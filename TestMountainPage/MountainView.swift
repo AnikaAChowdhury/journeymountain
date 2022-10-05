@@ -12,7 +12,9 @@ struct MountainView: View {
     
 //    @State var mountain:Mountain = Mountain(worldColor: <#T##String#>, clouds: <#T##String#>, background: <#T##String#>, foreground: <#T##String#>, path: <#T##String#>, completedStep: <#T##String#>, uncompletedStep: <#T##String#>)
     @State var characterPosition:Int = 0
-    
+    @State var starMaker:Int = 0
+    @State var hasStars:Bool = false
+
     // increments position of character
     func moveCharacter(){
         if(characterPosition < 154){
@@ -21,6 +23,38 @@ struct MountainView: View {
             characterPosition = 0
         }
         print(characterPosition)
+    }
+    
+    func makeStars(){
+        if(characterPosition > 124 - 1 && !hasStars){
+            
+            func loop(times: Int) {
+                var i = 0
+
+                func nextIteration() {
+                    if i < times {
+                        print("i is \(i)")
+
+                        i += 1
+
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
+                            starMaker += 1
+                            nextIteration()
+                        }
+                    }
+                }
+                nextIteration()
+            }
+            
+            loop(times: 154)
+            
+            hasStars = true
+        }
+        // reset when back to 0
+        if(characterPosition == 0){
+            starMaker = 0
+            hasStars = false
+        }
     }
 
     var body: some View {
@@ -52,16 +86,22 @@ struct MountainView: View {
                         .frame(width: screenWidth * 0.90)
                         .position(x: (screenWidth/2 - (0.02)*(screenWidth)),y: screenHeight/2-(0.043)*(screenHeight))
                     
-                    StepsView(completedSteps: $characterPosition)
+                    StepsView(completedSteps: $characterPosition, starMaker: $starMaker)
+                        .onChange(of: characterPosition){ newValue in
+                            makeStars()
+                        }
+                        .animation(Animation.easeInOut.delay(1.0), value: starMaker)
+                    
                     CharacterView(characterPosition: $characterPosition)
 
                 }
                 .animation(Animation.easeInOut, value: characterPosition)
             }
+            Spacer()
             Button("Move Character", action: moveCharacter)
                 .padding(10)
                 .foregroundColor(Color.white)
-                .font(.headline)
+                .font(.title)
                 .background(Color.blue)
                 .cornerRadius(30)
         }
