@@ -13,6 +13,23 @@ func confetti(){
     print("hey")
 }
 
+func getFirstDay() -> Int{
+    let days = getDaysInMonth()
+    let startIndex = (31 - days) * 5
+    return startIndex
+}
+
+func getDaysInMonth() -> Int{
+    let calendar = Calendar.current
+    let date = Date()
+    // Calculate start and end of the current year (or month with `.month`):
+    let interval = calendar.dateInterval(of: .month, for: date)! //change year it will no of days in a year , change it to month it will give no of days in a current month
+    // Compute difference in days:
+    let days = calendar.dateComponents([.day], from: interval.start, to: interval.end).day!
+    return days
+    
+}
+
 func makeStep(starMaker:Int, stepNumber:Int, completedSteps:Int, screenWidth:CGFloat, screenHeight:CGFloat, stepSize:Double, x1:CGFloat, y1:CGFloat) -> some View{
     
     var completedName:String = ""
@@ -22,13 +39,19 @@ func makeStep(starMaker:Int, stepNumber:Int, completedSteps:Int, screenWidth:CGF
         completedName = "uncompleted"
     }
     
-    if(completedSteps > 124-1 && stepNumber <= starMaker){
+    var visible = 100.0
+    if(stepNumber < getFirstDay()){
+        visible = 0.0
+    }
+    
+    if(completedSteps > 12-1 && stepNumber <= starMaker){
         let starVersion = (stepNumber % 3) + 1
         let starStep = Image(completedName + "StarStep_" + String(starVersion))
                     .resizable()
                     .scaledToFit()
                     .frame(width: screenWidth * stepSize)
                     .position(x: 0 + (x1)*(screenWidth),y: screenHeight - (y1)*screenHeight)
+                    .opacity(visible)
         return starStep
     }
     
@@ -37,6 +60,7 @@ func makeStep(starMaker:Int, stepNumber:Int, completedSteps:Int, screenWidth:CGF
                 .scaledToFit()
                 .frame(width: screenWidth * stepSize)
                 .position(x: 0 + (x1)*(screenWidth),y: screenHeight - (y1)*screenHeight)
+                .opacity(visible)
     return step
 }
 
@@ -50,7 +74,6 @@ struct StepsView: View {
         let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth:CGFloat = screenSize.width
         let screenHeight:CGFloat = screenSize.height
-                
         let stepSize:Double = 0.053
         
         return Group{

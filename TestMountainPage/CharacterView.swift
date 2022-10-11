@@ -14,10 +14,26 @@ struct CharacterView: View {
     @Binding var characterPosition:Int
     
     var body: some View {
+        func getFirstDay() -> Int{
+            let days = getDaysInMonth()
+            let startIndex = (31 - days) * 5
+            return startIndex
+        }
+        
+        func getDaysInMonth() -> Int{
+            let calendar = Calendar.current
+            let date = Date()
+            // Calculate start and end of the current year (or month with `.month`):
+            let interval = calendar.dateInterval(of: .month, for: date)! //change year it will no of days in a year , change it to month it will give no of days in a current month
+            // Compute difference in days:
+            let days = calendar.dateComponents([.day], from: interval.start, to: interval.end).day!
+                return days
+        }
         
         let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth:CGFloat = screenSize.width
         let screenHeight:CGFloat = screenSize.height
+        let firstDay = getFirstDay()
 
         func getDirection() -> String{
             var characterDirection:String = "character_right"
@@ -66,6 +82,15 @@ struct CharacterView: View {
         }
 
         let characterName = "character_" + getDirection()
+        
+        if(characterPosition == -1){
+            return  Image(characterName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: screenWidth * 0.1)
+                        .position(x: 0 + (locations[firstDay][0])*(screenWidth) - (0.05)*(screenWidth),y: screenHeight - (locations[firstDay][1])*screenHeight - (0.035)*screenHeight)
+            
+        }
         return Image(characterName)
                     .resizable()
                     .scaledToFit()

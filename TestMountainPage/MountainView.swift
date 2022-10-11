@@ -10,13 +10,14 @@ import SwiftUI
 struct MountainView: View {
 
 //    @State var mountain:Mountain = Mountain(worldColor: <#T##String#>, clouds: <#T##String#>, background: <#T##String#>, foreground: <#T##String#>, path: <#T##String#>, completedStep: <#T##String#>, uncompletedStep: <#T##String#>)
-    @State var characterPosition:Int = UserDefaults.standard.integer(forKey: "characterPosition") != nil ? UserDefaults.standard.integer(forKey: "characterPosition") : 0
+    
+    @State var characterPosition:Int = UserDefaults.standard.integer(forKey: "characterPosition") != nil ? UserDefaults.standard.integer(forKey: "characterPosition") : -1
     @State var starMaker:Int = UserDefaults.standard.integer(forKey: "starMaker") != nil ? UserDefaults.standard.integer(forKey: "starMaker") : 0
     @State var hasStars:Bool = UserDefaults.standard.bool(forKey: "hasStars") != nil ? UserDefaults.standard.bool(forKey: "hasStars") : false
     @State var todaysProgress:Int = UserDefaults.standard.integer(forKey: "todaysProgress") != nil ? UserDefaults.standard.integer(forKey: "todaysProgress") : 0
     @State var todaysExercise:Bool = UserDefaults.standard.bool(forKey: "todaysExercise") != nil ? UserDefaults.standard.bool(forKey: "todaysExercise") : false
     @State var todaysSteps:Int = UserDefaults.standard.integer(forKey: "todaysSteps") != nil ? UserDefaults.standard.integer(forKey: "todaysSteps") : 0
-    @State var tempCharacterPosition:Int = UserDefaults.standard.integer(forKey: "tempCharacterPosition") != nil ? UserDefaults.standard.integer(forKey: "tempCharacterPosition") : 0
+    @State var tempCharacterPosition:Int = UserDefaults.standard.integer(forKey: "tempCharacterPosition") != nil ? UserDefaults.standard.integer(forKey: "tempCharacterPosition") : -1
     @State var day:Int = UserDefaults.standard.integer(forKey: "day") != nil ? UserDefaults.standard.integer(forKey: "day") : 0
     
     // increments position of character
@@ -87,8 +88,8 @@ struct MountainView: View {
     }
     
     func resetMonth(){
-        characterPosition = 0
-        tempCharacterPosition = 0
+        characterPosition = -1
+        tempCharacterPosition = -1
         todaysSteps = 0
         todaysExercise = false
         todaysProgress = 0
@@ -103,10 +104,11 @@ struct MountainView: View {
         UserDefaults.standard.set(hasStars, forKey: "hasStars")
     }
     func makePercentage() -> some View{
-        var t = Text(String(todaysProgress)+"%")
-                    .padding(5)
+        let t = Text(String(todaysProgress)+"%")
+                    .frame(maxWidth: .infinity)
+                    .padding(7)
                     .foregroundColor(Color.white)
-                    .font(.subheadline)
+                    .font(.system(size: 20, weight: Font.Weight.bold))
         if(todaysProgress <= 20){
             return t
                     .background(Color.red)
@@ -133,22 +135,24 @@ struct MountainView: View {
     func makeExerciseButton() -> some View{
         if(todaysExercise){
             return Button("Exercise", action: toggleExercise)
-                .padding(5)
+                .frame(maxWidth: .infinity)
+                .padding(7)
                 .foregroundColor(Color.white)
-                .font(.subheadline)
+                .font(.system(size: 20, weight: Font.Weight.bold))
                 .background(Color.green)
                 .cornerRadius(30)
         }
         return Button("Exercise", action: toggleExercise)
-                .padding(5)
+                .frame(maxWidth: .infinity)
+                .padding(7)
                 .foregroundColor(Color.white)
-                .font(.subheadline)
+                .font(.system(size: 20, weight: Font.Weight.bold))
                 .background(Color.red)
                 .cornerRadius(30)
     }
     
     func makeStars(){
-        if(characterPosition > 124 - 1 && !hasStars){
+        if(tempCharacterPosition > 12 - 1 && !hasStars){
             
             func loop(times: Int) {
                 var i = 0
@@ -171,7 +175,6 @@ struct MountainView: View {
             loop(times: 154)
             hasStars = true
             UserDefaults.standard.set(hasStars, forKey: "hasStars")
-
         }
         // reset when back to 0
         if(characterPosition == 0){
@@ -182,13 +185,28 @@ struct MountainView: View {
         }
     }
     
+    func getDaysInMonth() -> Int{
+        let calendar = Calendar.current
+        let date = Date()
+
+        // Calculate start and end of the current year (or month with `.month`):
+        let interval = calendar.dateInterval(of: .month, for: date)! //change year it will no of days in a year , change it to month it will give no of days in a current month
+
+        // Compute difference in days:
+        let days = calendar.dateComponents([.day], from: interval.start, to: interval.end).day!
+        print(days)
+        return days
+    }
+    
+    
     
     var body: some View {
         
         let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth:CGFloat = screenSize.width
         let screenHeight:CGFloat = screenSize.height
-                
+        let daysInMonth:Int = getDaysInMonth()
+
         VStack {
             withAnimation{
                 ZStack{
@@ -216,40 +234,44 @@ struct MountainView: View {
                         .onChange(of: tempCharacterPosition){ newValue in
                             makeStars()
                         }
-                    
                     CharacterView(characterPosition: $tempCharacterPosition)
                 }
                 .animation(Animation.easeInOut.speed(1), value: tempCharacterPosition)
             }
-            Spacer()
+            .position(x: screenWidth/2 ,y: screenHeight/2 - (0.11)*(screenHeight) )
+
             VStack{
                 HStack{
                     Button("-20",action: subtract20)
-                        .padding(5)
+                        .frame(maxWidth: .infinity)
+                        .padding(7)
                         .foregroundColor(Color.white)
-                        .font(.subheadline)
+                        .font(.system(size: 20, weight: Font.Weight.bold))
                         .background(Color.blue)
                         .cornerRadius(30)
                     makePercentage()
                     Button("+20", action: add20)
-                        .padding(5)
+                        .frame(maxWidth: .infinity)
+                        .padding(7)
                         .foregroundColor(Color.white)
-                        .font(.subheadline)
+                        .font(.system(size: 20, weight: Font.Weight.bold))
                         .background(Color.blue)
                         .cornerRadius(30)
                     makeExerciseButton()
                 }
                 HStack{
                     Button("Submit day", action: submitDay)
-                        .padding(10)
+                        .frame(maxWidth: .infinity)
+                        .padding(7)
                         .foregroundColor(Color.white)
-                        .font(.subheadline)
+                        .font(.system(size: 20, weight: Font.Weight.bold))
                         .background(Color.blue)
                         .cornerRadius(30)
                     Button("Reset Month", action: resetMonth)
-                        .padding(10)
+                        .frame(maxWidth: .infinity)
+                        .padding(7)
                         .foregroundColor(Color.white)
-                        .font(.subheadline)
+                        .font(.system(size: 20, weight: Font.Weight.bold))
                         .background(Color.blue)
                         .cornerRadius(30)
                 }
