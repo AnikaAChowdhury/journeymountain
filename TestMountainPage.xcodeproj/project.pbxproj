@@ -17,6 +17,7 @@
 		4C3A1ECF28ED31E5008E5295 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3A1ECE28ED31E5008E5295 /* ConfettiView.swift */; };
 		4C3A1ED128ED3228008E5295 /* confetti.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4C3A1ED028ED3228008E5295 /* confetti.gif */; };
 		4CE909D628E8B4580041AD34 /* StepsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE909D528E8B4580041AD34 /* StepsView.swift */; };
+		998A055A28F7194D00299F53 /* PopUpMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998A055928F7194C00299F53 /* PopUpMessage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		4C3A1ECE28ED31E5008E5295 /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
 		4C3A1ED028ED3228008E5295 /* confetti.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = confetti.gif; path = images/confetti.gif; sourceTree = SOURCE_ROOT; };
 		4CE909D528E8B4580041AD34 /* StepsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsView.swift; sourceTree = "<group>"; };
+		998A055928F7194C00299F53 /* PopUpMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpMessage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				4C15490C28E51296005690B0 /* TestMountainPageApp.swift */,
 				4CE909D528E8B4580041AD34 /* StepsView.swift */,
 				4C15490E28E51296005690B0 /* MountainView.swift */,
+				998A055928F7194C00299F53 /* PopUpMessage.swift */,
 				4C1A640528E662A900631827 /* Step.swift */,
 				4C1A640328E660EE00631827 /* Mountain.swift */,
 				4C15491028E5129C005690B0 /* Assets.xcassets */,
@@ -162,6 +165,7 @@
 				4C1A640628E662A900631827 /* Step.swift in Sources */,
 				4C1A640428E660EE00631827 /* Mountain.swift in Sources */,
 				4CE909D628E8B4580041AD34 /* StepsView.swift in Sources */,
+				998A055A28F7194D00299F53 /* PopUpMessage.swift in Sources */,
 				4C15490D28E51296005690B0 /* TestMountainPageApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
