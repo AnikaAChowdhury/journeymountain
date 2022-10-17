@@ -3,10 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C048BFF28FCDB98007D1F9C /* CloudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C048BFE28FCDB98007D1F9C /* CloudView.swift */; };
+		4C0749C128F65E2B00DF69D3 /* GIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0749C028F65E2B00DF69D3 /* GIFView.swift */; };
+		4C0749C728F6673100DF69D3 /* confetti2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4C0749C628F6673100DF69D3 /* confetti2.gif */; };
+		4C0749C928F6673A00DF69D3 /* confetti1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4C0749C828F6673A00DF69D3 /* confetti1.gif */; };
 		4C11A70128E8F3D6007C24B6 /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C11A70028E8F3D6007C24B6 /* CharacterView.swift */; };
 		4C15490D28E51296005690B0 /* TestMountainPageApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C15490C28E51296005690B0 /* TestMountainPageApp.swift */; };
 		4C15490F28E51296005690B0 /* MountainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C15490E28E51296005690B0 /* MountainView.swift */; };
@@ -14,12 +18,14 @@
 		4C15491428E5129C005690B0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C15491328E5129C005690B0 /* Preview Assets.xcassets */; };
 		4C1A640428E660EE00631827 /* Mountain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1A640328E660EE00631827 /* Mountain.swift */; };
 		4C1A640628E662A900631827 /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1A640528E662A900631827 /* Step.swift */; };
-		4C3A1ECF28ED31E5008E5295 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3A1ECE28ED31E5008E5295 /* ConfettiView.swift */; };
-		4C3A1ED128ED3228008E5295 /* confetti.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4C3A1ED028ED3228008E5295 /* confetti.gif */; };
 		4CE909D628E8B4580041AD34 /* StepsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE909D528E8B4580041AD34 /* StepsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C048BFE28FCDB98007D1F9C /* CloudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudView.swift; sourceTree = "<group>"; };
+		4C0749C028F65E2B00DF69D3 /* GIFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFView.swift; sourceTree = "<group>"; };
+		4C0749C628F6673100DF69D3 /* confetti2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = confetti2.gif; path = images/confetti2.gif; sourceTree = SOURCE_ROOT; };
+		4C0749C828F6673A00DF69D3 /* confetti1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = confetti1.gif; path = images/confetti1.gif; sourceTree = SOURCE_ROOT; };
 		4C11A70028E8F3D6007C24B6 /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
 		4C15490928E51296005690B0 /* TestMountainPage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestMountainPage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C15490C28E51296005690B0 /* TestMountainPageApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestMountainPageApp.swift; sourceTree = "<group>"; };
@@ -28,8 +34,6 @@
 		4C15491328E5129C005690B0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4C1A640328E660EE00631827 /* Mountain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mountain.swift; sourceTree = "<group>"; };
 		4C1A640528E662A900631827 /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
-		4C3A1ECE28ED31E5008E5295 /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
-		4C3A1ED028ED3228008E5295 /* confetti.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = confetti.gif; path = images/confetti.gif; sourceTree = SOURCE_ROOT; };
 		4CE909D528E8B4580041AD34 /* StepsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -47,7 +51,6 @@
 		4C15490028E51295005690B0 = {
 			isa = PBXGroup;
 			children = (
-				4C3A1ECE28ED31E5008E5295 /* ConfettiView.swift */,
 				4C15490B28E51296005690B0 /* TestMountainPage */,
 				4C15490A28E51296005690B0 /* Products */,
 			);
@@ -64,10 +67,13 @@
 		4C15490B28E51296005690B0 /* TestMountainPage */ = {
 			isa = PBXGroup;
 			children = (
-				4C3A1ED028ED3228008E5295 /* confetti.gif */,
+				4C0749C828F6673A00DF69D3 /* confetti1.gif */,
+				4C0749C628F6673100DF69D3 /* confetti2.gif */,
 				4C11A70028E8F3D6007C24B6 /* CharacterView.swift */,
 				4C15490C28E51296005690B0 /* TestMountainPageApp.swift */,
+				4C048BFE28FCDB98007D1F9C /* CloudView.swift */,
 				4CE909D528E8B4580041AD34 /* StepsView.swift */,
+				4C0749C028F65E2B00DF69D3 /* GIFView.swift */,
 				4C15490E28E51296005690B0 /* MountainView.swift */,
 				4C1A640528E662A900631827 /* Step.swift */,
 				4C1A640328E660EE00631827 /* Mountain.swift */,
@@ -121,7 +127,7 @@
 				};
 			};
 			buildConfigurationList = 4C15490428E51295005690B0 /* Build configuration list for PBXProject "TestMountainPage" */;
-			compatibilityVersion = "Xcode 12.0";
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -144,7 +150,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C15491428E5129C005690B0 /* Preview Assets.xcassets in Resources */,
-				4C3A1ED128ED3228008E5295 /* confetti.gif in Resources */,
+				4C0749C728F6673100DF69D3 /* confetti2.gif in Resources */,
+				4C0749C928F6673A00DF69D3 /* confetti1.gif in Resources */,
 				4C15491128E5129C005690B0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -156,7 +163,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C3A1ECF28ED31E5008E5295 /* ConfettiView.swift in Sources */,
+				4C0749C128F65E2B00DF69D3 /* GIFView.swift in Sources */,
+				4C048BFF28FCDB98007D1F9C /* CloudView.swift in Sources */,
 				4C11A70128E8F3D6007C24B6 /* CharacterView.swift in Sources */,
 				4C15490F28E51296005690B0 /* MountainView.swift in Sources */,
 				4C1A640628E662A900631827 /* Step.swift in Sources */,
