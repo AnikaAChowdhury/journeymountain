@@ -20,6 +20,7 @@ struct MountainView: View {
     @State var todaysSteps:Int = UserDefaults.standard.integer(forKey: "todaysSteps") != nil ? UserDefaults.standard.integer(forKey: "todaysSteps") : 0
     @State var day:Int = UserDefaults.standard.integer(forKey: "day") != nil ? UserDefaults.standard.integer(forKey: "day") : 0
     @State var confettiVisible:Double = 0.0
+    @State private var showGame = true
 
 
     
@@ -43,18 +44,18 @@ struct MountainView: View {
         print(tempCharacterPosition)
     }
     
-    func subtract20(){
-        if(todaysProgress >= 20){
-            todaysProgress -= 20
+    func subtract10(){
+        if(todaysProgress >= 10){
+            todaysProgress -= 10
         }else{
             todaysProgress = 0
         }
         calculateSteps()
         UserDefaults.standard.set(todaysProgress, forKey: "todaysProgress")
     }
-    func add20(){
-        if(todaysProgress <= 80){
-            todaysProgress += 20
+    func add10(){
+        if(todaysProgress <= 90){
+            todaysProgress += 10
         }else{
             todaysProgress = 100
         }
@@ -63,13 +64,13 @@ struct MountainView: View {
     }
     func calculateSteps(){
         // calculate progress
-        if(todaysProgress <= 20){
+        if(todaysProgress <= 50){
             todaysSteps = 0
-        }else if(todaysProgress > 20 && todaysProgress <= 40){
+        }else if(todaysProgress > 50 && todaysProgress <= 60){
             todaysSteps = 1
-        }else if(todaysProgress > 40 && todaysProgress <= 60){
+        }else if(todaysProgress > 60 && todaysProgress <= 70){
             todaysSteps = 2
-        }else if(todaysProgress > 60 && todaysProgress <= 80){
+        }else if(todaysProgress > 70 && todaysProgress <= 80){
             todaysSteps = 3
         }else if(todaysProgress > 80 && todaysProgress <= 100){
             todaysSteps = 4
@@ -121,19 +122,19 @@ struct MountainView: View {
                     .padding(7)
                     .foregroundColor(Color.white)
                     .font(.system(size: 20, weight: Font.Weight.bold))
-        if(todaysProgress <= 20){
+        if(todaysProgress <= 50){
             return t
                     .background(Color.red)
                     .cornerRadius(30)
-        }else if(todaysProgress > 20 && todaysProgress <= 40){
+        }else if(todaysProgress > 50 && todaysProgress <= 60){
             return t
                     .background(Color.pink)
                     .cornerRadius(30)
-        }else if(todaysProgress > 40 && todaysProgress <= 60){
+        }else if(todaysProgress > 60 && todaysProgress <= 70){
             return t
                     .background(Color.orange)
                     .cornerRadius(30)
-        }else if(todaysProgress > 60 && todaysProgress <= 80){
+        }else if(todaysProgress > 70 && todaysProgress <= 80){
             return t
                     .background(Color.yellow)
                     .cornerRadius(30)
@@ -226,7 +227,7 @@ struct MountainView: View {
       }
     
     func makePath(screenWidth:CGFloat, screenHeight:CGFloat) -> some View{
-        let dimensions:String = "9:16"
+        let dimensions:String = "9:19.5"
         if (dimensions == "9:16"){
             return Image("path_1")
                     .resizable()
@@ -279,96 +280,110 @@ struct MountainView: View {
         let screenWidth:CGFloat = screenSize.width
         let screenHeight:CGFloat = screenSize.height
         let screenProportion:String = calculateScreenProportion(screenWidth: screenWidth, screenHeight: screenHeight)
-
-        VStack {
-            withAnimation{
-                ZStack{
-                    Image("Template")
-                        .resizable()
-                        .scaledToFill()
-                        .position(x: screenWidth/2 ,y: screenHeight/2 - (0.026)*(screenHeight) )
-                        .opacity(0.0)
-                    
-                    CloudView()
-                        .opacity(100.0)
-
-                    Image("mountainBackground_1")
-                        .resizable()
-                        .scaledToFit()
-                        .position(x: screenWidth/2 ,y: screenHeight/2 - (0.041)*(screenHeight) )
-                        .opacity(100.0)
-                    Image("mountainForeground_1")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: screenWidth * 0.93)
-                        .position(x: screenWidth/2 - (0.025)*(screenWidth),y: screenHeight/2+(0.001)*(screenHeight))
-                        .opacity(100.0)
-
-                    makePath(screenWidth: screenWidth, screenHeight: screenHeight)
-                        .opacity(100.0)
-                    
-                    StepsView(completedSteps: $tempCharacterPosition, starMaker: $starMaker)
-                        .onChange(of: tempCharacterPosition){ newValue in
-                            makeStars()
-                        }
-                        .opacity(100.0)
-                        .position(x: screenWidth/2 ,y: screenHeight - (0.603)*(screenHeight) )
-                    
-                    CharacterView(characterPosition: $tempCharacterPosition)
-                        .opacity(100.0)
-                        .position(x: screenWidth/2 ,y: screenHeight - (0.603)*(screenHeight) )
-
-                    
-                    GIFView("confetti1")
+        
+        if(showGame){
+            VStack {
+                withAnimation{
+                    ZStack{
+                        Image("Template")
+                            .resizable()
+                            .scaledToFill()
+                            .position(x: screenWidth/2 ,y: screenHeight/2 - (0.026)*(screenHeight) )
+                            .opacity(0.0)
+                        
+                        CloudView()
+                            .opacity(100.0)
+                        
+                        Image("mountainBackground_1")
+                            .resizable()
+                            .scaledToFit()
+                            .position(x: screenWidth/2 ,y: screenHeight/2 - (0.041)*(screenHeight) )
+                            .opacity(100.0)
+                        Image("mountainForeground_1")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: screenWidth * 0.93)
+                            .position(x: screenWidth/2 - (0.025)*(screenWidth),y: screenHeight/2-(0.002)*(screenHeight))
+                            .opacity(100.0)
+                        
+                        makePath(screenWidth: screenWidth, screenHeight: screenHeight)
+                            .opacity(100.0)
+                        
+                        StepsView(completedSteps: $tempCharacterPosition, starMaker: $starMaker)
+                            .onChange(of: tempCharacterPosition){ newValue in
+                                makeStars()
+                            }
+                            .opacity(100.0)
+                        
+                        CharacterView(characterPosition: $tempCharacterPosition)
+                            .opacity(100.0)
+                        
+                        
+                        GIFView("confetti1")
                             .scaleEffect(x: 2.0, y: 2.0, anchor: UnitPoint(x: 0.0, y: 0.0))
                             .position(x: screenWidth/2, y:screenHeight/2 - (0.1)*screenHeight)
                             .opacity(confettiVisible)
                             .onChange(of: tempCharacterPosition){ newValue in
                                 showConfetti()
                             }
-                    
+                        
+                        Button(action: {
+                            showGame = false
+                        }, label: {
+                            Text("Badges")
+                        })
+                            .padding(7)
+                            .background(Color(UIColor(red: 0.957, green: 0.831, blue: 0.502, alpha: 1).cgColor))
+                            .foregroundColor(Color.white)
+                            .font(.system(size: 20, weight: Font.Weight.bold))
+                            .cornerRadius(30)
+                            .position(x: (0.85)*screenWidth, y:(0.03)*screenHeight)
+                        
+                    }
+                    .animation(Animation.easeInOut.speed(1), value: tempCharacterPosition)
                 }
-                .animation(Animation.easeInOut.speed(1), value: tempCharacterPosition)
+                .position(x: screenWidth/2 ,y: screenHeight/2 - (0.11)*(screenHeight) )
+                VStack{
+                    HStack{
+                        Button("-10",action: subtract10)
+                            .frame(maxWidth: .infinity)
+                            .padding(7)
+                            .foregroundColor(Color.white)
+                            .font(.system(size: 20, weight: Font.Weight.bold))
+                            .background(Color.blue)
+                            .cornerRadius(30)
+                        makePercentage()
+                        Button("+10", action: add10)
+                            .frame(maxWidth: .infinity)
+                            .padding(7)
+                            .foregroundColor(Color.white)
+                            .font(.system(size: 20, weight: Font.Weight.bold))
+                            .background(Color.blue)
+                            .cornerRadius(30)
+                        makeExerciseButton()
+                    }
+                    HStack{
+                        Button("Submit day", action: submitDay)
+                            .frame(maxWidth: .infinity)
+                            .padding(7)
+                            .foregroundColor(Color.white)
+                            .font(.system(size: 20, weight: Font.Weight.bold))
+                            .background(Color.blue)
+                            .cornerRadius(30)
+                        Button("Reset Month", action: resetMonth)
+                            .frame(maxWidth: .infinity)
+                            .padding(7)
+                            .foregroundColor(Color.white)
+                            .font(.system(size: 20, weight: Font.Weight.bold))
+                            .background(Color.blue)
+                            .cornerRadius(30)
+                    }
+                }
             }
-            .position(x: screenWidth/2 ,y: screenHeight/2 - (0.11)*(screenHeight) )
             .background(Color(UIColor(red: 0.606, green: 0.898, blue: 0.962, alpha: 1).cgColor))
-
-            VStack{
-                HStack{
-                    Button("-20",action: subtract20)
-                        .frame(maxWidth: .infinity)
-                        .padding(7)
-                        .foregroundColor(Color.white)
-                        .font(.system(size: 20, weight: Font.Weight.bold))
-                        .background(Color.blue)
-                        .cornerRadius(30)
-                    makePercentage()
-                    Button("+20", action: add20)
-                        .frame(maxWidth: .infinity)
-                        .padding(7)
-                        .foregroundColor(Color.white)
-                        .font(.system(size: 20, weight: Font.Weight.bold))
-                        .background(Color.blue)
-                        .cornerRadius(30)
-                    makeExerciseButton()
-                }
-                HStack{
-                    Button("Submit day", action: submitDay)
-                        .frame(maxWidth: .infinity)
-                        .padding(7)
-                        .foregroundColor(Color.white)
-                        .font(.system(size: 20, weight: Font.Weight.bold))
-                        .background(Color.blue)
-                        .cornerRadius(30)
-                    Button("Reset Month", action: resetMonth)
-                        .frame(maxWidth: .infinity)
-                        .padding(7)
-                        .foregroundColor(Color.white)
-                        .font(.system(size: 20, weight: Font.Weight.bold))
-                        .background(Color.blue)
-                        .cornerRadius(30)
-                }
-            }
+        }
+        else{
+            BadgeView()
         }
     }
 }
