@@ -8,27 +8,205 @@
 import SwiftUI
 
 struct MountainView: View {
-    
-    
+
 //    @State var mountain:Mountain = Mountain(worldColor: <#T##String#>, clouds: <#T##String#>, background: <#T##String#>, foreground: <#T##String#>, path: <#T##String#>, completedStep: <#T##String#>, uncompletedStep: <#T##String#>)
-    @State var characterPosition:Int = 0
+    
+    @State var characterPosition:Int = UserDefaults.standard.integer(forKey: "characterPosition") != nil ? UserDefaults.standard.integer(forKey: "characterPosition") : -1
+    @State var starMaker:Int = UserDefaults.standard.integer(forKey: "starMaker") != nil ? UserDefaults.standard.integer(forKey: "starMaker") : 0
+    @State var hasStars:Bool = UserDefaults.standard.bool(forKey: "hasStars") != nil ? UserDefaults.standard.bool(forKey: "hasStars") : false
+    @State var todaysProgress:Int = UserDefaults.standard.integer(forKey: "todaysProgress") != nil ? UserDefaults.standard.integer(forKey: "todaysProgress") : 0
+    @State var todaysExercise:Bool = UserDefaults.standard.bool(forKey: "todaysExercise") != nil ? UserDefaults.standard.bool(forKey: "todaysExercise") : false
+    @State var todaysSteps:Int = UserDefaults.standard.integer(forKey: "todaysSteps") != nil ? UserDefaults.standard.integer(forKey: "todaysSteps") : 0
+    @State var tempCharacterPosition:Int = UserDefaults.standard.integer(forKey: "tempCharacterPosition") != nil ? UserDefaults.standard.integer(forKey: "tempCharacterPosition") : -1
+    @State var day:Int = UserDefaults.standard.integer(forKey: "day") != nil ? UserDefaults.standard.integer(forKey: "day") : 0
     
     // increments position of character
     func moveCharacter(){
-        if(characterPosition < 154){
-            characterPosition += 1
+        let amountToMove = todaysSteps
+        if(tempCharacterPosition + amountToMove <= 154){
+            tempCharacterPosition = characterPosition + amountToMove
         }else{
-            characterPosition = 0
+            tempCharacterPosition = 154
         }
-        print(characterPosition)
+        UserDefaults.standard.set(tempCharacterPosition, forKey: "tempCharacterPosition")
+        print(tempCharacterPosition)
     }
+    func subtract20(){
+        if(todaysProgress >= 20){
+            todaysProgress -= 20
+        }else{
+            todaysProgress = 0
+        }
+        calculateSteps()
+        UserDefaults.standard.set(todaysProgress, forKey: "todaysProgress")
+    }
+    func add20(){
+        if(todaysProgress <= 80){
+            todaysProgress += 20
+        }else{
+            todaysProgress = 100
+        }
+        calculateSteps()
+        UserDefaults.standard.set(todaysProgress, forKey: "todaysProgress")
+    }
+    func calculateSteps(){
+        // calculate progress
+        if(todaysProgress <= 20){
+            todaysSteps = 0
+        }else if(todaysProgress > 20 && todaysProgress <= 40){
+            todaysSteps = 1
+        }else if(todaysProgress > 40 && todaysProgress <= 60){
+            todaysSteps = 2
+        }else if(todaysProgress > 60 && todaysProgress <= 80){
+            todaysSteps = 3
+        }else if(todaysProgress > 80 && todaysProgress <= 100){
+            todaysSteps = 4
+        }
+        
+        if(todaysExercise){
+            todaysSteps += 1
+        }
+        UserDefaults.standard.set(todaysSteps, forKey: "todaysSteps")
+        
+        moveCharacter()
+    }
+    func toggleExercise(){
+        todaysExercise = !todaysExercise
+        calculateSteps()
+        UserDefaults.standard.set(todaysExercise, forKey: "todaysExercise")
+    }
+    
+    func submitDay(){
+        characterPosition = tempCharacterPosition
+        todaysSteps = 0
+        todaysExercise = false
+        todaysProgress = 0
+        UserDefaults.standard.set(characterPosition, forKey: "characterPosition")
+        UserDefaults.standard.set(todaysSteps, forKey: "todaysSteps")
+        UserDefaults.standard.set(todaysExercise, forKey: "todaysExercise")
+        UserDefaults.standard.set(todaysProgress, forKey: "todaysProgress")
+    }
+    
+    func resetMonth(){
+        characterPosition = -1
+        tempCharacterPosition = -1
+        todaysSteps = 0
+        todaysExercise = false
+        todaysProgress = 0
+        starMaker = 0
+        hasStars = false
+        UserDefaults.standard.set(characterPosition, forKey: "characterPosition")
+        UserDefaults.standard.set(tempCharacterPosition, forKey: "tempCharacterPosition")
+        UserDefaults.standard.set(todaysSteps, forKey: "todaysSteps")
+        UserDefaults.standard.set(todaysExercise, forKey: "todaysExercise")
+        UserDefaults.standard.set(todaysProgress, forKey: "todaysProgress")
+        UserDefaults.standard.set(starMaker, forKey: "starMaker")
+        UserDefaults.standard.set(hasStars, forKey: "hasStars")
+    }
+    func makePercentage() -> some View{
+        let t = Text(String(todaysProgress)+"%")
+                    .frame(maxWidth: .infinity)
+                    .padding(7)
+                    .foregroundColor(Color.white)
+                    .font(.system(size: 20, weight: Font.Weight.bold))
+        if(todaysProgress <= 20){
+            return t
+                    .background(Color.red)
+                    .cornerRadius(30)
+        }else if(todaysProgress > 20 && todaysProgress <= 40){
+            return t
+                    .background(Color.pink)
+                    .cornerRadius(30)
+        }else if(todaysProgress > 40 && todaysProgress <= 60){
+            return t
+                    .background(Color.orange)
+                    .cornerRadius(30)
+        }else if(todaysProgress > 60 && todaysProgress <= 80){
+            return t
+                    .background(Color.yellow)
+                    .cornerRadius(30)
+        }else{
+            return t
+                    .background(Color.green)
+                    .cornerRadius(30)
+        }
+    }
+    
+    func makeExerciseButton() -> some View{
+        if(todaysExercise){
+            return Button("Exercise", action: toggleExercise)
+                .frame(maxWidth: .infinity)
+                .padding(7)
+                .foregroundColor(Color.white)
+                .font(.system(size: 20, weight: Font.Weight.bold))
+                .background(Color.green)
+                .cornerRadius(30)
+        }
+        return Button("Exercise", action: toggleExercise)
+                .frame(maxWidth: .infinity)
+                .padding(7)
+                .foregroundColor(Color.white)
+                .font(.system(size: 20, weight: Font.Weight.bold))
+                .background(Color.red)
+                .cornerRadius(30)
+    }
+    
+    func makeStars(){
+        if(tempCharacterPosition > 12 - 1 && !hasStars){
+            
+            func loop(times: Int) {
+                var i = 0
 
+                func nextIteration() {
+                    if i < times {
+                        print("i is \(i)")
+
+                        i += 1
+
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
+                            starMaker += 1
+                            UserDefaults.standard.set(starMaker, forKey: "starMaker")
+                            nextIteration()
+                        }
+                    }
+                }
+                nextIteration()
+            }
+            loop(times: 154)
+            hasStars = true
+            UserDefaults.standard.set(hasStars, forKey: "hasStars")
+        }
+        // reset when back to 0
+        if(characterPosition == 0){
+            starMaker = 0
+            hasStars = false
+            UserDefaults.standard.set(starMaker, forKey: "starMaker")
+            UserDefaults.standard.set(hasStars, forKey: "hasStars")
+        }
+    }
+    
+    func getDaysInMonth() -> Int{
+        let calendar = Calendar.current
+        let date = Date()
+
+        // Calculate start and end of the current year (or month with `.month`):
+        let interval = calendar.dateInterval(of: .month, for: date)! //change year it will no of days in a year , change it to month it will give no of days in a current month
+
+        // Compute difference in days:
+        let days = calendar.dateComponents([.day], from: interval.start, to: interval.end).day!
+        print(days)
+        return days
+    }
+    
+    
+    
     var body: some View {
         
         let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth:CGFloat = screenSize.width
         let screenHeight:CGFloat = screenSize.height
-        
+        let daysInMonth:Int = getDaysInMonth()
+
         VStack {
             withAnimation{
                 ZStack{
@@ -52,18 +230,52 @@ struct MountainView: View {
                         .frame(width: screenWidth * 0.90)
                         .position(x: (screenWidth/2 - (0.02)*(screenWidth)),y: screenHeight/2-(0.043)*(screenHeight))
                     
-                    StepsView(completedSteps: $characterPosition)
-                    CharacterView(characterPosition: $characterPosition)
-
+                    StepsView(completedSteps: $tempCharacterPosition, starMaker: $starMaker)
+                        .onChange(of: tempCharacterPosition){ newValue in
+                            makeStars()
+                        }
+                    CharacterView(characterPosition: $tempCharacterPosition)
                 }
-                .animation(Animation.easeInOut, value: characterPosition)
+                .animation(Animation.easeInOut.speed(1), value: tempCharacterPosition)
             }
-            Button("Move Character", action: moveCharacter)
-                .padding(10)
-                .foregroundColor(Color.white)
-                .font(.headline)
-                .background(Color.blue)
-                .cornerRadius(30)
+            .position(x: screenWidth/2 ,y: screenHeight/2 - (0.11)*(screenHeight) )
+
+            VStack{
+                HStack{
+                    Button("-20",action: subtract20)
+                        .frame(maxWidth: .infinity)
+                        .padding(7)
+                        .foregroundColor(Color.white)
+                        .font(.system(size: 20, weight: Font.Weight.bold))
+                        .background(Color.blue)
+                        .cornerRadius(30)
+                    makePercentage()
+                    Button("+20", action: add20)
+                        .frame(maxWidth: .infinity)
+                        .padding(7)
+                        .foregroundColor(Color.white)
+                        .font(.system(size: 20, weight: Font.Weight.bold))
+                        .background(Color.blue)
+                        .cornerRadius(30)
+                    makeExerciseButton()
+                }
+                HStack{
+                    Button("Submit day", action: submitDay)
+                        .frame(maxWidth: .infinity)
+                        .padding(7)
+                        .foregroundColor(Color.white)
+                        .font(.system(size: 20, weight: Font.Weight.bold))
+                        .background(Color.blue)
+                        .cornerRadius(30)
+                    Button("Reset Month", action: resetMonth)
+                        .frame(maxWidth: .infinity)
+                        .padding(7)
+                        .foregroundColor(Color.white)
+                        .font(.system(size: 20, weight: Font.Weight.bold))
+                        .background(Color.blue)
+                        .cornerRadius(30)
+                }
+            }
         }
     }
 }

@@ -14,63 +14,89 @@ struct CharacterView: View {
     @Binding var characterPosition:Int
     
     var body: some View {
+        func getFirstDay() -> Int{
+            let days = getDaysInMonth()
+            let startIndex = (31 - days) * 5
+            return startIndex
+        }
+        
+        func getDaysInMonth() -> Int{
+            let calendar = Calendar.current
+            let date = Date()
+            // Calculate start and end of the current year (or month with `.month`):
+            let interval = calendar.dateInterval(of: .month, for: date)! //change year it will no of days in a year , change it to month it will give no of days in a current month
+            // Compute difference in days:
+            let days = calendar.dateComponents([.day], from: interval.start, to: interval.end).day!
+                return days
+        }
         
         let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth:CGFloat = screenSize.width
         let screenHeight:CGFloat = screenSize.height
+        let firstDay = getFirstDay()
 
         func getDirection() -> String{
             var characterDirection:String = "character_right"
             if(characterPosition <= 12){
-                characterDirection = "character_right"
+                characterDirection = "right"
             }else if(characterPosition > 12 && characterPosition <= 25){
-                characterDirection = "character_left"
+                characterDirection = "left"
             }else if(characterPosition > 25 && characterPosition <= 38){
-                characterDirection = "character_right"
+                characterDirection = "right"
             }else if(characterPosition > 38 && characterPosition <= 49){
-                characterDirection = "character_left"
+                characterDirection = "left"
             }else if(characterPosition > 49 && characterPosition <= 60){
-                characterDirection = "character_right"
+                characterDirection = "right"
             }else if(characterPosition > 60 && characterPosition <= 71){
-                characterDirection = "character_left"
+                characterDirection = "left"
             }else if(characterPosition > 71 && characterPosition <= 82){
-                characterDirection = "character_right"
+                characterDirection = "right"
             }else if(characterPosition > 82 && characterPosition <= 92){
-                characterDirection = "character_left"
+                characterDirection = "left"
             }else if(characterPosition > 92 && characterPosition <= 102){
-                characterDirection = "character_right"
+                characterDirection = "right"
             }else if(characterPosition > 102 && characterPosition <= 110){
-                characterDirection = "character_left"
+                characterDirection = "left"
             }else if(characterPosition > 110 && characterPosition <= 117){
-                characterDirection = "character_right"
+                characterDirection = "right"
             }else if(characterPosition > 117 && characterPosition <= 123){
-                characterDirection = "character_left"
+                characterDirection = "left"
             }else if(characterPosition > 123 && characterPosition <= 128){
-                characterDirection = "character_right"
+                characterDirection = "right"
             }else if(characterPosition > 128 && characterPosition <= 133){
-                characterDirection = "character_left"
+                characterDirection = "left"
             }else if(characterPosition > 133 && characterPosition <= 138){
-                characterDirection = "character_right"
+                characterDirection = "right"
             }else if(characterPosition > 138 && characterPosition <= 143){
-                characterDirection = "character_left"
+                characterDirection = "left"
             }else if(characterPosition > 143 && characterPosition <= 147){
-                characterDirection = "character_right"
+                characterDirection = "right"
             }else if(characterPosition > 147 && characterPosition <= 150){
-                characterDirection = "character_left"
+                characterDirection = "left"
             }else if(characterPosition > 150 && characterPosition <= 152){
-                characterDirection = "character_right"
+                characterDirection = "right"
             }else if(characterPosition > 152 && characterPosition <= 154){
-                characterDirection = "character_left"
+                characterDirection = "left"
             }
             return characterDirection
         }
 
-        return Image(getDirection())
+        let characterName = "character_" + getDirection()
+        
+        if(characterPosition == -1){
+            return  Image(characterName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: screenWidth * 0.1)
+                        .position(x: 0 + (locations[firstDay][0])*(screenWidth) - (0.05)*(screenWidth),y: screenHeight - (locations[firstDay][1])*screenHeight - (0.035)*screenHeight)
+            
+        }
+        return Image(characterName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: screenWidth * 0.1)
                     .position(x: 0 + (locations[characterPosition][0])*(screenWidth),y: screenHeight - (locations[characterPosition][1])*screenHeight - (0.035)*screenHeight)
-
+    
     }
 }
 
