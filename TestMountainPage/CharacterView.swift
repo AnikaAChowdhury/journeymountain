@@ -27,7 +27,7 @@ struct CharacterView: View {
             let interval = calendar.dateInterval(of: .month, for: date)! //change year it will no of days in a year , change it to month it will give no of days in a current month
             // Compute difference in days:
             let days = calendar.dateComponents([.day], from: interval.start, to: interval.end).day!
-                return days
+            return days
         }
         
         let screenSize: CGRect = UIScreen.main.bounds
@@ -36,46 +36,17 @@ struct CharacterView: View {
         let firstDay = getFirstDay()
 
         func getDirection() -> String{
-            var characterDirection:String = "character_right"
-            if(characterPosition <= 12){
-                characterDirection = "right"
-            }else if(characterPosition > 12 && characterPosition <= 25){
-                characterDirection = "left"
-            }else if(characterPosition > 25 && characterPosition <= 38){
-                characterDirection = "right"
-            }else if(characterPosition > 38 && characterPosition <= 49){
-                characterDirection = "left"
-            }else if(characterPosition > 49 && characterPosition <= 60){
-                characterDirection = "right"
-            }else if(characterPosition > 60 && characterPosition <= 71){
-                characterDirection = "left"
-            }else if(characterPosition > 71 && characterPosition <= 82){
-                characterDirection = "right"
-            }else if(characterPosition > 82 && characterPosition <= 92){
-                characterDirection = "left"
-            }else if(characterPosition > 92 && characterPosition <= 102){
-                characterDirection = "right"
-            }else if(characterPosition > 102 && characterPosition <= 110){
-                characterDirection = "left"
-            }else if(characterPosition > 110 && characterPosition <= 117){
-                characterDirection = "right"
-            }else if(characterPosition > 117 && characterPosition <= 123){
-                characterDirection = "left"
-            }else if(characterPosition > 123 && characterPosition <= 128){
-                characterDirection = "right"
-            }else if(characterPosition > 128 && characterPosition <= 133){
-                characterDirection = "left"
-            }else if(characterPosition > 133 && characterPosition <= 138){
-                characterDirection = "right"
-            }else if(characterPosition > 138 && characterPosition <= 143){
-                characterDirection = "left"
-            }else if(characterPosition > 143 && characterPosition <= 147){
-                characterDirection = "right"
-            }else if(characterPosition > 147 && characterPosition <= 150){
-                characterDirection = "left"
-            }else if(characterPosition > 150 && characterPosition <= 152){
-                characterDirection = "right"
-            }else if(characterPosition > 152 && characterPosition <= 154){
+            var characterDirection:String = "right"
+            if(characterPosition != -1 && characterPosition != 154){
+                let x1 = locations[characterPosition][0]
+                let x2 = locations[characterPosition+1][0]
+                if(x1 < x2) {
+                   characterDirection = "right"
+                }else{
+                    characterDirection = "left"
+                }
+            }
+            if(characterPosition == 154){
                 characterDirection = "left"
             }
             return characterDirection

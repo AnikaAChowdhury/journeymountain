@@ -26,11 +26,14 @@ struct Mountain{
     var completedStep:String
     var uncompletedStep:String
     
-    // an array of 155 steps for the mountain
-    var steps = [Step]()
+    // image names for accessories
+    var acessory1:String
+    var acessory2:String
+    var acessory3:String
+    var acessory4:String
     
     // constructor
-    init(worldColor:String, clouds:String, background:String, foreground:String, path:String, completedStep:String, uncompletedStep:String){
+    init(worldColor:String, clouds:String, background:String, foreground:String, path:String, completedStep:String, uncompletedStep:String, acessory1:String, acessory3:String, acessory2:String, acessory4:String ){
         self.worldColor = worldColor
         self.clouds = clouds
         self.background = background
@@ -38,9 +41,10 @@ struct Mountain{
         self.path = path
         self.completedStep = completedStep
         self.uncompletedStep = uncompletedStep
-        
-        // initialize steps
-        
+        self.acessory1 = acessory1
+        self.acessory2 = acessory2
+        self.acessory3 = acessory3
+        self.acessory4 = acessory4
     }
     
 }
