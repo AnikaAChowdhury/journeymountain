@@ -99,8 +99,6 @@ struct MountainView: View {
         todaysSteps = 0
         todaysExercise = false
         todaysProgress = 0
-        print(startStreak)
-        print(endStreak)
         UserDefaults.standard.set(characterPosition, forKey: "characterPosition")
         UserDefaults.standard.set(todaysSteps, forKey: "todaysSteps")
         UserDefaults.standard.set(todaysExercise, forKey: "todaysExercise")
@@ -231,7 +229,7 @@ struct MountainView: View {
             endStreak = UserDefaults.standard.object(forKey: "endStreak") != nil ? UserDefaults.standard.object(forKey: "endStreak") as! Date : Date()
         }
         
-        userStreak = calendar.dateComponents([.day], from: startStreak, to: endStreak).day!
+        userStreak = calendar.dateComponents([.day], from: startStreak, to: endStreak).day! + 1
         
         return userStreak
     }

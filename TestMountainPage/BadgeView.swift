@@ -42,8 +42,6 @@ struct BadgeView: View {
     
     @State private var showGame = false
     
-    let userDefaults = UserDefaults()
-    
     func loss() {
         if currWeight <= startWeight*0.95 {
             lost5PC = true
@@ -207,8 +205,8 @@ struct BadgeView: View {
                                     .buttonStyle(.plain)
                                     .alert(isPresented: $showAlert12_5PC) {
                                         Alert(
-                                            title: Text("12.5% Weight Loss"),
-                                            message: Text("This badge was earned on \n DD/MM/YYYY \n from losing 12.5% of your initial body weight."),
+                                            title: Text("15% Weight Loss"),
+                                            message: Text("This badge was earned on \n DD/MM/YYYY \n from losing 15% of your initial body weight."),
                                             dismissButton: .cancel(Text("Close"))
                                         )
                                     }
