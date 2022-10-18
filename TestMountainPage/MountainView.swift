@@ -68,15 +68,15 @@ struct MountainView: View {
     
     func calculateSteps(){
         // calculate progress
-        if(todaysProgress <= 50){
+        if(todaysProgress < 50){
             todaysSteps = 0
-        }else if(todaysProgress > 50 && todaysProgress <= 60){
+        }else if(todaysProgress >= 50 && todaysProgress < 60){
             todaysSteps = 1
-        }else if(todaysProgress > 60 && todaysProgress <= 70){
+        }else if(todaysProgress >= 60 && todaysProgress < 70){
             todaysSteps = 2
-        }else if(todaysProgress > 70 && todaysProgress <= 80){
+        }else if(todaysProgress >= 70 && todaysProgress < 80){
             todaysSteps = 3
-        }else if(todaysProgress > 80 && todaysProgress <= 100){
+        }else if(todaysProgress >= 80){
             todaysSteps = 4
         }
         
@@ -129,19 +129,20 @@ struct MountainView: View {
                     .padding(7)
                     .foregroundColor(Color.white)
                     .font(.system(size: 20, weight: Font.Weight.bold))
-        if(todaysProgress <= 50){
+        
+        if(todaysProgress < 50){
             return t
                     .background(Color.red)
                     .cornerRadius(30)
-        }else if(todaysProgress > 50 && todaysProgress <= 60){
+        }else if(todaysProgress >= 50 && todaysProgress < 60){
             return t
                     .background(Color.pink)
                     .cornerRadius(30)
-        }else if(todaysProgress > 60 && todaysProgress <= 70){
+        }else if(todaysProgress >= 60 && todaysProgress < 70){
             return t
                     .background(Color.orange)
                     .cornerRadius(30)
-        }else if(todaysProgress > 70 && todaysProgress <= 80){
+        }else if(todaysProgress >= 70 && todaysProgress < 80){
             return t
                     .background(Color.yellow)
                     .cornerRadius(30)
@@ -337,6 +338,8 @@ struct MountainView: View {
                                 makeStars()
                             }
                             .opacity(100.0)
+                        
+                        DecorationView()
                         
                         CharacterView(characterPosition: $tempCharacterPosition)
                             .opacity(100.0)
