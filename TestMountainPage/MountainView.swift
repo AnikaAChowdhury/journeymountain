@@ -21,7 +21,9 @@ struct MountainView: View {
     @State var day:Int = UserDefaults.standard.integer(forKey: "day") != nil ? UserDefaults.standard.integer(forKey: "day") : 0
     @State var confettiVisible:Double = 0.0
     @State private var showGame = true
-
+    @State var userStreak:Int = UserDefaults.standard.integer(forKey: "userStreak") != nil ? UserDefaults.standard.integer(forKey: "userStreak") : 0
+    @State var startStreak:Date = UserDefaults.standard.object(forKey: "startStreak") != nil ? UserDefaults.standard.object(forKey: "startStreak") as! Date : Date()
+    @State var endStreak:Date = UserDefaults.standard.object(forKey: "endStreak") != nil ? UserDefaults.standard.object(forKey: "endStreak") as! Date : Date()
 
     
     // increments position of character
@@ -41,7 +43,7 @@ struct MountainView: View {
             tempCharacterPosition = 154
         }
         UserDefaults.standard.set(tempCharacterPosition, forKey: "tempCharacterPosition")
-        print(tempCharacterPosition)
+        //print(tempCharacterPosition)
     }
     
     func subtract10(){
@@ -53,6 +55,7 @@ struct MountainView: View {
         calculateSteps()
         UserDefaults.standard.set(todaysProgress, forKey: "todaysProgress")
     }
+    
     func add10(){
         if(todaysProgress <= 90){
             todaysProgress += 10
@@ -62,6 +65,7 @@ struct MountainView: View {
         calculateSteps()
         UserDefaults.standard.set(todaysProgress, forKey: "todaysProgress")
     }
+    
     func calculateSteps(){
         // calculate progress
         if(todaysProgress <= 50){
@@ -83,6 +87,7 @@ struct MountainView: View {
         
         moveCharacter()
     }
+    
     func toggleExercise(){
         todaysExercise = !todaysExercise
         calculateSteps()
@@ -94,10 +99,13 @@ struct MountainView: View {
         todaysSteps = 0
         todaysExercise = false
         todaysProgress = 0
+        print(startStreak)
+        print(endStreak)
         UserDefaults.standard.set(characterPosition, forKey: "characterPosition")
         UserDefaults.standard.set(todaysSteps, forKey: "todaysSteps")
         UserDefaults.standard.set(todaysExercise, forKey: "todaysExercise")
         UserDefaults.standard.set(todaysProgress, forKey: "todaysProgress")
+        
     }
     
     func resetMonth(){
@@ -116,6 +124,7 @@ struct MountainView: View {
         UserDefaults.standard.set(starMaker, forKey: "starMaker")
         UserDefaults.standard.set(hasStars, forKey: "hasStars")
     }
+    
     func makePercentage() -> some View{
         let t = Text(String(todaysProgress)+"%")
                     .frame(maxWidth: .infinity)
@@ -209,6 +218,22 @@ struct MountainView: View {
         // Compute difference in days:
         let days = calendar.dateComponents([.day], from: interval.start, to: interval.end).day!
         return days
+    }
+    
+    func getStreak() -> Int {
+        let calendar = Calendar.current
+        
+        let gap = calendar.dateComponents([.day], from: endStreak, to: Date()).day!
+        
+        // if missed a day, restart the streak
+        if gap > 1 {
+            startStreak = UserDefaults.standard.object(forKey: "startStreak") != nil ? UserDefaults.standard.object(forKey: "startStreak") as! Date : Date()
+            endStreak = UserDefaults.standard.object(forKey: "endStreak") != nil ? UserDefaults.standard.object(forKey: "endStreak") as! Date : Date()
+        }
+        
+        userStreak = calendar.dateComponents([.day], from: startStreak, to: endStreak).day!
+        
+        return userStreak
     }
     
     func showConfetti(){
