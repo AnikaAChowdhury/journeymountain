@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4C048BFF28FCDB98007D1F9C /* CloudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C048BFE28FCDB98007D1F9C /* CloudView.swift */; };
 		4C048C0128FD9849007D1F9C /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C048C0028FD9849007D1F9C /* BadgeView.swift */; };
+		4C048C0328FDCA92007D1F9C /* DecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C048C0228FDCA91007D1F9C /* DecorationView.swift */; };
 		4C0749C128F65E2B00DF69D3 /* GIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0749C028F65E2B00DF69D3 /* GIFView.swift */; };
 		4C0749C728F6673100DF69D3 /* confetti2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4C0749C628F6673100DF69D3 /* confetti2.gif */; };
 		4C0749C928F6673A00DF69D3 /* confetti1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4C0749C828F6673A00DF69D3 /* confetti1.gif */; };
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		4C048BFE28FCDB98007D1F9C /* CloudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudView.swift; sourceTree = "<group>"; };
 		4C048C0028FD9849007D1F9C /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
+		4C048C0228FDCA91007D1F9C /* DecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorationView.swift; sourceTree = "<group>"; };
 		4C0749C028F65E2B00DF69D3 /* GIFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFView.swift; sourceTree = "<group>"; };
 		4C0749C628F6673100DF69D3 /* confetti2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = confetti2.gif; path = images/confetti2.gif; sourceTree = SOURCE_ROOT; };
 		4C0749C828F6673A00DF69D3 /* confetti1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = confetti1.gif; path = images/confetti1.gif; sourceTree = SOURCE_ROOT; };
@@ -77,6 +79,7 @@
 				4CE909D528E8B4580041AD34 /* StepsView.swift */,
 				4C048C0028FD9849007D1F9C /* BadgeView.swift */,
 				4C0749C028F65E2B00DF69D3 /* GIFView.swift */,
+				4C048C0228FDCA91007D1F9C /* DecorationView.swift */,
 				4C15490E28E51296005690B0 /* MountainView.swift */,
 				4C1A640528E662A900631827 /* Step.swift */,
 				4C1A640328E660EE00631827 /* Mountain.swift */,
@@ -170,6 +173,7 @@
 				4C048BFF28FCDB98007D1F9C /* CloudView.swift in Sources */,
 				4C11A70128E8F3D6007C24B6 /* CharacterView.swift in Sources */,
 				4C15490F28E51296005690B0 /* MountainView.swift in Sources */,
+				4C048C0328FDCA92007D1F9C /* DecorationView.swift in Sources */,
 				4C1A640628E662A900631827 /* Step.swift in Sources */,
 				4C1A640428E660EE00631827 /* Mountain.swift in Sources */,
 				4C048C0128FD9849007D1F9C /* BadgeView.swift in Sources */,
