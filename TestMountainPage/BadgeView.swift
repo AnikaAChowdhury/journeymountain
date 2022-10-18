@@ -94,8 +94,6 @@ struct BadgeView: View {
                 ScrollView{
                     VStack{
                         
-                        
-                        
                         Button(action: {
                             showGame = true
                         }, label: {
@@ -391,7 +389,7 @@ struct BadgeView: View {
                         }
                         
                     }
-                    .padding(.all)
+                    .padding(.top, 20.0)
                     .padding(.bottom, 40.0)
                     
                     Spacer()
