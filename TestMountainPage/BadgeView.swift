@@ -94,7 +94,7 @@ struct BadgeView: View {
                 ScrollView{
                     VStack{
                         
-                        Spacer()
+                        
                         
                         Button(action: {
                             showGame = true
@@ -112,6 +112,7 @@ struct BadgeView: View {
                             .font(.largeTitle)
                             .fontWeight(.heavy)
                             .foregroundColor(Color(red: 200/255, green: 135/255, blue: 35/255))
+                        
                         
                         //percent weight loss category
                         VStack{
@@ -391,7 +392,6 @@ struct BadgeView: View {
                         
                     }
                     .padding(.all)
-                    .padding(.vertical, 30.0)
                     .padding(.bottom, 40.0)
                     
                     Spacer()
