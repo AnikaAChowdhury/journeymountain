@@ -39,6 +39,19 @@ func getDayNumber() -> Int{
     return (Int(calendarDate.day ?? 1))
 }
 
+func getStarRotation(stepNumber:Int) -> Double{
+    let starVersion = ((stepNumber+1) % 3) + 1
+    var starRotation = 0.0
+    if (starVersion == 1){
+        starRotation = -10.0
+    }else if (starVersion == 2){
+        starRotation = 0.0
+    }else{
+        starRotation = 10.0
+    }
+    return starRotation
+}
+
 func makeStep(starMaker:Int, stepNumber:Int, completedSteps:Int, screenWidth:CGFloat, screenHeight:CGFloat, stepSize:Double) -> some View{
     
     let x1 = locations[stepNumber][0]
@@ -57,10 +70,12 @@ func makeStep(starMaker:Int, stepNumber:Int, completedSteps:Int, screenWidth:CGF
     }
     
     if(completedSteps > 12-1 && stepNumber <= starMaker){
-        let starVersion = ((stepNumber+1) % 3) + 1
-        let starStep = Image(completedName + "StarStep_1_" + String(starVersion))
+        let starRotation = getStarRotation(stepNumber: stepNumber)
+        
+        let starStep = Image(completedName + "StarStep_1")
                     .resizable()
                     .scaledToFit()
+                    .rotationEffect(Angle(degrees: starRotation), anchor: .center)
                     .frame(width: screenWidth * stepSize)
                     .position(x: 0 + (x1)*(screenWidth),y: screenHeight - (y1)*screenHeight)
                     .opacity(visible)
@@ -70,6 +85,7 @@ func makeStep(starMaker:Int, stepNumber:Int, completedSteps:Int, screenWidth:CGF
     let step = Image(completedName + "Step_1")
                 .resizable()
                 .scaledToFit()
+                .rotationEffect(Angle(degrees: 0))
                 .frame(width: screenWidth * stepSize)
                 .position(x: 0 + (x1)*(screenWidth),y: screenHeight - (y1)*screenHeight)
                 .opacity(visible)
