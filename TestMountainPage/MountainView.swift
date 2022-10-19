@@ -321,7 +321,6 @@ struct MountainView: View {
                         CharacterView(characterPosition: $tempCharacterPosition)
                             .opacity(100.0)
                         
-                        
                         GIFView("confetti1")
                             .scaleEffect(x: 2.0, y: 2.0, anchor: UnitPoint(x: 0.0, y: 0.0))
                             .position(x: screenWidth/2, y:screenHeight/2 - (0.1)*screenHeight)
