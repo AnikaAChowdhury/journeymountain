@@ -36,7 +36,6 @@ struct BadgeView: View {
     @State private var lost15PC = false
     
     //pull from mountainview val
-    @State var streak = 120
     @State private var oneDStr = false
     @State private var threeDStr = false
     @State private var oneWStr = false
@@ -45,6 +44,17 @@ struct BadgeView: View {
     @State private var sixMStr = false
     @State private var nineMStr = false
     @State private var oneYStr = false
+    
+    //dates badge earned
+    @State var oneDStrDate:Date = UserDefaults.standard.object(forKey: "oneDStrDate") != nil ? UserDefaults.standard.object(forKey: "oneDStrDate") as! Date : Date()
+    @State var threeDStrDate:Date = UserDefaults.standard.object(forKey: "threeDStrDate") != nil ? UserDefaults.standard.object(forKey: "threeDStrDate") as! Date : Date()
+    @State var oneWStrDate:Date = UserDefaults.standard.object(forKey: "oneWStrDate") != nil ? UserDefaults.standard.object(forKey: "oneWStrDate") as! Date : Date()
+    @State var oneMStrDate:Date = UserDefaults.standard.object(forKey: "oneMStrDate") != nil ? UserDefaults.standard.object(forKey: "oneMStrDate") as! Date : Date()
+    @State var threeMStrDate:Date = UserDefaults.standard.object(forKey: "threeMStrDate") != nil ? UserDefaults.standard.object(forKey: "threeMStrDate") as! Date : Date()
+    @State var sixMStrDate:Date = UserDefaults.standard.object(forKey: "sixMStrDate") != nil ? UserDefaults.standard.object(forKey: "sixMStrDate") as! Date : Date()
+    @State var nineMStrDate:Date = UserDefaults.standard.object(forKey: "nineMStrDate") != nil ? UserDefaults.standard.object(forKey: "nineMStrDate") as! Date : Date()
+    @State var oneYStrDate:Date = UserDefaults.standard.object(forKey: "oneYStrDate") != nil ? UserDefaults.standard.object(forKey: "oneYStrDate") as! Date : Date()
+    
     
     @State private var showGame = false
     
@@ -69,6 +79,7 @@ struct BadgeView: View {
     func countStreak() {
         if userStreak >= 1 {
             oneDStr = true
+            //store date badge earned
         }
     
         if userStreak >= 3 {
