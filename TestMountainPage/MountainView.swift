@@ -21,7 +21,6 @@ struct MountainView: View {
     @State var day:Int = UserDefaults.standard.integer(forKey: "day") != nil ? UserDefaults.standard.integer(forKey: "day") : 0
     @State var confettiVisible:Double = 0.0
     @State private var showGame = true
-    @State private var incrementStreak = true
     @State var userStreak:Int = UserDefaults.standard.integer(forKey: "userStreak") != nil ? UserDefaults.standard.integer(forKey: "userStreak") : 1
     @State var startStreak:Date = UserDefaults.standard.object(forKey: "startStreak") != nil ? UserDefaults.standard.object(forKey: "startStreak") as! Date : Date()
     @State var endStreak:Date = UserDefaults.standard.object(forKey: "endStreak") != nil ? UserDefaults.standard.object(forKey: "endStreak") as! Date : Date()
@@ -420,7 +419,7 @@ struct MountainView: View {
             .background(Color(UIColor(red: 0.606, green: 0.898, blue: 0.962, alpha: 1).cgColor))
         }
         else{
-            BadgeView()
+            BadgeView(userStreak: self.$userStreak)
         }
     }
 }
