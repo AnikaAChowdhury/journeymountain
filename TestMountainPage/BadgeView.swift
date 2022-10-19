@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct BadgeView: View {
+    @Binding var userStreak:Int
     
     @State private var showAlertPC = false
     @State private var showAlert5PC = false
@@ -16,6 +17,8 @@ struct BadgeView: View {
     @State private var showAlert12_5PC = false
     @State private var showAlert15PC = false
     @State private var showAlertStr = false
+    @State private var showAlert1DStr = false
+    @State private var showAlert3DStr = false
     @State private var showAlert1WStr = false
     @State private var showAlert1MStr = false
     @State private var showAlert3MStr = false
@@ -32,13 +35,26 @@ struct BadgeView: View {
     @State private var lost12_5PC = false
     @State private var lost15PC = false
     
-    @State var streak = 120
+    //pull from mountainview val
+    @State private var oneDStr = false
+    @State private var threeDStr = false
     @State private var oneWStr = false
     @State private var oneMStr = false
     @State private var threeMStr = false
     @State private var sixMStr = false
     @State private var nineMStr = false
     @State private var oneYStr = false
+    
+    //dates badge earned
+    @State var oneDStrDate:Date = UserDefaults.standard.object(forKey: "oneDStrDate") != nil ? UserDefaults.standard.object(forKey: "oneDStrDate") as! Date : Date()
+    @State var threeDStrDate:Date = UserDefaults.standard.object(forKey: "threeDStrDate") != nil ? UserDefaults.standard.object(forKey: "threeDStrDate") as! Date : Date()
+    @State var oneWStrDate:Date = UserDefaults.standard.object(forKey: "oneWStrDate") != nil ? UserDefaults.standard.object(forKey: "oneWStrDate") as! Date : Date()
+    @State var oneMStrDate:Date = UserDefaults.standard.object(forKey: "oneMStrDate") != nil ? UserDefaults.standard.object(forKey: "oneMStrDate") as! Date : Date()
+    @State var threeMStrDate:Date = UserDefaults.standard.object(forKey: "threeMStrDate") != nil ? UserDefaults.standard.object(forKey: "threeMStrDate") as! Date : Date()
+    @State var sixMStrDate:Date = UserDefaults.standard.object(forKey: "sixMStrDate") != nil ? UserDefaults.standard.object(forKey: "sixMStrDate") as! Date : Date()
+    @State var nineMStrDate:Date = UserDefaults.standard.object(forKey: "nineMStrDate") != nil ? UserDefaults.standard.object(forKey: "nineMStrDate") as! Date : Date()
+    @State var oneYStrDate:Date = UserDefaults.standard.object(forKey: "oneYStrDate") != nil ? UserDefaults.standard.object(forKey: "oneYStrDate") as! Date : Date()
+    
     
     @State private var showGame = false
     
@@ -61,22 +77,30 @@ struct BadgeView: View {
     }
     
     func countStreak() {
-        if streak >= 7 {
+        if userStreak >= 1 {
+            oneDStr = true
+            //store date badge earned
+        }
+    
+        if userStreak >= 3 {
+            threeDStr = true
+        }
+        if userStreak >= 7 {
             oneWStr = true
         }
-        if streak >= 30 {
+        if userStreak >= 30 {
             oneMStr = true
         }
-        if streak >= 90 {
+        if userStreak >= 90 {
             threeMStr = true
         }
-        if streak > 180 {
+        if userStreak > 180 {
             sixMStr = true
         }
-        if streak > 270 {
+        if userStreak > 270 {
             nineMStr = true
         }
-        if streak > 365 {
+        if userStreak > 365 {
             oneYStr = true;
         }
     }
@@ -112,7 +136,6 @@ struct BadgeView: View {
                         
                         //percent weight loss category
                         VStack{
-                            
                             
                             HStack{
                                 
@@ -154,6 +177,9 @@ struct BadgeView: View {
                                     Image("badge-empty")
                                 }
                                 
+                            }
+                            
+                            HStack{
                                 if(lost10PC) {
                                     Button(action: {
                                         showAlert10PC = true
@@ -172,10 +198,6 @@ struct BadgeView: View {
                                 else {
                                     Image("badge-empty")
                                 }
-                                
-                            }
-                            
-                            HStack{
                                 
                                 if(lost12_5PC) {
                                     Button(action: {
@@ -244,7 +266,51 @@ struct BadgeView: View {
                         
                         //daily streak
                         VStack{
+                            
                             HStack{
+                                
+                                if(oneDStr) {
+                                    Button(action: {
+                                        showAlert1DStr = true
+                                    }, label: {
+                                        Image("1day")
+                                    })
+                                    .buttonStyle(.plain)
+                                    .alert(isPresented: $showAlert1DStr) {
+                                        Alert(
+                                            title: Text("1 Week Streak"),
+                                            message: Text("This badge was earned on \n DD/MM/YYYY \n from logging your progress into the app for 1 day."),
+                                            dismissButton: .cancel(Text("Close"))
+                                        )
+                                    }
+                                }
+                                else {
+                                    Image("badge-empty")
+                                }
+                                
+                                
+                                if(threeDStr) {
+                                    Button(action: {
+                                        showAlert3DStr = true
+                                    }, label: {
+                                        Image("3day")
+                                    })
+                                    .buttonStyle(.plain)
+                                    .alert(isPresented: $showAlert3DStr) {
+                                        Alert(
+                                            title: Text("1 Week Streak"),
+                                            message: Text("This badge was earned on \n DD/MM/YYYY \n from logging your progress into the app for 3 days straight."),
+                                            dismissButton: .cancel(Text("Close"))
+                                        )
+                                    }
+                                }
+                                else {
+                                    Image("badge-empty")
+                                }
+                            }
+                            
+                            HStack{
+                            
                                 if(oneWStr) {
                                     Button(action: {
                                         showAlert1WStr = true
@@ -407,7 +473,7 @@ struct BadgeView: View {
     
     struct BadgeView_Previews: PreviewProvider {
         static var previews: some View {
-            BadgeView()
+            BadgeView(userStreak: .constant(1))
         }
     }
     

@@ -21,7 +21,7 @@ struct MountainView: View {
     @State var day:Int = UserDefaults.standard.integer(forKey: "day") != nil ? UserDefaults.standard.integer(forKey: "day") : 0
     @State var confettiVisible:Double = 0.0
     @State private var showGame = true
-    @State var userStreak:Int = UserDefaults.standard.integer(forKey: "userStreak") != nil ? UserDefaults.standard.integer(forKey: "userStreak") : 0
+    @State var userStreak:Int = UserDefaults.standard.integer(forKey: "userStreak") != nil ? UserDefaults.standard.integer(forKey: "userStreak") : 1
     @State var startStreak:Date = UserDefaults.standard.object(forKey: "startStreak") != nil ? UserDefaults.standard.object(forKey: "startStreak") as! Date : Date()
     @State var endStreak:Date = UserDefaults.standard.object(forKey: "endStreak") != nil ? UserDefaults.standard.object(forKey: "endStreak") as! Date : Date()
 
@@ -104,6 +104,7 @@ struct MountainView: View {
         UserDefaults.standard.set(todaysExercise, forKey: "todaysExercise")
         UserDefaults.standard.set(todaysProgress, forKey: "todaysProgress")
         
+        print("Streak: \(getStreak())")
     }
     
     func resetMonth(){
@@ -221,16 +222,25 @@ struct MountainView: View {
     
     func getStreak() -> Int {
         let calendar = Calendar.current
+        var start = calendar.startOfDay(for: startStreak)
+        var end = calendar.startOfDay(for: endStreak)
+        let today = calendar.startOfDay(for: Date())
+        let gap = calendar.dateComponents([.day], from: end, to: today).day!
+        let streak:Int
         
-        let gap = calendar.dateComponents([.day], from: endStreak, to: Date()).day!
         
         // if missed a day, restart the streak
-        if gap > 1 {
+        if gap >= 2 {
             startStreak = UserDefaults.standard.object(forKey: "startStreak") != nil ? UserDefaults.standard.object(forKey: "startStreak") as! Date : Date()
-            endStreak = UserDefaults.standard.object(forKey: "endStreak") != nil ? UserDefaults.standard.object(forKey: "endStreak") as! Date : Date()
+            start = calendar.startOfDay(for: startStreak)
         }
         
-        userStreak = calendar.dateComponents([.day], from: startStreak, to: endStreak).day! + 1
+        endStreak = UserDefaults.standard.object(forKey: "endStreak") != nil ? UserDefaults.standard.object(forKey: "endStreak") as! Date : Date()
+        end = calendar.startOfDay(for: endStreak)
+        
+        streak = calendar.dateComponents([.day], from: start, to: end).day! + 1
+        UserDefaults.standard.set(streak, forKey: "userStreak")
+        userStreak = streak
         
         return userStreak
     }
@@ -408,7 +418,7 @@ struct MountainView: View {
             .background(Color(UIColor(red: 0.606, green: 0.898, blue: 0.962, alpha: 1).cgColor))
         }
         else{
-            BadgeView()
+            BadgeView(userStreak: self.$userStreak)
         }
     }
 }
