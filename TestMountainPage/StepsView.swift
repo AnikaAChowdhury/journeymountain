@@ -89,9 +89,9 @@ struct StepsView: View {
         let stepSize:Double = 0.053
 
         return Group{
-                    ForEach(0..<155) { i in
-                        makeStep(starMaker: starMaker, stepNumber: i, completedSteps: completedSteps, screenWidth: screenWidth, screenHeight: screenHeight, stepSize:stepSize)
-                    }
+            ForEach(0..<155) { i in
+                makeStep(starMaker: starMaker, stepNumber: i, completedSteps: completedSteps, screenWidth: screenWidth, screenHeight: screenHeight, stepSize:stepSize)
+            }
         }
     }
 }

@@ -23,7 +23,7 @@ struct CloudView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: screenWidth * 0.45)
-                    .position(x: cloud1X ,y: 0 + (0.05)*(screenHeight) )
+                    .position(x: cloud1X ,y: 0 + (0.05)*(screenHeight))
                     .opacity(100.0)
                     .animation(Animation.linear(duration: 150.0).repeatForever(autoreverses: true).speed(1.0), value: cloud1X)
                     .onAppear {
