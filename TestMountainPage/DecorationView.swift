@@ -58,7 +58,7 @@ struct DecorationView: View {
                     .position(x: 0 + (x1)*(screenWidth),y: screenHeight - (y1)*screenHeight)
                     .animation(Animation.linear(duration: Double(Int.random(in: 2..<4))).repeatForever(autoreverses: true).speed(1.0), value: inner_big_rotation)
                     .onAppear {
-                        let rotation = Int.random(in: 2..<5)
+                        let rotation = Int.random(in: 5..<9)
                         if (inner_big_rotation < 0){
                             inner_big_rotation = rotation
                         }else{
@@ -81,7 +81,7 @@ struct DecorationView: View {
                 .position(x: 0 + (x1)*(screenWidth),y: screenHeight - (y1)*screenHeight)
                 .animation(Animation.linear(duration: Double(Int.random(in: 2..<4))).repeatForever(autoreverses: true).speed(1.0), value: outer_big_rotation)
                 .onAppear {
-                    let rotation = Int.random(in: 2..<5)
+                    let rotation = Int.random(in: 5..<9)
                     if (outer_big_rotation < 0){
                         outer_big_rotation = rotation
                     }else{
