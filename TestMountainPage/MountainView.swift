@@ -105,8 +105,6 @@ struct MountainView: View {
         UserDefaults.standard.set(todaysExercise, forKey: "todaysExercise")
         UserDefaults.standard.set(todaysProgress, forKey: "todaysProgress")
         
-        print("endStreak: \(endStreak)")
-        print("today's Date: \(Date())")
         print("Streak: \(getStreak())")
     }
     
@@ -230,10 +228,10 @@ struct MountainView: View {
         let today = calendar.startOfDay(for: Date())
         let gap = calendar.dateComponents([.day], from: end, to: today).day!
         let streak:Int
-        print("gap \(gap)")
+        
         
         // if missed a day, restart the streak
-        if gap > 2 {
+        if gap >= 2 {
             startStreak = UserDefaults.standard.object(forKey: "startStreak") != nil ? UserDefaults.standard.object(forKey: "startStreak") as! Date : Date()
             start = calendar.startOfDay(for: startStreak)
         }
@@ -241,12 +239,9 @@ struct MountainView: View {
         endStreak = UserDefaults.standard.object(forKey: "endStreak") != nil ? UserDefaults.standard.object(forKey: "endStreak") as! Date : Date()
         end = calendar.startOfDay(for: endStreak)
         
-        if incrementStreak {
-            streak = calendar.dateComponents([.day], from: start, to: end).day! + 1
-            UserDefaults.standard.set(streak, forKey: "userStreak")
-            userStreak = streak
-            incrementStreak = false
-        }
+        streak = calendar.dateComponents([.day], from: start, to: end).day! + 1
+        UserDefaults.standard.set(streak, forKey: "userStreak")
+        userStreak = streak
         
         return userStreak
     }
