@@ -32,6 +32,7 @@ struct BadgeView: View {
     @State private var lost12_5PC = false
     @State private var lost15PC = false
     
+    //pull from mountainview val
     @State var streak = 120
     @State private var oneWStr = false
     @State private var oneMStr = false
