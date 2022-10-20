@@ -29,11 +29,6 @@ struct BadgeView: View {
     //change to userDefaults value
     @State var startWeight:Double = 200
     @State var currWeight:Double =  180
-    @State private var lost5PC = false
-    @State private var lost7_5PC = false
-    @State private var lost10PC = false
-    @State private var lost12_5PC = false
-    @State private var lost15PC = false
     
     //bool is badge earned
     @State var has5PC:Bool = UserDefaults.standard.bool(forKey: "has5PC") != nil ? UserDefaults.standard.bool(forKey: "has5PC") : false
@@ -73,21 +68,55 @@ struct BadgeView: View {
     @State private var showGame = false
     
     func loss() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        var date:String
+        
         if currWeight <= startWeight*0.95 {
-            lost5PC = true
-            //store date badge earned
+            if(!has5PC) {
+                date = dateFormatter.string(from: Date())
+                UserDefaults.standard.set(date, forKey: "fivePCDate")
+                fivePCDate = date
+            }
+            has5PC = true
+            UserDefaults.standard.set(true, forKey: "has5PC")
         }
         if currWeight <= startWeight*0.925 {
-            lost7_5PC = true
+            if(!has7_5PC) {
+                date = dateFormatter.string(from: Date())
+                UserDefaults.standard.set(date, forKey: "seven_fivePCDate")
+                seven_fivePCDate = date
+            }
+            has7_5PC = true
+            UserDefaults.standard.set(true, forKey: "has7_5PC")
         }
         if currWeight <= startWeight*0.9 {
-            lost10PC = true
+            if(!has10PC) {
+                date = dateFormatter.string(from: Date())
+                UserDefaults.standard.set(date, forKey: "tenPCDate")
+                tenPCDate = date
+            }
+            has10PC = true
+            UserDefaults.standard.set(true, forKey: "has10PC")
         }
         if currWeight <= startWeight*0.875 {
-            lost12_5PC = true
+            if(!has12_5PC) {
+                date = dateFormatter.string(from: Date())
+                UserDefaults.standard.set(date, forKey: "twelve_fivePCDate")
+                twelve_fivePCDate = date
+            }
+            has12_5PC = true
+            UserDefaults.standard.set(true, forKey: "has12_5PC")
         }
         if currWeight <= startWeight*0.85 {
-            lost15PC = true
+            if(!has15PC) {
+                date = dateFormatter.string(from: Date())
+                UserDefaults.standard.set(date, forKey: "fifteenPCDate")
+                fifteenPCDate = date
+            }
+            has15PC = true
+            UserDefaults.standard.set(true, forKey: "has15PC")
         }
     }
     
@@ -206,7 +235,7 @@ struct BadgeView: View {
                             
                             HStack{
                                 
-                                if(lost5PC) {
+                                if(has5PC) {
                                     Button(action: {
                                         showAlert5PC = true
                                     }, label: {
@@ -216,7 +245,7 @@ struct BadgeView: View {
                                     .alert(isPresented: $showAlert5PC) {
                                         Alert(
                                             title: Text("5% Weight Loss"),
-                                            message: Text("This badge was earned on \n DD/MM/YYYY \n from losing 5% of your initial body weight."),
+                                            message: Text("This badge was earned on \n \(fivePCDate) \n from losing 5% of your initial body weight."),
                                             dismissButton: .cancel(Text("Close"))
                                         )
                                     }
@@ -225,7 +254,7 @@ struct BadgeView: View {
                                     Image("badge-empty")
                                 }
                                 
-                                if(lost7_5PC) {
+                                if(has7_5PC) {
                                     Button(action: {
                                         showAlert7_5PC = true
                                     }, label: {
@@ -235,7 +264,7 @@ struct BadgeView: View {
                                     .alert(isPresented: $showAlert7_5PC) {
                                         Alert(
                                             title: Text("7.5% Weight Loss"),
-                                            message: Text("This badge was earned on \n DD/MM/YYYY \n from losing 7.5% of your initial body weight."),
+                                            message: Text("This badge was earned on \n \(seven_fivePCDate) \n from losing 7.5% of your initial body weight."),
                                             dismissButton: .cancel(Text("Close"))
                                         )
                                     }
@@ -247,7 +276,7 @@ struct BadgeView: View {
                             }
                             
                             HStack{
-                                if(lost10PC) {
+                                if(has10PC) {
                                     Button(action: {
                                         showAlert10PC = true
                                     }, label: {
@@ -257,7 +286,7 @@ struct BadgeView: View {
                                     .alert(isPresented: $showAlert10PC) {
                                         Alert(
                                             title: Text("10% Weight Loss"),
-                                            message: Text("This badge was earned on \n DD/MM/YYYY \n from losing 10% of your initial body weight."),
+                                            message: Text("This badge was earned on \n \(tenPCDate) \n from losing 10% of your initial body weight."),
                                             dismissButton: .cancel(Text("Close"))
                                         )
                                     }
@@ -266,7 +295,7 @@ struct BadgeView: View {
                                     Image("badge-empty")
                                 }
                                 
-                                if(lost12_5PC) {
+                                if(has12_5PC) {
                                     Button(action: {
                                         showAlert12_5PC = true
                                     }, label: {
@@ -276,7 +305,7 @@ struct BadgeView: View {
                                     .alert(isPresented: $showAlert12_5PC) {
                                         Alert(
                                             title: Text("12.5% Weight Loss"),
-                                            message: Text("This badge was earned on \n DD/MM/YYYY \n from losing 12.5% of your initial body weight."),
+                                            message: Text("This badge was earned on \n \(twelve_fivePCDate) \n from losing 12.5% of your initial body weight."),
                                             dismissButton: .cancel(Text("Close"))
                                         )
                                     }
@@ -285,7 +314,7 @@ struct BadgeView: View {
                                     Image("badge-empty")
                                 }
                                 
-                                if(lost15PC) {
+                                if(has15PC) {
                                     Button(action: {
                                         showAlert15PC = true
                                     }, label: {
@@ -295,7 +324,7 @@ struct BadgeView: View {
                                     .alert(isPresented: $showAlert12_5PC) {
                                         Alert(
                                             title: Text("15% Weight Loss"),
-                                            message: Text("This badge was earned on \n DD/MM/YYYY \n from losing 15% of your initial body weight."),
+                                            message: Text("This badge was earned on \n \(fifteenPCDate) \n from losing 15% of your initial body weight."),
                                             dismissButton: .cancel(Text("Close"))
                                         )
                                     }
