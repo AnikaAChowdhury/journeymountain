@@ -18,6 +18,7 @@ struct MountainView: View {
     @State var todaysProgress:Int = UserDefaults.standard.integer(forKey: "todaysProgress") != nil ? UserDefaults.standard.integer(forKey: "todaysProgress") : 0
     @State var todaysExercise:Bool = UserDefaults.standard.bool(forKey: "todaysExercise") != nil ? UserDefaults.standard.bool(forKey: "todaysExercise") : false
     @State var todaysSteps:Int = UserDefaults.standard.integer(forKey: "todaysSteps") != nil ? UserDefaults.standard.integer(forKey: "todaysSteps") : 0
+    @State var prevTodaysSteps:Int = UserDefaults.standard.integer(forKey: "prevTodaysSteps") != nil ? UserDefaults.standard.integer(forKey: "prevTodaysSteps") : 0
     @State var day:Int = UserDefaults.standard.integer(forKey: "day") != nil ? UserDefaults.standard.integer(forKey: "day") : 0
     @State var confettiVisible:Double = 0.0
     @State private var showGame = true
@@ -36,6 +37,7 @@ struct MountainView: View {
             tempCharacterPosition = getStartIndex()
             UserDefaults.standard.set(tempCharacterPosition, forKey: "tempCharacterPosition")
         }
+        
         let amountToMove = todaysSteps
         if(tempCharacterPosition + amountToMove <= 154){
             tempCharacterPosition = characterPosition + amountToMove
@@ -67,6 +69,9 @@ struct MountainView: View {
     }
     
     func calculateSteps(){
+        // set previous steps to know if we made progress or regressed
+        prevTodaysSteps = todaysSteps
+        
         // calculate progress
         if(todaysProgress < 50){
             todaysSteps = 0
@@ -84,6 +89,7 @@ struct MountainView: View {
             todaysSteps += 1
         }
         UserDefaults.standard.set(todaysSteps, forKey: "todaysSteps")
+        UserDefaults.standard.set(prevTodaysSteps, forKey: "prevTodaysSteps")
         
         moveCharacter()
     }
@@ -97,10 +103,12 @@ struct MountainView: View {
     func submitDay(){
         characterPosition = tempCharacterPosition
         todaysSteps = 0
+        prevTodaysSteps = 0
         todaysExercise = false
         todaysProgress = 0
         UserDefaults.standard.set(characterPosition, forKey: "characterPosition")
         UserDefaults.standard.set(todaysSteps, forKey: "todaysSteps")
+        UserDefaults.standard.set(prevTodaysSteps, forKey: "prevTodaysSteps")
         UserDefaults.standard.set(todaysExercise, forKey: "todaysExercise")
         UserDefaults.standard.set(todaysProgress, forKey: "todaysProgress")
         
@@ -111,6 +119,7 @@ struct MountainView: View {
         characterPosition = getStartIndex()
         tempCharacterPosition = getStartIndex()
         todaysSteps = 0
+        prevTodaysSteps = 0
         todaysExercise = false
         todaysProgress = 0
         starMaker = 0
@@ -118,6 +127,7 @@ struct MountainView: View {
         UserDefaults.standard.set(characterPosition, forKey: "characterPosition")
         UserDefaults.standard.set(tempCharacterPosition, forKey: "tempCharacterPosition")
         UserDefaults.standard.set(todaysSteps, forKey: "todaysSteps")
+        UserDefaults.standard.set(prevTodaysSteps, forKey: "prevTodaysSteps")
         UserDefaults.standard.set(todaysExercise, forKey: "todaysExercise")
         UserDefaults.standard.set(todaysProgress, forKey: "todaysProgress")
         UserDefaults.standard.set(starMaker, forKey: "starMaker")
@@ -359,7 +369,9 @@ struct MountainView: View {
                             .position(x: screenWidth/2, y:screenHeight/2 - (0.1)*screenHeight)
                             .opacity(confettiVisible)
                             .onChange(of: tempCharacterPosition){ newValue in
-                                showConfetti()
+                                if(todaysSteps >= prevTodaysSteps){
+                                    showConfetti()
+                                }
                             }
                         
                         Button(action: {

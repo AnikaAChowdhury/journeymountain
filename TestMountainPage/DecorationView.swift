@@ -8,16 +8,19 @@
 import SwiftUI
 
 let outer_small_locations: [[Double]] = [
-    [0.091, 0.217], [0.151, 0.217],
-    [0.214, 0.215], [0.278, 0.215],
-    [0.34, 0.214], [0.4, 0.214],
-    [0.46, 0.2135], [0.523, 0.214]]
+    [0.26, 0.59],
+    [0.84, 0.54],
+    [0.86, 0.455],
+    [0.08, 0.34]]
 
 let inner_small_locations: [[Double]] = [
-    [0.091, 0.217], [0.151, 0.217],
-    [0.214, 0.215], [0.278, 0.215],
-    [0.34, 0.214], [0.4, 0.214],
-    [0.46, 0.2135], [0.523, 0.214]]
+    [0.34, 0.717],
+    [0.67, 0.684],
+    [0.18, 0.335],
+    [0.77, 0.45],
+    [0.967, 0.32],
+    [0.80, 0.28]]
+
 
 let outer_big_locations: [[Double]] = [
     [0.26, 0.64],
@@ -42,8 +45,6 @@ struct DecorationView: View {
     
     @State var inner_big_rotation:Int = 3
     @State var outer_big_rotation:Int = 3
-    @State var inner_small_rotation:Int = 0
-    @State var outer_small_rotation:Int = 0
 
     func makeInnerBigDecoration(decorationNumber:Int, screenWidth:CGFloat, screenHeight:CGFloat, imageName:String, imageSize:Double) -> some View{
         
@@ -58,7 +59,7 @@ struct DecorationView: View {
                     .position(x: 0 + (x1)*(screenWidth),y: screenHeight - (y1)*screenHeight)
                     .animation(Animation.linear(duration: Double(Int.random(in: 2..<4))).repeatForever(autoreverses: true).speed(1.0), value: inner_big_rotation)
                     .onAppear {
-                        let rotation = Int.random(in: 5..<9)
+                        let rotation = Int.random(in: 5..<10)
                         if (inner_big_rotation < 0){
                             inner_big_rotation = rotation
                         }else{
@@ -81,13 +82,39 @@ struct DecorationView: View {
                 .position(x: 0 + (x1)*(screenWidth),y: screenHeight - (y1)*screenHeight)
                 .animation(Animation.linear(duration: Double(Int.random(in: 2..<4))).repeatForever(autoreverses: true).speed(1.0), value: outer_big_rotation)
                 .onAppear {
-                    let rotation = Int.random(in: 5..<9)
+                    let rotation = Int.random(in: 5..<10)
                     if (outer_big_rotation < 0){
                         outer_big_rotation = rotation
                     }else{
                         outer_big_rotation = rotation * -1
                     }
                 }
+        return d
+    }
+    
+    func makeOuterSmallDecoration(decorationNumber:Int, screenWidth:CGFloat, screenHeight:CGFloat, imageName:String, imageSize:Double) -> some View{
+        
+        let x1 = outer_small_locations[decorationNumber][0]
+        let y1 = outer_small_locations[decorationNumber][1]
+
+        let d = Image(imageName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: screenWidth * (imageSize))
+                .position(x: 0 + (x1)*(screenWidth),y: screenHeight - (y1)*screenHeight)
+        return d
+    }
+    
+    func makeInnerSmallDecoration(decorationNumber:Int, screenWidth:CGFloat, screenHeight:CGFloat, imageName:String, imageSize:Double) -> some View{
+        
+        let x1 = inner_small_locations[decorationNumber][0]
+        let y1 = inner_small_locations[decorationNumber][1]
+
+        let d = Image(imageName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: screenWidth * (imageSize))
+                .position(x: 0 + (x1)*(screenWidth),y: screenHeight - (y1)*screenHeight)
         return d
     }
     
@@ -106,6 +133,14 @@ struct DecorationView: View {
 //                .position(x: screenWidth/2 ,y: screenHeight/2 - (0.026)*(screenHeight) )
 //                .opacity(100.0)
             
+            ForEach(0..<outer_small_locations.count) { i in
+                makeOuterSmallDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight, imageName: "rock_1", imageSize: 0.1)
+            }
+            
+            ForEach(0..<inner_small_locations.count) { i in
+                makeInnerSmallDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight, imageName: "rock_small_1", imageSize: 0.08)
+            }
+            
             ForEach(0..<outer_big_locations.count) { i in
                 makeOuterBigDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight, imageName: imageName, imageSize: imageSize)
                     .opacity(100.0)
@@ -114,12 +149,6 @@ struct DecorationView: View {
                 makeInnerBigDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight, imageName: imageName, imageSize: imageSize)
                     .opacity(100.0)
             }
-//            ForEach(0..<outer_small_locations.count) { i in
-//                makeOuterSmallDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight)
-//            }
-//            ForEach(0..<innere_small_locations.count) { i in
-//                makeInnerSmallDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight)
-//            }
         }
         
     }
