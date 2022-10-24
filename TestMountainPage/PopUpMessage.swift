@@ -7,97 +7,129 @@
 
 
 
-//
-
-
 import SwiftUI
 
+struct TextFieldClearButton: ViewModifier {
+    @Binding var fieldText: String
 
-
-struct FoodChoicesPercent: Identifiable {
-    var id: String { motivationalQuote}
-    
-    
-    let motivationalQuote: String
-    
-}
-struct BlueButton: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .padding()
-            .background(Color(red: 0, green: 0, blue: 0.5))
-            .foregroundColor(.white)
-            .clipShape(Capsule())
+    func body(content: Content) -> some View {
+        content
+            .overlay {
+                if !fieldText.isEmpty {
+                    HStack {
+                        Spacer()
+                        Button {
+                            fieldText = ""
+                        } label: {
+                            Image(systemName: "multiply.circle.fill")
+                       }
+                        .foregroundColor(.secondary)
+                        .padding(.trailing, 4)
+                    }
+                }
+            }
     }
 }
 
+extension View {
+    func showClearButton(_ text: Binding<String>)->some View {
+        self.modifier(TextFieldClearButton(fieldText: text))
+    }
+}
 
 
 struct PopUpMessage: View {
+    @Binding var progressPercent:Int
+    @State private var showPopUpMessage = false
+    @State var randomInt = Int.random(in: 1..<5)
+    
+    @State private var msgs = ""
+    @State private var fiftyPercent = false
+    @State private var SixtyPercent = false
+    @State private var SeventyPercent = false
     
     
-
-    @State private var showingPopUpMessage = false
-    @State private var msg = ""
-    @State private var todaysProgress: FoodChoicesPercent?
     
-    var body: some View {
+    func messageCalc()
+    {
+        if(progressPercent < 50)
+        {
+            fiftyPercent = true
+            
+            randomInt = Int.random(in: 1..<9)
+            
+            if(randomInt == 1)
+            {
+                msgs = "You can make better choices"
+            }
+            else if(randomInt == 2)
+            {
+                msgs = "Tomorrow is a new day and a chance to make a better choice!"
+            }
+            
+            else if(randomInt == 3)
+            {
+                msgs = "What cancer fighting colors did you miss today?"
+                
+            }
+            else if(randomInt == 4)
+            {
+                msgs = "Start planning your next meal and plan to include 2 vegetables."
+                
+            }
+            else
+            {
+                msgs = "Preplan next time."
+                
+            }
+            
+            
+        }
+        if(progressPercent >= 70){
+            
+            
+  
+            msgs = "Great food choices! These are promoting healthy, vibrant life!"
+            
+        }
+        if(progressPercent <= 60 && progressPercent >= 50){
+           
+            
+            msgs = "Think about how your energy levels are improving as you eat more anti-inflammatory foods"
+            
+            
+            
+        }
+        UserDefaults.standard.set(progressPercent, forKey: "progressPercent")    }
+    @FocusState private var isTextFieldFocused: Bool
+    var body: some View
+    {
+    
         
-        VStack(spacing: 20) {
-            Text("Behavioral Prompts")
-                .padding()
-                .background(.yellow)
-                .font(.headline)
-            
-            Button(">=60%")
-            {
-                msg = "Great Choice!"
-                todaysProgress = FoodChoicesPercent(motivationalQuote:"You achieved >=60% from Blue Zone.Think about how your energy levels are improving as you eat more anti-inflammatory foods")
-            }
-            .buttonStyle(BlueButton())
-            
-            Button("<=50%")
-            {
-                msg = "You can do it!"
-                todaysProgress = FoodChoicesPercent(motivationalQuote:"You achieved <=50% from Blue Zone.Tomorrow is a new day and a chance to make a better choice")
-            }
-            .buttonStyle(BlueButton())
-            
-            Button(">=70%")
-            {
-                msg = "Excellent!"
-                todaysProgress = FoodChoicesPercent(motivationalQuote:"You achieved >=70% from Blue Zone.Great food choices! These are promoting healthy, vibrant life!")
-            }
-            .buttonStyle(BlueButton())
-            
-            Button("Weight_Loss_of_5%")
-            {
-                msg = "Keep going!"
-                todaysProgress = FoodChoicesPercent(motivationalQuote:"Now that you're down 5% of your current weight, you're noticing a reduction in (Blood Glucose, Blood pressure, etc) and getting closer to talking with your physician about reducing your meds!")
-            }
-            .buttonStyle(BlueButton())
-            
-            Button("Weight_Loss_of_10%")
-            {
-                msg = "You are in the right path!"
-                todaysProgress = FoodChoicesPercent(motivationalQuote:"Now that you're down 10%, I bet you're noticing more ease/energy (walking dog; enjoying jogging!")
-            }
-            .buttonStyle(BlueButton())
+        VStack(spacing: 20)
+        {
+            Text(msgs)
+              .multilineTextAlignment(.leading)
+              .textFieldStyle(.roundedBorder)
+              .foregroundColor(.black)
+                             .background(Color(red: 0.5, green: 0.8, blue: 0.2))
+
+              
+              .focused($isTextFieldFocused)              .showClearButton($msgs)
+             
+        }
+        
+        .onAppear{messageCalc()}
+        .padding(0.4)
+                                    
+                              
+    } 
+    struct PopUpMessage_Previews: PreviewProvider {
+        static var previews: some View {
+            PopUpMessage(progressPercent: .constant(2))
             
         }
         
-        .alert(item: $todaysProgress) { show in
-                    Alert(title: Text(show.motivationalQuote), message: Text(msg), dismissButton: .cancel(Text("Close")))
-                }
-        
-    
-    }
-}
-
-
-struct PopUpMessage_Previews: PreviewProvider {
-    static var previews: some View {
-        PopUpMessage()
     }
 }
 
