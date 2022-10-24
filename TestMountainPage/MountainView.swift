@@ -25,8 +25,7 @@ struct MountainView: View {
     @State var userStreak:Int = UserDefaults.standard.integer(forKey: "userStreak") != nil ? UserDefaults.standard.integer(forKey: "userStreak") : 1
     @State var startStreak:Date = UserDefaults.standard.object(forKey: "startStreak") != nil ? UserDefaults.standard.object(forKey: "startStreak") as! Date : Date()
     @State var endStreak:Date = UserDefaults.standard.object(forKey: "endStreak") != nil ? UserDefaults.standard.object(forKey: "endStreak") as! Date : Date()
-
-    
+    @State var progressPercent:Int = UserDefaults.standard.integer(forKey: "progressPercent") != nil ? UserDefaults.standard.integer(forKey: "progressPercent") : 2
     // increments position of character
     func moveCharacter(){
         if(characterPosition == -1){
@@ -101,6 +100,8 @@ struct MountainView: View {
     }
     
     func submitDay(){
+        progressPercent = todaysProgress
+        UserDefaults.standard.set(progressPercent, forKey: "progressPercent")
         characterPosition = tempCharacterPosition
         todaysSteps = 0
         prevTodaysSteps = 0
@@ -359,10 +360,16 @@ struct MountainView: View {
                             }
                             .opacity(100.0)
                         
-                        DecorationView()
+                      //for some reason if I don't comment out decoration view the pop up message does not work
+                        
+                        //DecorationView()
+                        
+                        PopUpMessage(progressPercent: $todaysProgress)
                         
                         CharacterView(characterPosition: $tempCharacterPosition)
                             .opacity(100.0)
+                        
+                       
                         
                         GIFView("confetti1")
                             .scaleEffect(x: 2.0, y: 2.0, anchor: UnitPoint(x: 0.0, y: 0.0))
@@ -373,6 +380,8 @@ struct MountainView: View {
                                     showConfetti()
                                 }
                             }
+                        
+                        
                         
                         Button(action: {
                             showGame = false
@@ -390,6 +399,8 @@ struct MountainView: View {
                     .animation(Animation.easeInOut.speed(1), value: tempCharacterPosition)
                 }
                 .position(x: screenWidth/2 ,y: screenHeight/2 - (0.11)*(screenHeight) )
+                
+                
                 VStack{
                     HStack{
                         Button("-10",action: subtract10)
@@ -410,6 +421,8 @@ struct MountainView: View {
                         makeExerciseButton()
                     }
                     HStack{
+                        
+                       
                         Button("Submit day", action: submitDay)
                             .frame(maxWidth: .infinity)
                             .padding(7)
@@ -417,7 +430,9 @@ struct MountainView: View {
                             .font(.system(size: 20, weight: Font.Weight.bold))
                             .background(Color.blue)
                             .cornerRadius(30)
-                        Button("Reset Month", action: resetMonth)
+                        
+                        
+                            Button("Reset Month", action: resetMonth)
                             .frame(maxWidth: .infinity)
                             .padding(7)
                             .foregroundColor(Color.white)
