@@ -2,148 +2,85 @@
 //  PopUpMessage.swift
 //  TestMountainPage
 //
-//  Created by Chowdhury,Anika on 10/12/22.
-//
+//  Created by Chowdhury,Anika on 10/12/22
 
-
-
-//
-
-//
 
 import SwiftUI
 
-
-
-struct TextFieldClearButton: ViewModifier {
-    @Binding var fieldText: String
-
-    func body(content: Content) -> some View {
-        content
-            .overlay {
-                if !fieldText.isEmpty {
-                    HStack {
-                        Spacer()
-                        Button {
-                            fieldText = ""
-                        } label: {
-                            Image(systemName: "multiply.circle.fill")
-                       }
-                        .foregroundColor(.secondary)
-                        .padding(.trailing, 4)
-                    }
-                }
-            }
-    }
-}
-
-extension View {
-    func showClearButton(_ text: Binding<String>)->some View {
-        self.modifier(TextFieldClearButton(fieldText: text))
-    }
-}
-
-
 struct PopUpMessage: View {
-    @Binding var progressPercent:Int
-    @State private var showPopUpMessage = false
-    @State var randomInt = Int.random(in: 1..<5)
+    @Binding var todaysProgressPercent:Int
     
-    
-   
-    @State private var msgs = ""
-    @State private var fiftyPercent = false
-    @State private var SixtyPercent = false
-    @State private var SeventyPercent = false
-    
-    
-
+    func messageCalc() -> String {
+        var message = ""
         
+        if(todaysProgressPercent < 50){
+            var randomInt = Int.random(in: 1..<9)
+            
+            switch(randomInt){
+            case 1:
+                message = "You can make better choices"
+            case 2:
+                message = "Tomorrow is a new day and a chance to make a better choice!"
+            case 3:
+                message = "What cancer fighting colors did you miss today?"
+            case 4:
+                message = "Start planning your next meal and plan to include 2 vegetables."
+            default:
+                message = "Preplan next time."
+            }
+        }else if(todaysProgressPercent >= 50 && todaysProgressPercent < 60){
+            message = "50-60% message"
+        }else if(todaysProgressPercent >= 60 && todaysProgressPercent < 70){
+            message = "Think about how your energy levels are improving as you eat more anti-inflammatory foods"
+        }else if(todaysProgressPercent >= 70 && todaysProgressPercent < 80){
+            message = "Great food choices! These are promoting healthy, vibrant life!"
+        }else{
+            message = "80%+ message"
+        }
+        return message
+    }
     
+    func getBackgroundColor() -> Color{
+        if(todaysProgressPercent < 50){
+            return Color.red
+        }else if(todaysProgressPercent >= 50 && todaysProgressPercent < 60){
+            return Color.pink
+        }else if(todaysProgressPercent >= 60 && todaysProgressPercent < 70){
+            return Color.orange
+        }else if(todaysProgressPercent >= 70 && todaysProgressPercent < 80){
+            return Color.yellow
+        }else{
+            return Color.green
+        }
+    }
     
-    func messageCalc()
-    {
-        if(progressPercent < 50)
-        {
-            fiftyPercent = true
-            
-            randomInt = Int.random(in: 1..<9)
-            
-            if(randomInt == 1)
-            {
-                msgs = "You can make better choices"
-            }
-            else if(randomInt == 2)
-            {
-                msgs = "Tomorrow is a new day and a chance to make a better choice!"
-            }
-            
-            else if(randomInt == 3)
-            {
-                msgs = "What cancer fighting colors did you miss today?"
-                
-            }
-            else if(randomInt == 4)
-            {
-                msgs = "Start planning your next meal and plan to include 2 vegetables."
-                
-            }
-            else
-            {
-                msgs = "Preplan next time."
-                
-            }
-            
-            
-        }
-        if(progressPercent >= 70){
-            
-            
-            
-            msgs = "Great food choices! These are promoting healthy, vibrant life!"
-            
-        }
-        if(progressPercent <= 60 && progressPercent >= 50){
-           
-            
-            msgs = "Think about how your energy levels are improving as you eat more anti-inflammatory foods"
-            
-            
-            
-        }
-        UserDefaults.standard.set(progressPercent, forKey: "progressPercent")    }
-    @FocusState private var isTextFieldFocused: Bool
-    var body: some View
-    {
-    
-        
-        VStack(spacing: 20)
-        {
-            Text(msgs)
-              .multilineTextAlignment(.leading)
-              .textFieldStyle(.roundedBorder)
-              .foregroundColor(.black)
-                             .background(Color(red: 0.5, green: 0.8, blue: 0.2))
-
-              
-              .focused($isTextFieldFocused)              .showClearButton($msgs)
-             
-        }
-        
-        .onAppear{messageCalc()}
-        .padding(0.4)
-        
-                               
-                              
+    func makePopUp(screenWidth:CGFloat) -> some View{
+        return Text(messageCalc())
+                .frame(width: screenWidth*0.85)
+                .padding(20)
+                .foregroundColor(Color.white)
+                .font(.system(size: 33, weight: Font.Weight.bold) )
+                .multilineTextAlignment(.center)
+                .background(getBackgroundColor())
+                .cornerRadius(20)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(.black, lineWidth: 6)
+                )
     }
 
-           
-    
-    
+    var body: some View{
+        
+        let screenSize: CGRect = UIScreen.main.bounds
+        let screenWidth:CGFloat = screenSize.width
+        let screenHeight:CGFloat = screenSize.height
+
+        makePopUp(screenWidth: screenWidth)
+    }
+
     struct PopUpMessage_Previews: PreviewProvider {
         static var previews: some View {
-            PopUpMessage(progressPercent: .constant(1))
-            
+            PopUpMessage(todaysProgressPercent: .constant(70))
         }
         
     }
