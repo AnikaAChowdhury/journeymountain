@@ -277,26 +277,26 @@ struct MountainView: View {
     func makePath(screenWidth:CGFloat, screenHeight:CGFloat) -> some View{
         let dimensions:String = "9:19.5"
         if (dimensions == "9:16"){
-            return Image("path_1")
+            return Image("path_template")
                     .resizable()
                     .scaledToFit()
                     .frame(width: screenWidth * 0.905)
                     .position(x: (screenWidth/2 - (0.02)*(screenWidth)),y: screenHeight/2-(0.0455)*(screenHeight))
         }else if(dimensions == "9:19.5"){
-            return Image("path_1")
+            return Image("path_template")
                     .resizable()
                     .scaledToFit()
                     .frame(width: screenWidth * 0.90)
                     .position(x: (screenWidth/2 - (0.02)*(screenWidth)),y: screenHeight/2-(0.043)*(screenHeight))
         }else if(dimensions == "3:4"){
-            return Image("path_1")
+            return Image("path_template")
                         .resizable()
                         .scaledToFit()
                         .frame(width: screenWidth * 0.10)
                         .position(x: (screenWidth/2 - (0.02)*(screenWidth)),y: screenHeight/2-(0.043)*(screenHeight))
         }
         
-        return Image("path_1")
+        return Image("path_template")
                     .resizable()
                     .scaledToFit()
                     .frame(width: screenWidth * 0.90)
