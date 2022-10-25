@@ -15,17 +15,18 @@ struct MountainView: View {
     @State var tempCharacterPosition:Int = UserDefaults.standard.integer(forKey: "tempCharacterPosition") != nil ? UserDefaults.standard.integer(forKey: "tempCharacterPosition") : -1
     @State var starMaker:Int = UserDefaults.standard.integer(forKey: "starMaker") != nil ? UserDefaults.standard.integer(forKey: "starMaker") : 0
     @State var hasStars:Bool = UserDefaults.standard.bool(forKey: "hasStars") != nil ? UserDefaults.standard.bool(forKey: "hasStars") : false
-    @State var todaysProgress:Int = UserDefaults.standard.integer(forKey: "todaysProgress") != nil ? UserDefaults.standard.integer(forKey: "todaysProgress") : 0
+    @State var todaysProgressPercent:Int = UserDefaults.standard.integer(forKey: "todaysProgressPercent") != nil ? UserDefaults.standard.integer(forKey: "todaysProgressPercent") : 0
     @State var todaysExercise:Bool = UserDefaults.standard.bool(forKey: "todaysExercise") != nil ? UserDefaults.standard.bool(forKey: "todaysExercise") : false
     @State var todaysSteps:Int = UserDefaults.standard.integer(forKey: "todaysSteps") != nil ? UserDefaults.standard.integer(forKey: "todaysSteps") : 0
     @State var prevTodaysSteps:Int = UserDefaults.standard.integer(forKey: "prevTodaysSteps") != nil ? UserDefaults.standard.integer(forKey: "prevTodaysSteps") : 0
     @State var day:Int = UserDefaults.standard.integer(forKey: "day") != nil ? UserDefaults.standard.integer(forKey: "day") : 0
-    @State var confettiVisible:Double = 0.0
-    @State private var showGame = true
     @State var userStreak:Int = UserDefaults.standard.integer(forKey: "userStreak") != nil ? UserDefaults.standard.integer(forKey: "userStreak") : 1
     @State var startStreak:Date = UserDefaults.standard.object(forKey: "startStreak") != nil ? UserDefaults.standard.object(forKey: "startStreak") as! Date : Date()
     @State var endStreak:Date = UserDefaults.standard.object(forKey: "endStreak") != nil ? UserDefaults.standard.object(forKey: "endStreak") as! Date : Date()
-    @State var progressPercent:Int = UserDefaults.standard.integer(forKey: "progressPercent") != nil ? UserDefaults.standard.integer(forKey: "progressPercent") : 2
+    @State var confettiVisible:Double = 0.0
+    @State var popUpVisible:Double = 0.0
+    @State private var showGame = true
+    
     // increments position of character
     func moveCharacter(){
         if(characterPosition == -1){
@@ -48,23 +49,23 @@ struct MountainView: View {
     }
     
     func subtract10(){
-        if(todaysProgress >= 10){
-            todaysProgress -= 10
+        if(todaysProgressPercent >= 10){
+            todaysProgressPercent -= 10
         }else{
-            todaysProgress = 0
+            todaysProgressPercent = 0
         }
         calculateSteps()
-        UserDefaults.standard.set(todaysProgress, forKey: "todaysProgress")
+        UserDefaults.standard.set(todaysProgressPercent, forKey: "todaysProgressPercent")
     }
     
     func add10(){
-        if(todaysProgress <= 90){
-            todaysProgress += 10
+        if(todaysProgressPercent <= 90){
+            todaysProgressPercent += 10
         }else{
-            todaysProgress = 100
+            todaysProgressPercent = 100
         }
         calculateSteps()
-        UserDefaults.standard.set(todaysProgress, forKey: "todaysProgress")
+        UserDefaults.standard.set(todaysProgressPercent, forKey: "todaysProgressPercent")
     }
     
     func calculateSteps(){
@@ -72,15 +73,15 @@ struct MountainView: View {
         prevTodaysSteps = todaysSteps
         
         // calculate progress
-        if(todaysProgress < 50){
+        if(todaysProgressPercent < 50){
             todaysSteps = 0
-        }else if(todaysProgress >= 50 && todaysProgress < 60){
+        }else if(todaysProgressPercent >= 50 && todaysProgressPercent < 60){
             todaysSteps = 1
-        }else if(todaysProgress >= 60 && todaysProgress < 70){
+        }else if(todaysProgressPercent >= 60 && todaysProgressPercent < 70){
             todaysSteps = 2
-        }else if(todaysProgress >= 70 && todaysProgress < 80){
+        }else if(todaysProgressPercent >= 70 && todaysProgressPercent < 80){
             todaysSteps = 3
-        }else if(todaysProgress >= 80){
+        }else if(todaysProgressPercent >= 80){
             todaysSteps = 4
         }
         
@@ -100,20 +101,22 @@ struct MountainView: View {
     }
     
     func submitDay(){
-        progressPercent = todaysProgress
-        UserDefaults.standard.set(progressPercent, forKey: "progressPercent")
-        characterPosition = tempCharacterPosition
-        todaysSteps = 0
-        prevTodaysSteps = 0
-        todaysExercise = false
-        todaysProgress = 0
-        UserDefaults.standard.set(characterPosition, forKey: "characterPosition")
-        UserDefaults.standard.set(todaysSteps, forKey: "todaysSteps")
-        UserDefaults.standard.set(prevTodaysSteps, forKey: "prevTodaysSteps")
-        UserDefaults.standard.set(todaysExercise, forKey: "todaysExercise")
-        UserDefaults.standard.set(todaysProgress, forKey: "todaysProgress")
-        
-        print("Streak: \(getStreak())")
+        popUpVisible = 100.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
+            popUpVisible = 0.0
+            characterPosition = tempCharacterPosition
+            todaysSteps = 0
+            prevTodaysSteps = 0
+            todaysExercise = false
+            todaysProgressPercent = 0
+            UserDefaults.standard.set(characterPosition, forKey: "characterPosition")
+            UserDefaults.standard.set(todaysSteps, forKey: "todaysSteps")
+            UserDefaults.standard.set(prevTodaysSteps, forKey: "prevTodaysSteps")
+            UserDefaults.standard.set(todaysExercise, forKey: "todaysExercise")
+            UserDefaults.standard.set(todaysProgressPercent, forKey: "todaysProgressPercent")
+            
+            print("Streak: \(getStreak())")
+        }
     }
     
     func resetMonth(){
@@ -122,7 +125,7 @@ struct MountainView: View {
         todaysSteps = 0
         prevTodaysSteps = 0
         todaysExercise = false
-        todaysProgress = 0
+        todaysProgressPercent = 0
         starMaker = 0
         hasStars = false
         UserDefaults.standard.set(characterPosition, forKey: "characterPosition")
@@ -130,31 +133,31 @@ struct MountainView: View {
         UserDefaults.standard.set(todaysSteps, forKey: "todaysSteps")
         UserDefaults.standard.set(prevTodaysSteps, forKey: "prevTodaysSteps")
         UserDefaults.standard.set(todaysExercise, forKey: "todaysExercise")
-        UserDefaults.standard.set(todaysProgress, forKey: "todaysProgress")
+        UserDefaults.standard.set(todaysProgressPercent, forKey: "todaysProgressPercent")
         UserDefaults.standard.set(starMaker, forKey: "starMaker")
         UserDefaults.standard.set(hasStars, forKey: "hasStars")
     }
     
     func makePercentage() -> some View{
-        let t = Text(String(todaysProgress)+"%")
+        let t = Text(String(todaysProgressPercent)+"%")
                     .frame(maxWidth: .infinity)
                     .padding(7)
                     .foregroundColor(Color.white)
                     .font(.system(size: 20, weight: Font.Weight.bold))
         
-        if(todaysProgress < 50){
+        if(todaysProgressPercent < 50){
             return t
                     .background(Color.red)
                     .cornerRadius(30)
-        }else if(todaysProgress >= 50 && todaysProgress < 60){
+        }else if(todaysProgressPercent >= 50 && todaysProgressPercent < 60){
             return t
                     .background(Color.pink)
                     .cornerRadius(30)
-        }else if(todaysProgress >= 60 && todaysProgress < 70){
+        }else if(todaysProgressPercent >= 60 && todaysProgressPercent < 70){
             return t
                     .background(Color.orange)
                     .cornerRadius(30)
-        }else if(todaysProgress >= 70 && todaysProgress < 80){
+        }else if(todaysProgressPercent >= 70 && todaysProgressPercent < 80){
             return t
                     .background(Color.yellow)
                     .cornerRadius(30)
@@ -336,40 +339,37 @@ struct MountainView: View {
                             .position(x: screenWidth/2 ,y: screenHeight/2 - (0.026)*(screenHeight) )
                             .opacity(0.0)
                         
-                        CloudView()
-                            .opacity(100.0)
-                        
-                        Image("mountainBackground_1")
-                            .resizable()
-                            .scaledToFit()
-                            .position(x: screenWidth/2 ,y: screenHeight/2 - (0.041)*(screenHeight) )
-                            .opacity(100.0)
-                        Image("mountainForeground_1")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: screenWidth * 0.93)
-                            .position(x: screenWidth/2 - (0.025)*(screenWidth),y: screenHeight/2-(0.002)*(screenHeight))
-                            .opacity(100.0)
-                        
-                        makePath(screenWidth: screenWidth, screenHeight: screenHeight)
-                            .opacity(100.0)
-                        
-                        StepsView(completedSteps: $tempCharacterPosition, starMaker: $starMaker)
-                            .onChange(of: tempCharacterPosition){ newValue in
-                                makeStars()
-                            }
-                            .opacity(100.0)
-                        
-                      //for some reason if I don't comment out decoration view the pop up message does not work
-                        
-                        //DecorationView()
-                        
-                        PopUpMessage(progressPercent: $todaysProgress)
-                        
-                        CharacterView(characterPosition: $tempCharacterPosition)
-                            .opacity(100.0)
-                        
-                       
+                        // actual mountain
+                        Group{
+                            CloudView()
+                                .opacity(100.0)
+                            
+                            Image("mountainBackground_1")
+                                .resizable()
+                                .scaledToFit()
+                                .position(x: screenWidth/2 ,y: screenHeight/2 - (0.041)*(screenHeight) )
+                                .opacity(100.0)
+                            Image("mountainForeground_1")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: screenWidth * 0.93)
+                                .position(x: screenWidth/2 - (0.025)*(screenWidth),y: screenHeight/2-(0.002)*(screenHeight))
+                                .opacity(100.0)
+                            
+                            makePath(screenWidth: screenWidth, screenHeight: screenHeight)
+                                .opacity(100.0)
+                            
+                            StepsView(completedSteps: $tempCharacterPosition, starMaker: $starMaker)
+                                .onChange(of: tempCharacterPosition){ newValue in
+                                    makeStars()
+                                }
+                                .opacity(100.0)
+                                                        
+                            DecorationView()
+                            
+                            CharacterView(characterPosition: $tempCharacterPosition)
+                                .opacity(100.0)
+                        }
                         
                         GIFView("confetti1")
                             .scaleEffect(x: 2.0, y: 2.0, anchor: UnitPoint(x: 0.0, y: 0.0))
@@ -380,9 +380,11 @@ struct MountainView: View {
                                     showConfetti()
                                 }
                             }
-                        
-                        
-                        
+                        if (popUpVisible == 100.0){
+                            PopUpMessage(todaysProgressPercent: $todaysProgressPercent)
+                                .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
+                        }
+
                         Button(action: {
                             showGame = false
                         }, label: {
@@ -421,8 +423,6 @@ struct MountainView: View {
                         makeExerciseButton()
                     }
                     HStack{
-                        
-                       
                         Button("Submit day", action: submitDay)
                             .frame(maxWidth: .infinity)
                             .padding(7)
