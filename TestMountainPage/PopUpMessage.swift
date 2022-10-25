@@ -7,7 +7,13 @@
 
 
 
+//
+
+//
+
 import SwiftUI
+
+
 
 struct TextFieldClearButton: ViewModifier {
     @Binding var fieldText: String
@@ -43,11 +49,16 @@ struct PopUpMessage: View {
     @State private var showPopUpMessage = false
     @State var randomInt = Int.random(in: 1..<5)
     
+    
+   
     @State private var msgs = ""
     @State private var fiftyPercent = false
     @State private var SixtyPercent = false
     @State private var SeventyPercent = false
     
+    
+
+        
     
     
     func messageCalc()
@@ -88,7 +99,7 @@ struct PopUpMessage: View {
         if(progressPercent >= 70){
             
             
-  
+            
             msgs = "Great food choices! These are promoting healthy, vibrant life!"
             
         }
@@ -121,16 +132,19 @@ struct PopUpMessage: View {
         
         .onAppear{messageCalc()}
         .padding(0.4)
-                                    
+        
+                               
                               
-    } 
+    }
+
+           
+    
+    
     struct PopUpMessage_Previews: PreviewProvider {
         static var previews: some View {
-            PopUpMessage(progressPercent: .constant(2))
+            PopUpMessage(progressPercent: .constant(1))
             
         }
         
     }
 }
-
-
