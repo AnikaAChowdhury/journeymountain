@@ -52,16 +52,14 @@ func getStarRotation(stepNumber:Int) -> Double{
     return starRotation
 }
 
-func makeStep(starMaker:Int, stepNumber:Int, completedSteps:Int, screenWidth:CGFloat, screenHeight:CGFloat, stepSize:Double) -> some View{
+func makeStep(starMaker:Int, stepNumber:Int, completedStepsNum:Int, screenWidth:CGFloat, screenHeight:CGFloat, stepSize:Double, completedStep:String, completedStarStep:String, uncompletedStep:String, uncompletedStarStep:String) -> some View{
     
     let x1 = locations[stepNumber][0]
     let y1 = locations[stepNumber][1]
     
-    var completedName:String = ""
-    if(stepNumber <= completedSteps){
-        completedName = "completed"
-    }else{
-        completedName = "uncompleted"
+    var completed:Bool = false
+    if(stepNumber <= completedStepsNum){
+        completed = true
     }
     
     var visible = 100.0
@@ -69,10 +67,20 @@ func makeStep(starMaker:Int, stepNumber:Int, completedSteps:Int, screenWidth:CGF
         visible = 0.0
     }
     
-    if(completedSteps > 12-1 && stepNumber <= starMaker){
+    if(completedStepsNum > 12-1 && stepNumber <= starMaker){
         let starRotation = getStarRotation(stepNumber: stepNumber)
         
-        let starStep = Image(completedName + "StarStep_1")
+        if(completed){
+            let starStep = Image(completedStarStep)
+                        .resizable()
+                        .scaledToFit()
+                        .rotationEffect(Angle(degrees: starRotation), anchor: .center)
+                        .frame(width: screenWidth * stepSize)
+                        .position(x: 0 + (x1)*(screenWidth),y: screenHeight - (y1)*screenHeight)
+                        .opacity(visible)
+            return starStep
+        }
+        let starStep = Image(uncompletedStarStep)
                     .resizable()
                     .scaledToFit()
                     .rotationEffect(Angle(degrees: starRotation), anchor: .center)
@@ -81,8 +89,18 @@ func makeStep(starMaker:Int, stepNumber:Int, completedSteps:Int, screenWidth:CGF
                     .opacity(visible)
         return starStep
     }
+    if(completed){
+        let step = Image(completedStep)
+                    .resizable()
+                    .scaledToFit()
+                    .rotationEffect(Angle(degrees: 0))
+                    .frame(width: screenWidth * stepSize)
+                    .position(x: 0 + (x1)*(screenWidth),y: screenHeight - (y1)*screenHeight)
+                    .opacity(visible)
+        return step
+    }
     
-    let step = Image(completedName + "Step_1")
+    let step = Image(uncompletedStep)
                 .resizable()
                 .scaledToFit()
                 .rotationEffect(Angle(degrees: 0))
@@ -94,8 +112,12 @@ func makeStep(starMaker:Int, stepNumber:Int, completedSteps:Int, screenWidth:CGF
 
 struct StepsView: View {
     
-    @Binding var completedSteps:Int
+    @Binding var completedStepsNum:Int
     @Binding var starMaker:Int
+    @Binding var completedStep:String
+    @Binding var completedStarStep:String
+    @Binding var uncompletedStep:String
+    @Binding var uncompletedStarStep:String
 
     var body: some View {
         
@@ -106,7 +128,7 @@ struct StepsView: View {
 
         return Group{
             ForEach(0..<155) { i in
-                makeStep(starMaker: starMaker, stepNumber: i, completedSteps: completedSteps, screenWidth: screenWidth, screenHeight: screenHeight, stepSize:stepSize)
+                makeStep(starMaker: starMaker, stepNumber: i, completedStepsNum: completedStepsNum, screenWidth: screenWidth, screenHeight: screenHeight, stepSize:stepSize, completedStep: completedStep, completedStarStep: completedStarStep, uncompletedStep: uncompletedStep, uncompletedStarStep: uncompletedStarStep)
             }
         }
     }

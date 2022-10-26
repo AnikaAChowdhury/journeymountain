@@ -11,15 +11,16 @@ struct CloudView: View {
     @State var cloud1X:Double = 0.0
     @State var cloud2X:Double = 0.0
     @State var cloud3X:Double = 0.0
-
     
+    @Binding var cloudName:String
+
     var body: some View {
         let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth:CGFloat = screenSize.width
         let screenHeight:CGFloat = screenSize.height
         
         return ZStack{
-                Image("cloud_1")
+                Image(cloudName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: screenWidth * 0.45)
@@ -33,7 +34,7 @@ struct CloudView: View {
                             cloud1X = 0.0
                         }
                     }
-                Image("cloud_1")
+                Image(cloudName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: screenWidth * 0.45)
@@ -47,7 +48,7 @@ struct CloudView: View {
                             cloud2X = 0.0
                         }
                     }
-                Image("cloud_1")
+                Image(cloudName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: screenWidth * 0.45)
@@ -67,6 +68,6 @@ struct CloudView: View {
 
 struct CloudView_Previews: PreviewProvider {
     static var previews: some View {
-        CloudView()
+        CloudView(cloudName: .constant("cloud"))
     }
 }

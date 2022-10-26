@@ -14,7 +14,7 @@ struct PopUpMessage: View {
         var message = ""
         
         if(todaysProgressPercent < 50){
-            var randomInt = Int.random(in: 1..<9)
+            let randomInt = Int.random(in: 1..<9)
             
             switch(randomInt){
             case 1:
