@@ -45,6 +45,19 @@ struct DecorationView: View {
     
     @State var inner_big_rotation:Int = 3
     @State var outer_big_rotation:Int = 3
+    
+    @Binding var decoration1:String
+    @Binding var showDecoration1:Bool
+    @Binding var sizeDecoration1:Double
+    @Binding var decoration2:String
+    @Binding var showDecoration2:Bool
+    @Binding var sizeDecoration2:Double
+    @Binding var decoration3:String
+    @Binding var showDecoration3:Bool
+    @Binding var sizeDecoration3:Double
+    @Binding var decoration4:String
+    @Binding var showDecoration4:Bool
+    @Binding var sizeDecoration4:Double
 
     func makeInnerBigDecoration(decorationNumber:Int, screenWidth:CGFloat, screenHeight:CGFloat, imageName:String, imageSize:Double) -> some View{
         
@@ -123,9 +136,6 @@ struct DecorationView: View {
         let screenWidth:CGFloat = screenSize.width
         let screenHeight:CGFloat = screenSize.height
         
-        let imageName = "tree_1"
-        let imageSize = 0.12
-        
         return ZStack{
 //            Image("Template")
 //                .resizable()
@@ -133,21 +143,30 @@ struct DecorationView: View {
 //                .position(x: screenWidth/2 ,y: screenHeight/2 - (0.026)*(screenHeight) )
 //                .opacity(100.0)
             
-            ForEach(0..<outer_small_locations.count) { i in
-                makeOuterSmallDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight, imageName: "rock_1", imageSize: 0.1)
+            if(showDecoration1){
+                ForEach(0..<outer_big_locations.count) { i in
+                    makeOuterBigDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight, imageName: decoration1, imageSize: sizeDecoration1)
+                        .opacity(100.0)
+                }
             }
             
-            ForEach(0..<inner_small_locations.count) { i in
-                makeInnerSmallDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight, imageName: "rock_small_1", imageSize: 0.08)
+            if(showDecoration2){
+                ForEach(0..<inner_big_locations.count) { i in
+                    makeInnerBigDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight, imageName: decoration2, imageSize: sizeDecoration2)
+                        .opacity(100.0)
+                }
             }
             
-            ForEach(0..<outer_big_locations.count) { i in
-                makeOuterBigDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight, imageName: imageName, imageSize: imageSize)
-                    .opacity(100.0)
+            if(showDecoration3){
+                ForEach(0..<outer_small_locations.count) { i in
+                    makeOuterSmallDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight, imageName: decoration3, imageSize: sizeDecoration3)
+                }
             }
-            ForEach(0..<inner_big_locations.count) { i in
-                makeInnerBigDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight, imageName: imageName, imageSize: imageSize)
-                    .opacity(100.0)
+            
+            if(showDecoration4){
+                ForEach(0..<inner_small_locations.count) { i in
+                    makeInnerSmallDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight, imageName: decoration4, imageSize: sizeDecoration4)
+                }
             }
         }
         
@@ -156,6 +175,6 @@ struct DecorationView: View {
 
 struct DecorationView_Previews: PreviewProvider {
     static var previews: some View {
-        DecorationView()
+        DecorationView(decoration1: .constant("tree_8"), showDecoration1: .constant(true), sizeDecoration1: .constant(0.12), decoration2: .constant("tree_8"), showDecoration2: .constant(true), sizeDecoration2: .constant(0.12), decoration3: .constant("rock_large"), showDecoration3: .constant(true), sizeDecoration3: .constant(0.1), decoration4: .constant("tree_8"), showDecoration4: .constant(true), sizeDecoration4: .constant(0.08))
     }
 }
