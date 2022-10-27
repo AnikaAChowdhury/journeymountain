@@ -19,6 +19,7 @@
 		4C15491128E5129C005690B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C15491028E5129C005690B0 /* Assets.xcassets */; };
 		4C15491428E5129C005690B0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C15491328E5129C005690B0 /* Preview Assets.xcassets */; };
 		4C1A640428E660EE00631827 /* Mountain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1A640328E660EE00631827 /* Mountain.swift */; };
+		4C5E6F3F290A193600D22D02 /* FishView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5E6F3E290A193600D22D02 /* FishView.swift */; };
 		4CE909D628E8B4580041AD34 /* StepsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE909D528E8B4580041AD34 /* StepsView.swift */; };
 		998A055A28F7194D00299F53 /* PopUpMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998A055928F7194C00299F53 /* PopUpMessage.swift */; };
 /* End PBXBuildFile section */
@@ -37,6 +38,7 @@
 		4C15491028E5129C005690B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C15491328E5129C005690B0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4C1A640328E660EE00631827 /* Mountain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mountain.swift; sourceTree = "<group>"; };
+		4C5E6F3E290A193600D22D02 /* FishView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FishView.swift; sourceTree = "<group>"; };
 		4CE909D528E8B4580041AD34 /* StepsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsView.swift; sourceTree = "<group>"; };
 		998A055928F7194C00299F53 /* PopUpMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpMessage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,6 +78,7 @@
 				4C11A70028E8F3D6007C24B6 /* CharacterView.swift */,
 				4C15490C28E51296005690B0 /* TestMountainPageApp.swift */,
 				4C048BFE28FCDB98007D1F9C /* CloudView.swift */,
+				4C5E6F3E290A193600D22D02 /* FishView.swift */,
 				4CE909D528E8B4580041AD34 /* StepsView.swift */,
 				4C048C0028FD9849007D1F9C /* BadgeView.swift */,
 				4C0749C028F65E2B00DF69D3 /* GIFView.swift */,
@@ -178,6 +181,7 @@
 				4C048C0128FD9849007D1F9C /* BadgeView.swift in Sources */,
 				4CE909D628E8B4580041AD34 /* StepsView.swift in Sources */,
 				998A055A28F7194D00299F53 /* PopUpMessage.swift in Sources */,
+				4C5E6F3F290A193600D22D02 /* FishView.swift in Sources */,
 				4C15490D28E51296005690B0 /* TestMountainPageApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

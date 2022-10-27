@@ -136,12 +136,11 @@ struct DecorationView: View {
         let screenHeight:CGFloat = screenSize.height
         
         return ZStack{
-            Image("Template")
-                .resizable()
-                .scaledToFill()
-                .position(x: screenWidth/2 ,y: screenHeight/2 - (0.026)*(screenHeight) )
-                .opacity(100.0)
-            
+//            Image("Template")
+//                .resizable()
+//                .scaledToFill()
+//                .position(x: screenWidth/2 ,y: screenHeight/2 - (0.026)*(screenHeight) )
+//                .opacity(100.0)
             if(showDecoration1){
                 ForEach(0..<outer_big_locations.count) { i in
                     makeOuterBigDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight, imageName: decoration1, imageSize: sizeDecoration1)

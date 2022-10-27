@@ -51,8 +51,14 @@ struct Mountain{
     // if it has snow
     var hasSnow:Bool
     
+    // if it has fish
+    var hasFish:Bool
+    var fish1:String
+    var fish2:String
+
+    
     // constructor
-    init(monthNumber:Int, worldColor:Color, clouds:String, hasClouds:Bool, decoration1:String, decoration2:String, decoration3:String, decoration4:String, showDecoration1:Bool, showDecoration2:Bool, showDecoration3:Bool, showDecoration4:Bool, hasSnow:Bool, sizeDecoration1:Double, sizeDecoration2:Double, sizeDecoration3:Double, sizeDecoration4:Double){
+    init(monthNumber:Int, worldColor:Color, clouds:String, hasClouds:Bool, decoration1:String, decoration2:String, decoration3:String, decoration4:String, showDecoration1:Bool, showDecoration2:Bool, showDecoration3:Bool, showDecoration4:Bool, hasSnow:Bool, sizeDecoration1:Double, sizeDecoration2:Double, sizeDecoration3:Double, sizeDecoration4:Double, hasFish:Bool = false, fish1:String = "", fish2:String = ""){
         self.worldColor = worldColor
         self.clouds = clouds
         self.hasClouds = hasClouds
@@ -76,7 +82,9 @@ struct Mountain{
         self.sizeDecoration3 = sizeDecoration3
         self.sizeDecoration4 = sizeDecoration4
         self.hasSnow = hasSnow
-
+        self.hasFish = hasFish
+        self.fish1 = fish1
+        self.fish2 = fish2
     }
     
 }
