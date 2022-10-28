@@ -461,7 +461,7 @@ struct MountainView: View {
                     }
                     .animation(Animation.easeInOut.speed(1), value: tempCharacterPosition)
                 }
-                .position(x: screenWidth/2 ,y: screenHeight/2 - (0.13)*(screenHeight) )
+                .position(x: screenWidth/2 ,y: screenHeight/2 - (0.13)*(screenHeight))
                 
                 VStack{
                     HStack{

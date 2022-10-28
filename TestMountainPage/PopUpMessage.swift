@@ -18,22 +18,22 @@ struct PopUpMessage: View {
             
             switch(randomInt){
             case 1:
-                message = "You can make better choices"
+                message = "You can make better choices!"
             case 2:
                 message = "Tomorrow is a new day and a chance to make a better choice!"
             case 3:
                 message = "What cancer fighting colors did you miss today?"
             case 4:
-                message = "Start planning your next meal and plan to include 2 vegetables."
+                message = "Start planning your next meal and try to include 2 vegetables."
             default:
                 message = "Preplan next time."
             }
         }else if(todaysProgressPercent >= 50 && todaysProgressPercent < 60){
             message = "50-60% message"
         }else if(todaysProgressPercent >= 60 && todaysProgressPercent < 70){
-            message = "Think about how your energy levels are improving as you eat more anti-inflammatory foods"
+            message = "Think about how your energy levels are improving as you eat more anti-inflammatory foods."
         }else if(todaysProgressPercent >= 70 && todaysProgressPercent < 80){
-            message = "Great food choices! These are promoting healthy, vibrant life!"
+            message = "Great food choices! These are promoting a healthy and vibrant life!"
         }else{
             message = "80%+ message"
         }
@@ -68,10 +68,25 @@ struct PopUpMessage: View {
                         .stroke(.black, lineWidth: 6)
                 )
     }
+    
+    func badgePopUp(screenWidth:CGFloat, message:String) -> some View {
+        return Text(message)
+            .frame(width: screenWidth*0.85)
+            .padding(20)
+            .foregroundColor(Color.white)
+            .font(.system(size: 25, weight: Font.Weight.bold) )
+            .multilineTextAlignment(.center)
+            .background(Color.yellow)
+            .cornerRadius(20)
+            .overlay(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(.black, lineWidth: 6)
+            )
+    }
 
     var body: some View{
         
-        let screenSize: CGRect = UIScreen.main.bounds
+        let screenSize:CGRect = UIScreen.main.bounds
         let screenWidth:CGFloat = screenSize.width
         let screenHeight:CGFloat = screenSize.height
 
