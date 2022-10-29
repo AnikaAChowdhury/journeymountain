@@ -232,142 +232,167 @@ struct BadgeView: View {
                         
                         //percent weight loss category
                         VStack{
-                            Group {
-                                HStack{
-                                    
-                                    if(has5PC) {
-                                        Button(action: {
-                                            message = "5% Weight Loss\n\nThis badge was earned on \n \(fivePCDate) \n from losing 5% of your initial body weight."
-                                            popUpWindow(screenWidth: screenWidth)
-                                        }, label: {
-                                            Image("5pc")
-                                        })
-                                        .buttonStyle(.plain)
-                                    }
-                                    else {
-                                        Image("badge-empty")
-                                    }
-                                    
-                                    if(has7_5PC) {
-                                        Button(action: {
-                                            message = "7.5% Weight Loss\n\nThis badge was earned on \n \(seven_fivePCDate) \n from losing 7.5% of your initial body weight."
-                                            popUpWindow(screenWidth: screenWidth)
-                                        }, label: {
-                                            Image("7_5pc")
-                                        })
-                                        .buttonStyle(.plain)
-                                    }
-                                    else {
-                                        Image("badge-empty")
-                                    }
-                                    
+                            HStack{
+                                
+                                if(has5PC) {
+                                    Button(action: {
+                                        message = "5% Weight Loss\n\nThis badge was earned on \n \(fivePCDate) \n from losing 5% of your initial body weight."
+                                        popUpWindow(screenWidth: screenWidth)
+                                    }, label: {
+                                        Image("5pc")
+                                    })
+                                    .buttonStyle(.plain)
+                                }
+                                else {
+                                    Image("badge-empty")
                                 }
                                 
-                                HStack{
-                                    if(has10PC) {
-                                        Button(action: {
-                                            message = "10% Weight Loss\n\nThis badge was earned on \n \(tenPCDate) \n from losing 10% of your initial body weight."
-                                            popUpWindow(screenWidth: screenWidth)
-                                        }, label: {
-                                            Image("10pc")
-                                        })
-                                        .buttonStyle(.plain)
-                                        
-                                    }
-                                    else {
-                                        Image("badge-empty")
-                                    }
-                                    
-                                    if(has12_5PC) {
-                                        Button(action: {
-                                            message = "12.5% Weight Loss\n\nThis badge was earned on \n \(twelve_fivePCDate) \n from losing 12.5% of your initial body weight."
-                                            popUpWindow(screenWidth: screenWidth)
-                                        }, label: {
-                                            Image("12_5pc")
-                                        })
-                                        .buttonStyle(.plain)
-                                    }
-                                    else {
-                                        Image("badge-empty")
-                                    }
-                                    
-                                    if(has15PC) {
-                                        Button(action: {
-                                            message = "15% Weight Loss\n\nThis badge was earned on \n \(fifteenPCDate) \n from losing 15% of your initial body weight."
-                                            popUpWindow(screenWidth: screenWidth)
-                                        }, label: {
-                                            Image("15pc")
-                                        })
-                                        .buttonStyle(.plain)
-                                    }
-                                    else {
-                                        Image("badge-empty")
-                                    }
+                                if(has7_5PC) {
+                                    Button(action: {
+                                        message = "7.5% Weight Loss\n\nThis badge was earned on \n \(seven_fivePCDate) \n from losing 7.5% of your initial body weight."
+                                        popUpWindow(screenWidth: screenWidth)
+                                    }, label: {
+                                        Image("7_5pc")
+                                    })
+                                    .buttonStyle(.plain)
+                                }
+                                else {
+                                    Image("badge-empty")
                                 }
                                 
-                                // % initial weight loss category
-                                Button(action: {
-                                    message = "Percent Initial Weight Loss\n\nThis badge category is for percent weight loss goals of 5 to 15%. Losing 5 to 15% of your initial body weight can result in lowered blood pressure and cholesterol levels, better heart health, and decreased risks for diabetes and various types of cancer."
-                                    popUpWindow(screenWidth: screenWidth)
-                                }, label: {
-                                    Text("Percent Initial Weight Loss")
-                                        .font(.system(size: 20, weight: Font.Weight.bold))
-                                        .padding(7.0)
-                                        .padding(.horizontal, 10.0)
-                                        .background(Color(red: 200/255, green: 135/255, blue: 35/255))
-                                        .foregroundColor(Color.white)
-                                        .cornerRadius(30.0)
-                                    
-                                })
-                                .padding(.top, 10.0)
-                                .padding(.bottom, 30.0)
                             }
+                            
+                            HStack{
+                                if(has10PC) {
+                                    Button(action: {
+                                        message = "10% Weight Loss\n\nThis badge was earned on \n \(tenPCDate) \n from losing 10% of your initial body weight."
+                                        popUpWindow(screenWidth: screenWidth)
+                                    }, label: {
+                                        Image("10pc")
+                                    })
+                                    .buttonStyle(.plain)
+                                    
+                                }
+                                else {
+                                    Image("badge-empty")
+                                }
+                                
+                                if(has12_5PC) {
+                                    Button(action: {
+                                        message = "12.5% Weight Loss\n\nThis badge was earned on \n \(twelve_fivePCDate) \n from losing 12.5% of your initial body weight."
+                                        popUpWindow(screenWidth: screenWidth)
+                                    }, label: {
+                                        Image("12_5pc")
+                                    })
+                                    .buttonStyle(.plain)
+                                }
+                                else {
+                                    Image("badge-empty")
+                                }
+                                
+                                if(has15PC) {
+                                    Button(action: {
+                                        message = "15% Weight Loss\n\nThis badge was earned on \n \(fifteenPCDate) \n from losing 15% of your initial body weight."
+                                        popUpWindow(screenWidth: screenWidth)
+                                    }, label: {
+                                        Image("15pc")
+                                    })
+                                    .buttonStyle(.plain)
+                                }
+                                else {
+                                    Image("badge-empty")
+                                }
+                            }
+                            
+                            // % initial weight loss category
+                            Button(action: {
+                                message = "Percent Initial Weight Loss\n\nThis badge category is for percent weight loss goals of 5 to 15%. Losing 5 to 15% of your initial body weight can result in lowered blood pressure and cholesterol levels, better heart health, and decreased risks for diabetes and various types of cancer."
+                                popUpWindow(screenWidth: screenWidth)
+                            }, label: {
+                                Text("Percent Initial Weight Loss")
+                                    .font(.system(size: 20, weight: Font.Weight.bold))
+                                    .padding(7.0)
+                                    .padding(.horizontal, 10.0)
+                                    .background(Color(red: 200/255, green: 135/255, blue: 35/255))
+                                    .foregroundColor(Color.white)
+                                    .cornerRadius(30.0)
+                                
+                            })
+                            .padding(.top, 10.0)
+                            .padding(.bottom, 30.0)
                         }
                         
                         Spacer()
                         
                         //daily streak
                         VStack{
-                            Group {
-                                HStack{
-                                    
-                                    if(has1WStr) {
-                                        Button(action: {
-                                            message = "1 Week Streak\n\nThis badge was earned on \n \(oneWStrDate) \n from logging your progress into the app for a week straight."
-                                        }, label: {
-                                            Image("1week")
-                                        })
-                                        .buttonStyle(.plain)
-                                    }
-                                    else {
-                                        Image("badge-empty")
-                                    }
-                                    
-                                    if(has1MStr) {
-                                        Button(action: {
-                                            message = "1 Month Streak\n\nThis badge was earned on \n \(oneMStrDate) \n from logging your progress into the app for a month straight."
-                                        }, label: {
-                                            Image("1month")
-                                        })
-                                        .buttonStyle(.plain)
-                                    }
-                                    else {
-                                        Image("badge-empty")
-                                    }
-                                    
-                                    if(has3MStr) {
-                                        Button(action: {
-                                            message = "3 Month Streak\n\nThis badge was earned on \n \(threeMStrDate) \n from logging your progress into the app for 3 months straight."
-                                            popUpWindow(screenWidth: screenWidth)
-                                        }, label: {
-                                            Image("3month")
-                                        })
-                                        .buttonStyle(.plain)
-                                    }
-                                    else {
-                                        Image("badge-empty")
-                                    }
+                            HStack {
+                                if(has1DStr) {
+                                    Button(action: {
+                                        message = "1 Day Streak\n\nThis badge was earned on \n \(oneDStrDate) \n from logging your progress into the app for a day."
+                                        popUpWindow(screenWidth: screenWidth)
+                                    }, label: {
+                                        Image("1day")
+                                    })
+                                    .buttonStyle(.plain)
                                 }
+                                else {
+                                    Image("badge-empty")
+                                }
+                                
+                                if(has3DStr) {
+                                    Button(action: {
+                                        message = "3 Day Streak\n\nThis badge was earned on \n \(threeDStrDate) \n from logging your progress into the app for 3 days straight."
+                                        popUpWindow(screenWidth: screenWidth)
+                                    }, label: {
+                                        Image("3day")
+                                    })
+                                    .buttonStyle(.plain)
+                                }
+                                else {
+                                    Image("badge-empty")
+                                }
+                            }
+                            
+                            HStack{
+                                
+                                if(has1WStr) {
+                                    Button(action: {
+                                        message = "1 Week Streak\n\nThis badge was earned on \n \(oneWStrDate) \n from logging your progress into the app for a week straight."
+                                    }, label: {
+                                        Image("1week")
+                                    })
+                                    .buttonStyle(.plain)
+                                }
+                                else {
+                                    Image("badge-empty")
+                                }
+                                
+                                if(has1MStr) {
+                                    Button(action: {
+                                        message = "1 Month Streak\n\nThis badge was earned on \n \(oneMStrDate) \n from logging your progress into the app for a month straight."
+                                    }, label: {
+                                        Image("1month")
+                                    })
+                                    .buttonStyle(.plain)
+                                }
+                                else {
+                                    Image("badge-empty")
+                                }
+                                
+                                if(has3MStr) {
+                                    Button(action: {
+                                        message = "3 Month Streak\n\nThis badge was earned on \n \(threeMStrDate) \n from logging your progress into the app for 3 months straight."
+                                        popUpWindow(screenWidth: screenWidth)
+                                    }, label: {
+                                        Image("3month")
+                                    })
+                                    .buttonStyle(.plain)
+                                }
+                                else {
+                                    Image("badge-empty")
+                                }
+                            }
                                 
                                 HStack{
                                     
@@ -428,7 +453,7 @@ struct BadgeView: View {
                                 .padding(.top, 10.0)
                                 .padding(.bottom, 30.0)
                                 
-                            }
+                            
                         }
                     }
                     .padding(.top, 20.0)
