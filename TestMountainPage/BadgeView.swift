@@ -359,6 +359,7 @@ struct BadgeView: View {
                                 if(has1WStr) {
                                     Button(action: {
                                         message = "1 Week Streak\n\nThis badge was earned on \n \(oneWStrDate) \n from logging your progress into the app for a week straight."
+                                        popUpWindow(screenWidth: screenWidth)
                                     }, label: {
                                         Image("1week")
                                     })

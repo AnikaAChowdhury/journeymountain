@@ -38,7 +38,6 @@ struct MountainView: View {
     @State var prevTodaysSteps:Int = UserDefaults.standard.integer(forKey: "prevTodaysSteps") != nil ? UserDefaults.standard.integer(forKey: "prevTodaysSteps") : 0
     @State var day:Int = UserDefaults.standard.integer(forKey: "day") != nil ? UserDefaults.standard.integer(forKey: "day") : 0
     @State var userStreak:Int = UserDefaults.standard.integer(forKey: "userStreak") != nil ? UserDefaults.standard.integer(forKey: "userStreak") : 0
-    @State var startOfStreak:Date = UserDefaults.standard.object(forKey: "startOfStreak") != nil ? UserDefaults.standard.object(forKey: "startOfStreak") as! Date : Date()
     @State var endOfStreak:Date = UserDefaults.standard.object(forKey: "endOfStreak") != nil ? UserDefaults.standard.object(forKey: "endOfStreak") as! Date : Date()
     @State var confettiVisible:Double = 0.0
     @State var popUpVisible:Double = 0.0
@@ -132,7 +131,6 @@ struct MountainView: View {
             UserDefaults.standard.set(todaysExercise, forKey: "todaysExercise")
             UserDefaults.standard.set(todaysProgressPercent, forKey: "todaysProgressPercent")
             
-            print("Start of Streak: \(startOfStreak)")
             print("Streak: \(getStreak())")
         }
     }
@@ -254,7 +252,7 @@ struct MountainView: View {
     
     func getStreak() -> Int {
         let calendar = Calendar.current
-        var end = calendar.startOfDay(for: endOfStreak)
+        let end = calendar.startOfDay(for: endOfStreak)
         let today = calendar.startOfDay(for: Date())
         let gap = calendar.dateComponents([.day], from: end, to: today).day!
         
