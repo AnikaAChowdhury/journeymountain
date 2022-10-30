@@ -26,7 +26,7 @@ struct CloudView: View {
                     .frame(width: screenWidth * 0.45)
                     .position(x: cloud1X ,y: 0 + (0.05)*(screenHeight))
                     .opacity(100.0)
-                    .animation(Animation.linear(duration: 150.0).repeatForever(autoreverses: true).speed(1.0), value: cloud1X)
+                    .animation(Animation.linear(duration: 130.0).repeatForever(autoreverses: true).speed(1.0), value: cloud1X)
                     .onAppear {
                         if(cloud1X < screenWidth){
                             cloud1X = screenWidth
@@ -40,7 +40,7 @@ struct CloudView: View {
                     .frame(width: screenWidth * 0.45)
                     .position(x: screenWidth - cloud2X ,y: 0 + (0.12)*(screenHeight) )
                     .opacity(100.0)
-                    .animation(Animation.linear(duration: 90.0).repeatForever(autoreverses: true).speed(1.0), value: cloud2X)
+                    .animation(Animation.linear(duration: 80.0).repeatForever(autoreverses: true).speed(1.0), value: cloud2X)
                     .onAppear {
                         if(cloud2X < screenWidth){
                             cloud2X = screenWidth
@@ -54,7 +54,7 @@ struct CloudView: View {
                     .frame(width: screenWidth * 0.45)
                     .position(x: cloud3X ,y: 0 + (0.19)*(screenHeight) )
                     .opacity(110.0)
-                    .animation(Animation.linear(duration: 80.0).repeatForever(autoreverses: true).speed(1.0), value: cloud3X)
+                    .animation(Animation.linear(duration: 70.0).repeatForever(autoreverses: true).speed(1.0), value: cloud3X)
                     .onAppear {
                         if(cloud3X < screenWidth){
                             cloud3X = screenWidth

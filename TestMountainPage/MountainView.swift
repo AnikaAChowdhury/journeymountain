@@ -11,7 +11,7 @@ let mountain_1 = Mountain(monthNumber: 1, worldColor: Color(UIColor(red: 0.871, 
 let mountain_2 = Mountain(monthNumber: 2, worldColor: Color(UIColor(red: 1, green: 0.721, blue: 0.721, alpha: 1).cgColor), clouds: "cloud", hasClouds: true,  decoration1: "heart_balloons", decoration2: "teddy_bear", decoration3: "roses", decoration4: "", showDecoration1: true, showDecoration2: true, showDecoration3: true, showDecoration4: false, hasSnow: true, sizeDecoration1: 0.15, sizeDecoration2: 0.11, sizeDecoration3: 0.1, sizeDecoration4: 0.15)
 let mountain_3 = Mountain(monthNumber: 3, worldColor: Color(UIColor(red: 0.871, green: 0.977, blue: 1, alpha: 1).cgColor), clouds: "cloud", hasClouds: true,  decoration1: "tree_3", decoration2: "tree_3", decoration3: "skis", decoration4: "", showDecoration1: true, showDecoration2: true, showDecoration3: true, showDecoration4: false, hasSnow: true, sizeDecoration1: 0.11, sizeDecoration2: 0.075, sizeDecoration3: 0.08, sizeDecoration4: 0.08)
 let mountain_4 = Mountain(monthNumber: 4, worldColor: Color(UIColor(red: 0.604, green: 0.898, blue: 0.961, alpha: 1).cgColor), clouds: "cloud", hasClouds: true,  decoration1: "spring_tree", decoration2: "spring_tree", decoration3: "orange_flower", decoration4: "flower_bush", showDecoration1: true, showDecoration2: false, showDecoration3: true, showDecoration4: true, hasSnow: false, sizeDecoration1: 0.17, sizeDecoration2: 0.17, sizeDecoration3: 0.07, sizeDecoration4: 0.1)
-let mountain_5_not_done = Mountain(monthNumber: 1, worldColor: Color(UIColor(red: 0.871, green: 0.977, blue: 1, alpha: 1).cgColor), clouds: "cloud", hasClouds: true,  decoration1: "tree_snowy_1", decoration2: "tree_snowy_1", decoration3: "snowman", decoration4: "", showDecoration1: true, showDecoration2: true, showDecoration3: true, showDecoration4: false, hasSnow: false, sizeDecoration1: 0.1, sizeDecoration2: 0.1, sizeDecoration3: 0.1, sizeDecoration4: 0.1)
+let mountain_5 = Mountain(monthNumber: 5, worldColor: Color(UIColor(red: 0.604, green: 0.898, blue: 0.961, alpha: 1).cgColor), clouds: "cloud", hasClouds: true,  decoration1: "cactus", decoration2: "cactus", decoration3: "tumbleweed", decoration4: "tumbleweed", showDecoration1: true, showDecoration2: false, showDecoration3: true, showDecoration4: true, hasSnow: false, sizeDecoration1: 0.13, sizeDecoration2: 0.09, sizeDecoration3: 0.1, sizeDecoration4: 0.08)
 let mountain_6 = Mountain(monthNumber: 6, worldColor: Color(UIColor(red: 0.604, green: 0.898, blue: 0.961, alpha: 1).cgColor), clouds: "cloud", hasClouds: true,  decoration1: "palm_tree", decoration2: "palm_tree", decoration3: "umbrella", decoration4: "beach_ball", showDecoration1: true, showDecoration2: false, showDecoration3: true, showDecoration4: true, hasSnow: false, sizeDecoration1: 0.19, sizeDecoration2: 0.17, sizeDecoration3: 0.11, sizeDecoration4: 0.07)
 let mountain_7 = Mountain(monthNumber: 7, worldColor: Color(UIColor(red: 0.508, green: 0.793, blue: 1, alpha: 1).cgColor), clouds: "cloud", hasClouds: false,  decoration1: "algae", decoration2: "algae", decoration3: "coral", decoration4: "coral", showDecoration1: true, showDecoration2: true, showDecoration3: true, showDecoration4: true, hasSnow: false, sizeDecoration1: 0.17, sizeDecoration2: 0.15, sizeDecoration3: 0.15, sizeDecoration4: 0.12,hasFish: true, fish1: "fish1", fish2: "fish2")
 let mountain_8 = Mountain(monthNumber: 8, worldColor: Color(UIColor(red: 0.604, green: 0.898, blue: 0.961, alpha: 1).cgColor), clouds: "cloud", hasClouds: true,  decoration1: "tree_8", decoration2: "tree_8", decoration3: "rock_large", decoration4: "rock_small", showDecoration1: true, showDecoration2: true, showDecoration3: true, showDecoration4: true, hasSnow: false, sizeDecoration1: 0.14, sizeDecoration2: 0.12, sizeDecoration3: 0.1, sizeDecoration4: 0.08)
@@ -21,7 +21,7 @@ let mountain_11 = Mountain(monthNumber: 11, worldColor: Color(UIColor(red: 1, gr
 let mountain_12 = Mountain(monthNumber: 12, worldColor: Color(UIColor(red: 0.871, green: 0.977, blue: 1, alpha: 1).cgColor), clouds: "cloud", hasClouds: true,  decoration1: "christmas_tree", decoration2: "presents_1", decoration3: "reindeer", decoration4: "presents_2", showDecoration1: true, showDecoration2: true, showDecoration3: true, showDecoration4: true, hasSnow: true, sizeDecoration1: 0.14, sizeDecoration2: 0.12, sizeDecoration3: 0.09, sizeDecoration4: 0.12)
 
 let mountains: [Mountain] = [
-    mountain_1, mountain_2, mountain_3, mountain_4, mountain_5_not_done, mountain_6,
+    mountain_1, mountain_2, mountain_3, mountain_4, mountain_5, mountain_6,
     mountain_7, mountain_8, mountain_9, mountain_10, mountain_11, mountain_12
 ]
 
@@ -343,6 +343,7 @@ struct MountainView: View {
         }
         UserDefaults.standard.set(mountainNum, forKey: "mountainNum")
         mountain = mountains[mountainNum - 1]
+        print("mountain number: " + String(mountainNum))
     }
     
     
