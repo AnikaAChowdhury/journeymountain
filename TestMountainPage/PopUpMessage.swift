@@ -3,8 +3,6 @@
 //  TestMountainPage
 //
 //  Created by Chowdhury,Anika on 10/12/22
-// 
-
 
 import SwiftUI
 
