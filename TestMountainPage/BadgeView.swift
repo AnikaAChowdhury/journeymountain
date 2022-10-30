@@ -10,21 +10,8 @@ import SwiftUI
 struct BadgeView: View {
     @Binding var userStreak:Int
     
-    @State private var showAlertPC = false
-    @State private var showAlert5PC = false
-    @State private var showAlert7_5PC = false
-    @State private var showAlert10PC = false
-    @State private var showAlert12_5PC = false
-    @State private var showAlert15PC = false
-    @State private var showAlertStr = false
-    @State private var showAlert1DStr = false
-    @State private var showAlert3DStr = false
-    @State private var showAlert1WStr = false
-    @State private var showAlert1MStr = false
-    @State private var showAlert3MStr = false
-    @State private var showAlert6MStr = false
-    @State private var showAlert9MStr = false
-    @State private var showAlert1YStr = false
+    @State private var popUpVisible:Double = 0.0
+    let popUp = PopUpMessage(todaysProgressPercent: .constant(0))
     
     //change to userDefaults value
     @State var startWeight:Double = 200
@@ -64,7 +51,7 @@ struct BadgeView: View {
     @State var nineMStrDate:String = UserDefaults.standard.string(forKey: "nineMStrDate") != nil ? UserDefaults.standard.string(forKey: "nineMStrDate")! : ""
     @State var oneYStrDate:String = UserDefaults.standard.string(forKey: "oneYStrDate") != nil ? UserDefaults.standard.string(forKey: "oneYStrDate")! : ""
     
-    
+    @State var message = ""
     @State private var showGame = false
     
     func loss() {
@@ -145,6 +132,7 @@ struct BadgeView: View {
             has3DStr = true
             UserDefaults.standard.set(true, forKey: "has3DStr")
         }
+        
         if userStreak >= 7 {
             if(!has1WStr) {
                 date = dateFormatter.string(from: Date())
@@ -154,6 +142,7 @@ struct BadgeView: View {
             has1WStr = true
             UserDefaults.standard.set(true, forKey: "has1WStr")
         }
+        
         if userStreak >= 30 {
             if(!has1MStr) {
                 date = dateFormatter.string(from: Date())
@@ -163,6 +152,7 @@ struct BadgeView: View {
             has1MStr = true
             UserDefaults.standard.set(true, forKey: "has1MStr")
         }
+        
         if userStreak >= 90 {
             if(!has3MStr) {
                 date = dateFormatter.string(from: Date())
@@ -172,6 +162,7 @@ struct BadgeView: View {
             has3MStr = true
             UserDefaults.standard.set(true, forKey: "has3MStr")
         }
+        
         if userStreak > 180 {
             if(!has6MStr) {
                 date = dateFormatter.string(from: Date())
@@ -181,6 +172,7 @@ struct BadgeView: View {
             has6MStr = true
             UserDefaults.standard.set(true, forKey: "has6MStr")
         }
+        
         if userStreak > 270 {
             if(!has9MStr) {
                 date = dateFormatter.string(from: Date())
@@ -190,6 +182,7 @@ struct BadgeView: View {
             has9MStr = true
             UserDefaults.standard.set(true, forKey: "has9MStr")
         }
+        
         if userStreak > 365 {
             if(!has1YStr) {
                 date = dateFormatter.string(from: Date())
@@ -201,9 +194,16 @@ struct BadgeView: View {
         }
     }
     
+    func popUpWindow(screenWidth:CGFloat) {
+        popUpVisible = 100.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
+            popUpVisible = 0.0
+            message = ""
+        }
+    }
     
     var body: some View {
-        let screenSize: CGRect = UIScreen.main.bounds
+        let screenSize:CGRect = UIScreen.main.bounds
         let screenWidth:CGFloat = screenSize.width
         let screenHeight:CGFloat = screenSize.height
         
@@ -232,23 +232,16 @@ struct BadgeView: View {
                         
                         //percent weight loss category
                         VStack{
-                            
                             HStack{
                                 
                                 if(has5PC) {
                                     Button(action: {
-                                        showAlert5PC = true
+                                        message = "5% Weight Loss\n\nThis badge was earned on \n \(fivePCDate) \n from losing 5% of your initial body weight."
+                                        popUpWindow(screenWidth: screenWidth)
                                     }, label: {
                                         Image("5pc")
                                     })
                                     .buttonStyle(.plain)
-                                    .alert(isPresented: $showAlert5PC) {
-                                        Alert(
-                                            title: Text("5% Weight Loss"),
-                                            message: Text("This badge was earned on \n \(fivePCDate) \n from losing 5% of your initial body weight."),
-                                            dismissButton: .cancel(Text("Close"))
-                                        )
-                                    }
                                 }
                                 else {
                                     Image("badge-empty")
@@ -256,18 +249,12 @@ struct BadgeView: View {
                                 
                                 if(has7_5PC) {
                                     Button(action: {
-                                        showAlert7_5PC = true
+                                        message = "7.5% Weight Loss\n\nThis badge was earned on \n \(seven_fivePCDate) \n from losing 7.5% of your initial body weight."
+                                        popUpWindow(screenWidth: screenWidth)
                                     }, label: {
                                         Image("7_5pc")
                                     })
                                     .buttonStyle(.plain)
-                                    .alert(isPresented: $showAlert7_5PC) {
-                                        Alert(
-                                            title: Text("7.5% Weight Loss"),
-                                            message: Text("This badge was earned on \n \(seven_fivePCDate) \n from losing 7.5% of your initial body weight."),
-                                            dismissButton: .cancel(Text("Close"))
-                                        )
-                                    }
                                 }
                                 else {
                                     Image("badge-empty")
@@ -278,18 +265,13 @@ struct BadgeView: View {
                             HStack{
                                 if(has10PC) {
                                     Button(action: {
-                                        showAlert10PC = true
+                                        message = "10% Weight Loss\n\nThis badge was earned on \n \(tenPCDate) \n from losing 10% of your initial body weight."
+                                        popUpWindow(screenWidth: screenWidth)
                                     }, label: {
                                         Image("10pc")
                                     })
                                     .buttonStyle(.plain)
-                                    .alert(isPresented: $showAlert10PC) {
-                                        Alert(
-                                            title: Text("10% Weight Loss"),
-                                            message: Text("This badge was earned on \n \(tenPCDate) \n from losing 10% of your initial body weight."),
-                                            dismissButton: .cancel(Text("Close"))
-                                        )
-                                    }
+                                    
                                 }
                                 else {
                                     Image("badge-empty")
@@ -297,18 +279,12 @@ struct BadgeView: View {
                                 
                                 if(has12_5PC) {
                                     Button(action: {
-                                        showAlert12_5PC = true
+                                        message = "12.5% Weight Loss\n\nThis badge was earned on \n \(twelve_fivePCDate) \n from losing 12.5% of your initial body weight."
+                                        popUpWindow(screenWidth: screenWidth)
                                     }, label: {
                                         Image("12_5pc")
                                     })
                                     .buttonStyle(.plain)
-                                    .alert(isPresented: $showAlert12_5PC) {
-                                        Alert(
-                                            title: Text("12.5% Weight Loss"),
-                                            message: Text("This badge was earned on \n \(twelve_fivePCDate) \n from losing 12.5% of your initial body weight."),
-                                            dismissButton: .cancel(Text("Close"))
-                                        )
-                                    }
                                 }
                                 else {
                                     Image("badge-empty")
@@ -316,18 +292,12 @@ struct BadgeView: View {
                                 
                                 if(has15PC) {
                                     Button(action: {
-                                        showAlert15PC = true
+                                        message = "15% Weight Loss\n\nThis badge was earned on \n \(fifteenPCDate) \n from losing 15% of your initial body weight."
+                                        popUpWindow(screenWidth: screenWidth)
                                     }, label: {
                                         Image("15pc")
                                     })
                                     .buttonStyle(.plain)
-                                    .alert(isPresented: $showAlert12_5PC) {
-                                        Alert(
-                                            title: Text("15% Weight Loss"),
-                                            message: Text("This badge was earned on \n \(fifteenPCDate) \n from losing 15% of your initial body weight."),
-                                            dismissButton: .cancel(Text("Close"))
-                                        )
-                                    }
                                 }
                                 else {
                                     Image("badge-empty")
@@ -336,7 +306,8 @@ struct BadgeView: View {
                             
                             // % initial weight loss category
                             Button(action: {
-                                showAlertPC = true
+                                message = "Percent Initial Weight Loss\n\nThis badge category is for percent weight loss goals of 5 to 15%. Losing 5 to 15% of your initial body weight can result in lowered blood pressure and cholesterol levels, better heart health, and decreased risks for diabetes and various types of cancer."
+                                popUpWindow(screenWidth: screenWidth)
                             }, label: {
                                 Text("Percent Initial Weight Loss")
                                     .font(.system(size: 20, weight: Font.Weight.bold))
@@ -349,56 +320,34 @@ struct BadgeView: View {
                             })
                             .padding(.top, 10.0)
                             .padding(.bottom, 30.0)
-                            .alert(isPresented: $showAlertPC) {
-                                Alert(title: Text("Percent Initial Weight Loss"),
-                                      message: Text("This badge category is for percent weight loss goals of 5 to 15%. Losing 5 to 15% of your initial body weight can result in lower blood pressure and cholesterol levels, better heart health, and decreased risks for diabetes and various types of cancer."),
-                                      dismissButton: .cancel(Text("Close"))
-                                )
-                            }
-                            
                         }
                         
                         Spacer()
                         
                         //daily streak
                         VStack{
-                            
-                            HStack{
-                                
+                            HStack {
                                 if(has1DStr) {
                                     Button(action: {
-                                        showAlert1DStr = true
+                                        message = "1 Day Streak\n\nThis badge was earned on \n \(oneDStrDate) \n from logging your progress into the app for a day."
+                                        popUpWindow(screenWidth: screenWidth)
                                     }, label: {
                                         Image("1day")
                                     })
                                     .buttonStyle(.plain)
-                                    .alert(isPresented: $showAlert1DStr) {
-                                        Alert(
-                                            title: Text("1 Day Streak"),
-                                            message: Text("This badge was earned on \n \(oneDStrDate) \n from logging your progress into the app for 1 day."),
-                                            dismissButton: .cancel(Text("Close"))
-                                        )
-                                    }
                                 }
                                 else {
                                     Image("badge-empty")
                                 }
                                 
-                                
                                 if(has3DStr) {
                                     Button(action: {
-                                        showAlert3DStr = true
+                                        message = "3 Day Streak\n\nThis badge was earned on \n \(threeDStrDate) \n from logging your progress into the app for 3 days straight."
+                                        popUpWindow(screenWidth: screenWidth)
                                     }, label: {
                                         Image("3day")
                                     })
                                     .buttonStyle(.plain)
-                                    .alert(isPresented: $showAlert3DStr) {
-                                        Alert(
-                                            title: Text("3 Day Streak"),
-                                            message: Text("This badge was earned on \n \(threeDStrDate) \n from logging your progress into the app for 3 days straight."),
-                                            dismissButton: .cancel(Text("Close"))
-                                        )
-                                    }
                                 }
                                 else {
                                     Image("badge-empty")
@@ -406,21 +355,15 @@ struct BadgeView: View {
                             }
                             
                             HStack{
-                            
+                                
                                 if(has1WStr) {
                                     Button(action: {
-                                        showAlert1WStr = true
+                                        message = "1 Week Streak\n\nThis badge was earned on \n \(oneWStrDate) \n from logging your progress into the app for a week straight."
+                                        popUpWindow(screenWidth: screenWidth)
                                     }, label: {
                                         Image("1week")
                                     })
                                     .buttonStyle(.plain)
-                                    .alert(isPresented: $showAlert1WStr) {
-                                        Alert(
-                                            title: Text("1 Week Streak"),
-                                            message: Text("This badge was earned on \n \(oneWStrDate) \n from logging your progress into the app for a week straight."),
-                                            dismissButton: .cancel(Text("Close"))
-                                        )
-                                    }
                                 }
                                 else {
                                     Image("badge-empty")
@@ -428,18 +371,11 @@ struct BadgeView: View {
                                 
                                 if(has1MStr) {
                                     Button(action: {
-                                        showAlert1MStr = true
+                                        message = "1 Month Streak\n\nThis badge was earned on \n \(oneMStrDate) \n from logging your progress into the app for a month straight."
                                     }, label: {
                                         Image("1month")
                                     })
                                     .buttonStyle(.plain)
-                                    .alert(isPresented: $showAlert1MStr) {
-                                        Alert(
-                                            title: Text("1 Month Streak"),
-                                            message: Text("This badge was earned on \n \(oneMStrDate) \n from logging your progress into the app for a month straight."),
-                                            dismissButton: .cancel(Text("Close"))
-                                        )
-                                    }
                                 }
                                 else {
                                     Image("badge-empty")
@@ -447,107 +383,79 @@ struct BadgeView: View {
                                 
                                 if(has3MStr) {
                                     Button(action: {
-                                        showAlert3MStr = true
+                                        message = "3 Month Streak\n\nThis badge was earned on \n \(threeMStrDate) \n from logging your progress into the app for 3 months straight."
+                                        popUpWindow(screenWidth: screenWidth)
                                     }, label: {
                                         Image("3month")
                                     })
                                     .buttonStyle(.plain)
-                                    .alert(isPresented: $showAlert3MStr) {
-                                        Alert(
-                                            title: Text("3 Month Streak"),
-                                            message: Text("This badge was earned on \n \(threeMStrDate) \n from logging your progress into the app for 3 months straight."),
-                                            dismissButton: .cancel(Text("Close"))
-                                        )
-                                    }
                                 }
                                 else {
                                     Image("badge-empty")
                                 }
                             }
+                                
+                                HStack{
+                                    
+                                    if(has6MStr) {
+                                        Button(action: {
+                                            message = "6 Month Streak\n\nThis badge was earned on \n \(sixMStrDate) \n from logging your progress into the app for 6 months straight."
+                                            popUpWindow(screenWidth: screenWidth)
+                                        }, label: {
+                                            Image("6month")
+                                        })
+                                        .buttonStyle(.plain)
+                                    }
+                                    else {
+                                        Image("badge-empty")
+                                    }
+                                    
+                                    if(has9MStr) {
+                                        Button(action: {
+                                            message = "9 Month Streak\n\nThis badge was earned on \n \(nineMStrDate) \n from logging your progress into the app for 9 months straight."
+                                            popUpWindow(screenWidth: screenWidth)
+                                        }, label: {
+                                            Image("9month")
+                                        })
+                                        .buttonStyle(.plain)
+                                    }
+                                    else {
+                                        Image("badge-empty")
+                                    }
+                                    
+                                    if(has1YStr) {
+                                        Button(action: {
+                                            message = "1 Year Streak\n\nThis badge was earned on \n \(oneYStrDate) \n from logging your progress into the app for 1 year straight."
+                                            popUpWindow(screenWidth: screenWidth)
+                                        }, label: {
+                                            Image("1year")
+                                        })
+                                        .buttonStyle(.plain)
+                                    }
+                                    else {
+                                        Image("badge-empty")
+                                    }
+                                }
+                                
+                                // Daily streak category
+                                Button(action: {
+                                    message = "Daily Streak\n\nThis badge category is for your daily streak. If you log in and record your food and exercise every day, you can earn a badge for a streak."
+                                    popUpWindow(screenWidth: screenWidth)
+                                }, label: {
+                                    Text("Daily Streak")
+                                        .font(.system(size: 20, weight: Font.Weight.bold))
+                                        .padding(7.0)
+                                        .padding(.horizontal, 10.0)
+                                        .background(Color(red: 200/255, green: 135/255, blue: 35/255))
+                                        .foregroundColor(Color.white)
+                                        .cornerRadius(30.0)
+                                    
+                                })
+                                .padding(.top, 10.0)
+                                .padding(.bottom, 30.0)
+                                
                             
-                            HStack{
-                                
-                                if(has6MStr) {
-                                    Button(action: {
-                                        showAlert6MStr = true
-                                    }, label: {
-                                        Image("6month")
-                                    })
-                                    .buttonStyle(.plain)
-                                    .alert(isPresented: $showAlert6MStr) {
-                                        Alert(
-                                            title: Text("6 Month Streak"),
-                                            message: Text("This badge was earned on \n \(sixMStrDate) \n from logging your progress into the app for 6 months straight."),
-                                            dismissButton: .cancel(Text("Close"))
-                                        )
-                                    }
-                                }
-                                else {
-                                    Image("badge-empty")
-                                }
-                                
-                                if(has9MStr) {
-                                    Button(action: {
-                                        showAlert9MStr = true
-                                    }, label: {
-                                        Image("9month")
-                                    })
-                                    .buttonStyle(.plain)
-                                    .alert(isPresented: $showAlert9MStr) {
-                                        Alert(
-                                            title: Text("9 Month Streak"),
-                                            message: Text("This badge was earned on \n \(nineMStrDate) \n from logging your progress into the app for 9 months straight."),
-                                            dismissButton: .cancel(Text("Close"))
-                                        )
-                                    }
-                                }
-                                else {
-                                    Image("badge-empty")
-                                }
-                                
-                                if(has1YStr) {
-                                    Button(action: {
-                                        showAlert1YStr = true
-                                    }, label: {
-                                        Image("1year")
-                                    })
-                                    .buttonStyle(.plain)
-                                    .alert(isPresented: $showAlert1YStr) {
-                                        Alert(
-                                            title: Text("1 Year Streak"),
-                                            message: Text("This badge was earned on \n \(oneYStrDate) \n from logging your progress into the app for 1 Year straight."),
-                                            dismissButton: .cancel(Text("Close"))
-                                        )
-                                    }
-                                }
-                                else {
-                                    Image("badge-empty")
-                                }
-                            }
-                            
-                            // Daily streak category
-                            Button(action: {
-                                showAlertStr = true
-                            }, label: {
-                                Text("Daily Streak")
-                                    .font(.system(size: 20, weight: Font.Weight.bold))
-                                    .padding(7.0)
-                                    .padding(.horizontal, 10.0)
-                                    .background(Color(red: 200/255, green: 135/255, blue: 35/255))
-                                    .foregroundColor(Color.white)
-                                    .cornerRadius(30.0)
-                                
-                            })
-                            .padding(.top, 10.0)
-                            .padding(.bottom, 30.0)
-                            .alert(isPresented: $showAlertStr) {
-                                Alert(title: Text("Daily Streak"),
-                                      message: Text("This badge category is for your daily streak. If you log in and record your food and exercise every day, you can earn a badge for a streak."),
-                                      dismissButton: .cancel(Text("Close"))
-                                )
-                            }
                         }
-                        
                     }
                     .padding(.top, 20.0)
                     .padding(.bottom, 40.0)
@@ -557,6 +465,11 @@ struct BadgeView: View {
                 .onAppear {
                     loss()
                     countStreak()
+                }
+                if(popUpVisible == 100.0) {
+                    popUp.badgePopUp(screenWidth: screenWidth, message: message)
+                        .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
+                        .position(x: screenWidth/2, y: screenHeight/2)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity) 
