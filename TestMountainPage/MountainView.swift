@@ -39,8 +39,10 @@ struct MountainView: View {
     @State var day:Int = UserDefaults.standard.integer(forKey: "day") != nil ? UserDefaults.standard.integer(forKey: "day") : 0
     @State var userStreak:Int = UserDefaults.standard.integer(forKey: "userStreak") != nil ? UserDefaults.standard.integer(forKey: "userStreak") : 0
     @State var endOfStreak:Date = UserDefaults.standard.object(forKey: "endOfStreak") != nil ? UserDefaults.standard.object(forKey: "endOfStreak") as! Date : Date()
+    let popUp = PopUpMessage(todaysProgressPercent: .constant(0))
     @State var confettiVisible:Double = 0.0
     @State var popUpVisible:Double = 0.0
+    @State var presentBadge:Double = 0.0
     @State private var showGame = true
     
     // increments position of character
@@ -270,6 +272,12 @@ struct MountainView: View {
         }
         
         return userStreak
+    }
+    
+    func badgeEarned() {
+        let badges = BadgeView(userStreak: self.$userStreak)
+        // popUp object
+        // Check if badge earned bool is true, show pop up message with image of badge added
     }
     
     func showConfetti(){

@@ -469,7 +469,7 @@ struct BadgeView: View {
                 if(popUpVisible == 100.0) {
                     popUp.badgePopUp(screenWidth: screenWidth, message: message)
                         .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
-                        .position(x: screenWidth/2, y: screenHeight/2)
+                        .position(x: screenWidth/2, y: screenHeight/2 - screenHeight*0.075)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity) 
