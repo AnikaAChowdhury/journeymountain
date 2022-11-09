@@ -10,6 +10,8 @@ import SwiftUI
 struct BadgeView: View {
     @Binding var userStreak:Int
     
+    @State var earnPCPopUp:Double = 0.0
+    @State var earnStrPopUp:Double = 0.0
     @State private var popUpVisible:Double = 0.0
     let popUp = PopUpMessage(todaysProgressPercent: .constant(0))
     
@@ -65,6 +67,7 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "fivePCDate")
                 fivePCDate = date
+                earnPCPopUp = 100.0
             }
             has5PC = true
             UserDefaults.standard.set(true, forKey: "has5PC")
@@ -74,6 +77,7 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "seven_fivePCDate")
                 seven_fivePCDate = date
+                earnPCPopUp = 100.0
             }
             has7_5PC = true
             UserDefaults.standard.set(true, forKey: "has7_5PC")
@@ -83,6 +87,7 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "tenPCDate")
                 tenPCDate = date
+                earnPCPopUp = 100.0
             }
             has10PC = true
             UserDefaults.standard.set(true, forKey: "has10PC")
@@ -92,6 +97,7 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "twelve_fivePCDate")
                 twelve_fivePCDate = date
+                earnPCPopUp = 100.0
             }
             has12_5PC = true
             UserDefaults.standard.set(true, forKey: "has12_5PC")
@@ -101,6 +107,7 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "fifteenPCDate")
                 fifteenPCDate = date
+                earnPCPopUp = 100.0
             }
             has15PC = true
             UserDefaults.standard.set(true, forKey: "has15PC")
@@ -118,6 +125,7 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "oneDStrDate")
                 oneDStrDate = date
+                earnStrPopUp = 100.0
             }
             has1DStr = true
             UserDefaults.standard.set(true, forKey: "has1DStr")
@@ -128,6 +136,7 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "threeDStrDate")
                 threeDStrDate = date
+                earnStrPopUp = 100.0
             }
             has3DStr = true
             UserDefaults.standard.set(true, forKey: "has3DStr")
@@ -138,6 +147,7 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "oneWStrDate")
                 oneWStrDate = date
+                earnStrPopUp = 100.0
             }
             has1WStr = true
             UserDefaults.standard.set(true, forKey: "has1WStr")
@@ -148,6 +158,7 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "oneMStrDate")
                 oneMStrDate = date
+                earnStrPopUp = 100.0
             }
             has1MStr = true
             UserDefaults.standard.set(true, forKey: "has1MStr")
@@ -158,6 +169,7 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "threeMStrDate")
                 threeMStrDate = date
+                earnStrPopUp = 100.0
             }
             has3MStr = true
             UserDefaults.standard.set(true, forKey: "has3MStr")
@@ -168,6 +180,7 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "sixMStrDate")
                 sixMStrDate = date
+                earnStrPopUp = 100.0
             }
             has6MStr = true
             UserDefaults.standard.set(true, forKey: "has6MStr")
@@ -178,6 +191,7 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "nineMStrDate")
                 nineMStrDate = date
+                earnStrPopUp = 100.0
             }
             has9MStr = true
             UserDefaults.standard.set(true, forKey: "has9MStr")
@@ -188,6 +202,7 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "oneYStrDate")
                 oneYStrDate = date
+                earnStrPopUp = 100.0
             }
             has1YStr = true
             UserDefaults.standard.set(true, forKey: "has1YStr")
