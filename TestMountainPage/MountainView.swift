@@ -140,6 +140,8 @@ struct MountainView: View {
             UserDefaults.standard.set(todaysExercise, forKey: "todaysExercise")
             UserDefaults.standard.set(todaysProgressPercent, forKey: "todaysProgressPercent")
             badgeEarned()
+            badgeEarned()
+            //for some reason the popup only appears without pressing submit again if this fxn is run twice in a row
         }
     }
     
@@ -282,12 +284,9 @@ struct MountainView: View {
     
     func badgeEarned() {
         let badgePage = BadgeView(userStreak: self.$userStreak)
-        /*if(badgePage.has5PC) {
-            badge = "5pc"
-            achievement = "5"
-        }
-        message = "Congratulations! You've earned this badge for losing \(achievement)% of your initial body weight. Keep up the amazing work!"*/
+        
         badgePage.loss()
+        
         if(badgePage.earnPCPopUp) {
             if(badgePage.has5PC) {
                 badge = "5pc"
@@ -313,9 +312,14 @@ struct MountainView: View {
             message = "Congratulations! You've earned this badge for losing \(achievement)% of your initial body weight. Keep up the amazing work!"
             presentBadge = 100.0
         }
+        
         badgePage.countStreak()
-        print(badgePage.earnStrPopUp)
+        
         if(badgePage.earnStrPopUp) {
+            if(badgePage.has1DStr) {
+                badge = "1day"
+                achievement = "1 day"
+            }
             if(badgePage.has3DStr) {
                 badge = "3day"
                 achievement = "3 days in a row"
@@ -348,7 +352,7 @@ struct MountainView: View {
             presentBadge = 100.0
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(4)) {
             presentBadge = 0.0
         }
          

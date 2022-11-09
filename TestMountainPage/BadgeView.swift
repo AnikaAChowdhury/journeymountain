@@ -137,6 +137,8 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "oneDStrDate")
                 oneDStrDate = date
+                earnStrPopUp = true
+                UserDefaults.standard.set(true, forKey: "earnStrPopUp")
             }
             has1DStr = true
             UserDefaults.standard.set(true, forKey: "has1DStr")
@@ -227,7 +229,7 @@ struct BadgeView: View {
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
-            earnPCPopUp = false
+            earnStrPopUp = false
             UserDefaults.standard.set(false, forKey: "earnStrPopUp")
         }
     }
