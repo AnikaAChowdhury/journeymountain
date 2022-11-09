@@ -126,7 +126,6 @@ struct MountainView: View {
     func submitDay(){
         popUpVisible = 100.0
         print("Streak: \(getStreak())")
-        badgeEarned()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
             popUpVisible = 0.0
@@ -140,7 +139,7 @@ struct MountainView: View {
             UserDefaults.standard.set(prevTodaysSteps, forKey: "prevTodaysSteps")
             UserDefaults.standard.set(todaysExercise, forKey: "todaysExercise")
             UserDefaults.standard.set(todaysProgressPercent, forKey: "todaysProgressPercent")
-            
+            badgeEarned()
         }
     }
     
@@ -283,7 +282,11 @@ struct MountainView: View {
     
     func badgeEarned() {
         let badgePage = BadgeView(userStreak: self.$userStreak)
-        
+        if(badgePage.has5PC) {
+            badge = "5pc"
+            achievement = "5"
+        }
+        message = "Congratulations! You've earned this badge for losing \(achievement)% of your initial body weight. Keep up the amazing work!"
         badgePage.loss()
         
         if(badgePage.earnPCPopUp == 100.0) {
@@ -323,7 +326,7 @@ struct MountainView: View {
             if(badgePage.has3DStr) {
                 badge = "3day"
                 achievement = "3 days in a row"
-                
+                print("earn3StrPopUp")
             }
             if(badgePage.has1WStr) {
                 badge = "1week"
@@ -357,6 +360,7 @@ struct MountainView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
             presentBadge = 0.0
         }
+         
     }
     
     func showConfetti(){
