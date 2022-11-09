@@ -282,14 +282,13 @@ struct MountainView: View {
     
     func badgeEarned() {
         let badgePage = BadgeView(userStreak: self.$userStreak)
-        if(badgePage.has5PC) {
+        /*if(badgePage.has5PC) {
             badge = "5pc"
             achievement = "5"
         }
-        message = "Congratulations! You've earned this badge for losing \(achievement)% of your initial body weight. Keep up the amazing work!"
+        message = "Congratulations! You've earned this badge for losing \(achievement)% of your initial body weight. Keep up the amazing work!"*/
         badgePage.loss()
-        
-        if(badgePage.earnPCPopUp == 100.0) {
+        if(badgePage.earnPCPopUp) {
             if(badgePage.has5PC) {
                 badge = "5pc"
                 achievement = "5"
@@ -312,21 +311,14 @@ struct MountainView: View {
                 achievement = "15"
             }
             message = "Congratulations! You've earned this badge for losing \(achievement)% of your initial body weight. Keep up the amazing work!"
-            badgePage.earnPCPopUp = 0.0
             presentBadge = 100.0
         }
-        
         badgePage.countStreak()
-        
-        if(badgePage.earnStrPopUp == 100.0) {
-            if(badgePage.has1DStr) {
-                badge = "1day"
-                achievement = "1 day"
-            }
+        print(badgePage.earnStrPopUp)
+        if(badgePage.earnStrPopUp) {
             if(badgePage.has3DStr) {
                 badge = "3day"
                 achievement = "3 days in a row"
-                print("earn3StrPopUp")
             }
             if(badgePage.has1WStr) {
                 badge = "1week"
@@ -353,7 +345,6 @@ struct MountainView: View {
                 achievement = "1 year"
             }
             message = "Congratulations! You've earned this badge for tracking your health journey for \(achievement). Keep up your daily streak!"
-            badgePage.earnStrPopUp = 0.0
             presentBadge = 100.0
         }
         
