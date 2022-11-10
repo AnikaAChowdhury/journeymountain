@@ -234,7 +234,7 @@ struct BadgeView: View {
         }
     }
     
-    func popUpWindow(screenWidth:CGFloat) {
+    func popUpWindow() {
         popUpVisible = 100.0
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
             popUpVisible = 0.0
@@ -277,7 +277,7 @@ struct BadgeView: View {
                                 if(has5PC) {
                                     Button(action: {
                                         message = "5% Weight Loss\n\nThis badge was earned on \n \(fivePCDate) \n from losing 5% of your initial body weight."
-                                        popUpWindow(screenWidth: screenWidth)
+                                        popUpWindow()
                                     }, label: {
                                         Image("5pc")
                                     })
@@ -290,7 +290,7 @@ struct BadgeView: View {
                                 if(has7_5PC) {
                                     Button(action: {
                                         message = "7.5% Weight Loss\n\nThis badge was earned on \n \(seven_fivePCDate) \n from losing 7.5% of your initial body weight."
-                                        popUpWindow(screenWidth: screenWidth)
+                                        popUpWindow()
                                     }, label: {
                                         Image("7_5pc")
                                     })
@@ -306,7 +306,7 @@ struct BadgeView: View {
                                 if(has10PC) {
                                     Button(action: {
                                         message = "10% Weight Loss\n\nThis badge was earned on \n \(tenPCDate) \n from losing 10% of your initial body weight."
-                                        popUpWindow(screenWidth: screenWidth)
+                                        popUpWindow()
                                     }, label: {
                                         Image("10pc")
                                     })
@@ -320,7 +320,7 @@ struct BadgeView: View {
                                 if(has12_5PC) {
                                     Button(action: {
                                         message = "12.5% Weight Loss\n\nThis badge was earned on \n \(twelve_fivePCDate) \n from losing 12.5% of your initial body weight."
-                                        popUpWindow(screenWidth: screenWidth)
+                                        popUpWindow()
                                     }, label: {
                                         Image("12_5pc")
                                     })
@@ -333,7 +333,7 @@ struct BadgeView: View {
                                 if(has15PC) {
                                     Button(action: {
                                         message = "15% Weight Loss\n\nThis badge was earned on \n \(fifteenPCDate) \n from losing 15% of your initial body weight."
-                                        popUpWindow(screenWidth: screenWidth)
+                                        popUpWindow()
                                     }, label: {
                                         Image("15pc")
                                     })
@@ -347,7 +347,7 @@ struct BadgeView: View {
                             // % initial weight loss category
                             Button(action: {
                                 message = "Percent Initial Weight Loss\n\nThis badge category is for percent weight loss goals of 5 to 15%. Losing 5 to 15% of your initial body weight can result in lowered blood pressure and cholesterol levels, better heart health, and decreased risks for diabetes and various types of cancer."
-                                popUpWindow(screenWidth: screenWidth)
+                                popUpWindow()
                             }, label: {
                                 Text("Percent Initial Weight Loss")
                                     .font(.system(size: 20, weight: Font.Weight.bold))
@@ -370,7 +370,7 @@ struct BadgeView: View {
                                 if(has1DStr) {
                                     Button(action: {
                                         message = "1 Day Streak\n\nThis badge was earned on \n \(oneDStrDate) \n from logging your progress into the app for a day."
-                                        popUpWindow(screenWidth: screenWidth)
+                                        popUpWindow()
                                     }, label: {
                                         Image("1day")
                                     })
@@ -383,7 +383,7 @@ struct BadgeView: View {
                                 if(has3DStr) {
                                     Button(action: {
                                         message = "3 Day Streak\n\nThis badge was earned on \n \(threeDStrDate) \n from logging your progress into the app for 3 days straight."
-                                        popUpWindow(screenWidth: screenWidth)
+                                        popUpWindow()
                                     }, label: {
                                         Image("3day")
                                     })
@@ -399,7 +399,7 @@ struct BadgeView: View {
                                 if(has1WStr) {
                                     Button(action: {
                                         message = "1 Week Streak\n\nThis badge was earned on \n \(oneWStrDate) \n from logging your progress into the app for a week straight."
-                                        popUpWindow(screenWidth: screenWidth)
+                                        popUpWindow()
                                     }, label: {
                                         Image("1week")
                                     })
@@ -424,7 +424,7 @@ struct BadgeView: View {
                                 if(has3MStr) {
                                     Button(action: {
                                         message = "3 Month Streak\n\nThis badge was earned on \n \(threeMStrDate) \n from logging your progress into the app for 3 months straight."
-                                        popUpWindow(screenWidth: screenWidth)
+                                        popUpWindow()
                                     }, label: {
                                         Image("3month")
                                     })
@@ -440,7 +440,7 @@ struct BadgeView: View {
                                     if(has6MStr) {
                                         Button(action: {
                                             message = "6 Month Streak\n\nThis badge was earned on \n \(sixMStrDate) \n from logging your progress into the app for 6 months straight."
-                                            popUpWindow(screenWidth: screenWidth)
+                                            popUpWindow()
                                         }, label: {
                                             Image("6month")
                                         })
@@ -453,7 +453,7 @@ struct BadgeView: View {
                                     if(has9MStr) {
                                         Button(action: {
                                             message = "9 Month Streak\n\nThis badge was earned on \n \(nineMStrDate) \n from logging your progress into the app for 9 months straight."
-                                            popUpWindow(screenWidth: screenWidth)
+                                            popUpWindow()
                                         }, label: {
                                             Image("9month")
                                         })
@@ -466,7 +466,7 @@ struct BadgeView: View {
                                     if(has1YStr) {
                                         Button(action: {
                                             message = "1 Year Streak\n\nThis badge was earned on \n \(oneYStrDate) \n from logging your progress into the app for 1 year straight."
-                                            popUpWindow(screenWidth: screenWidth)
+                                            popUpWindow()
                                         }, label: {
                                             Image("1year")
                                         })
@@ -480,7 +480,7 @@ struct BadgeView: View {
                                 // Daily streak category
                                 Button(action: {
                                     message = "Daily Streak\n\nThis badge category is for your daily streak. If you log in and record your food and exercise every day, you can earn a badge for a streak."
-                                    popUpWindow(screenWidth: screenWidth)
+                                    popUpWindow()
                                 }, label: {
                                     Text("Daily Streak")
                                         .font(.system(size: 20, weight: Font.Weight.bold))
@@ -507,9 +507,8 @@ struct BadgeView: View {
                     countStreak()
                 }
                 if(popUpVisible == 100.0) {
-                    popUp.badgePopUp(screenWidth: screenWidth, message: message)
+                    BadgePagePopUp(message: $message)
                         .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
-                        .position(x: screenWidth/2, y: screenHeight/2 - screenHeight*0.075)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity) 

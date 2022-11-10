@@ -39,8 +39,6 @@ struct MountainView: View {
     @State var day:Int = UserDefaults.standard.integer(forKey: "day") != nil ? UserDefaults.standard.integer(forKey: "day") : 0
     @State var userStreak:Int = UserDefaults.standard.integer(forKey: "userStreak") != nil ? UserDefaults.standard.integer(forKey: "userStreak") : 0
     @State var endOfStreak:Date = UserDefaults.standard.object(forKey: "endOfStreak") != nil ? UserDefaults.standard.object(forKey: "endOfStreak") as! Date : Date()
-    let popUp = PopUpMessage(todaysProgressPercent: .constant(0))
-    let badgePage = BadgeView(userStreak: .constant(1))
     @State var confettiVisible:Double = 0.0
     @State var popUpVisible:Double = 0.0
     @State var presentBadge:Double = 0.0

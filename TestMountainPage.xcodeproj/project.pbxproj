@@ -27,6 +27,8 @@
 		4CEF6064291D71810000BF6A /* backwards.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4CEF605F291D71800000BF6A /* backwards.wav */; };
 		4CEF6065291D71810000BF6A /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4CEF6060291D71810000BF6A /* background.wav */; };
 		4CEF6066291D71810000BF6A /* badge_earned.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4CEF6061291D71810000BF6A /* badge_earned.wav */; };
+		8DE325F6291DA1F800A998F9 /* BadgePagePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE325F5291DA1F800A998F9 /* BadgePagePopUp.swift */; };
+		8DE325F8291DA21D00A998F9 /* BadgeEarnedPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE325F7291DA21D00A998F9 /* BadgeEarnedPopUp.swift */; };
 		998A055A28F7194D00299F53 /* PopUpMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998A055928F7194C00299F53 /* PopUpMessage.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +54,8 @@
 		4CEF605F291D71800000BF6A /* backwards.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = backwards.wav; sourceTree = "<group>"; };
 		4CEF6060291D71810000BF6A /* background.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = background.wav; sourceTree = "<group>"; };
 		4CEF6061291D71810000BF6A /* badge_earned.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = badge_earned.wav; sourceTree = "<group>"; };
+		8DE325F5291DA1F800A998F9 /* BadgePagePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePagePopUp.swift; sourceTree = "<group>"; };
+		8DE325F7291DA21D00A998F9 /* BadgeEarnedPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeEarnedPopUp.swift; sourceTree = "<group>"; };
 		998A055928F7194C00299F53 /* PopUpMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpMessage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,6 +141,8 @@
 				998A055928F7194C00299F53 /* PopUpMessage.swift */,
 				4C11A70028E8F3D6007C24B6 /* CharacterView.swift */,
 				4C15490E28E51296005690B0 /* MountainView.swift */,
+				8DE325F5291DA1F800A998F9 /* BadgePagePopUp.swift */,
+				8DE325F7291DA21D00A998F9 /* BadgeEarnedPopUp.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -236,9 +242,11 @@
 				4C048C0128FD9849007D1F9C /* BadgeView.swift in Sources */,
 				4CE909D628E8B4580041AD34 /* StepsView.swift in Sources */,
 				998A055A28F7194D00299F53 /* PopUpMessage.swift in Sources */,
+				8DE325F6291DA1F800A998F9 /* BadgePagePopUp.swift in Sources */,
 				4C5E6F3F290A193600D22D02 /* FishView.swift in Sources */,
 				4CEF6051291D64FC0000BF6A /* SoundPlayer.swift in Sources */,
 				4C15490D28E51296005690B0 /* TestMountainPageApp.swift in Sources */,
+				8DE325F8291DA21D00A998F9 /* BadgeEarnedPopUp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,7 +375,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TestMountainPage/Preview Content\"";
-				DEVELOPMENT_TEAM = 8WYXDUFQAW;
+				DEVELOPMENT_TEAM = P8BUJJLMP9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -399,7 +407,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TestMountainPage/Preview Content\"";
-				DEVELOPMENT_TEAM = 8WYXDUFQAW;
+				DEVELOPMENT_TEAM = P8BUJJLMP9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
