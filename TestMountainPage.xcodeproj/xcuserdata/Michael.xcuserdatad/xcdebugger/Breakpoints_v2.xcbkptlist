@@ -78,8 +78,8 @@
             filePath = "TestMountainPage/MountainView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "621"
-            endingLineNumber = "621"
+            startingLineNumber = "622"
+            endingLineNumber = "622"
             landmarkName = "makeMountain(screenWidth:screenHeight:)"
             landmarkType = "7">
          </BreakpointContent>
