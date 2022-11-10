@@ -655,15 +655,15 @@ struct MountainView: View {
                                 showConfetti()
                             }
                         }
-                    if (popUpVisible == 100.0){
-                        PopUpMessage(todaysProgressPercent: $todaysProgressPercent)
-                            .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
+                    Group {
+                        if (popUpVisible == 100.0) {
+                            PopUpMessage(todaysProgressPercent: $todaysProgressPercent)
+                                .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
+                        }
+                        if (presentBadge == 100.0) {
+                            BadgeEarnedPopUp(message: $message, badge: $badge).transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
+                        }
                     }
-                    // todo: app wont compile with this so it needs to be fixed
-//                    if(presentBadge == 100.0) {
-//                        popUp.badgeEarnedPopUp(screenWidth: screenWidth, message: message, badge: badge)
-//                            .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
-//                    }
                 }
                 
                 Button(action: {
