@@ -281,7 +281,7 @@ struct BadgeView: View {
                                     }, label: {
                                         Image("5pc")
                                     })
-                                    .buttonStyle(.plain)
+//                                    .buttonStyle(.plain)
                                 }
                                 else {
                                     Image("badge-empty")
@@ -512,7 +512,6 @@ struct BadgeView: View {
                         .position(x: screenWidth/2, y: screenHeight/2 - screenHeight*0.075)
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity) 
             .background(Color(UIColor(red: 0.957, green: 0.831, blue: 0.502, alpha: 1).cgColor))
 
         } else {
@@ -523,6 +522,8 @@ struct BadgeView: View {
     struct BadgeView_Previews: PreviewProvider {
         static var previews: some View {
             BadgeView(userStreak: .constant(1))
+                .previewDevice("iPad (10th generation)")
+
         }
     }
     
