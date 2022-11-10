@@ -10,6 +10,7 @@ import SwiftUI
 struct BadgeView: View {
     @Binding var userStreak:Int
     
+    
     @State private var popUpVisible:Double = 0.0
     let popUp = PopUpMessage(todaysProgressPercent: .constant(0))
     
@@ -17,6 +18,9 @@ struct BadgeView: View {
     @State var startWeight:Double = 200
     @State var currWeight:Double =  180
     
+    //bool to show earned badges on home screen
+    @State var earnPCPopUp:Bool = UserDefaults.standard.bool(forKey: "earnPCPopUp") != nil ? UserDefaults.standard.bool(forKey: "earnPCPopUp") : false
+    @State var earnStrPopUp:Bool = UserDefaults.standard.bool(forKey: "earnStrPopUp") != nil ? UserDefaults.standard.bool(forKey: "earnStrPopUp") : false
     //bool is badge earned
     @State var has5PC:Bool = UserDefaults.standard.bool(forKey: "has5PC") != nil ? UserDefaults.standard.bool(forKey: "has5PC") : false
     @State var has7_5PC:Bool = UserDefaults.standard.bool(forKey: "has7_5PC") != nil ? UserDefaults.standard.bool(forKey: "has7_5PC") : false
@@ -65,6 +69,8 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "fivePCDate")
                 fivePCDate = date
+                earnPCPopUp = true
+                UserDefaults.standard.set(true, forKey: "earnPCPopUp")
             }
             has5PC = true
             UserDefaults.standard.set(true, forKey: "has5PC")
@@ -74,6 +80,8 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "seven_fivePCDate")
                 seven_fivePCDate = date
+                earnPCPopUp = true
+                UserDefaults.standard.set(true, forKey: "earnPCPopUp")
             }
             has7_5PC = true
             UserDefaults.standard.set(true, forKey: "has7_5PC")
@@ -83,6 +91,8 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "tenPCDate")
                 tenPCDate = date
+                earnPCPopUp = true
+                UserDefaults.standard.set(true, forKey: "earnPCPopUp")
             }
             has10PC = true
             UserDefaults.standard.set(true, forKey: "has10PC")
@@ -92,6 +102,8 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "twelve_fivePCDate")
                 twelve_fivePCDate = date
+                earnPCPopUp = true
+                UserDefaults.standard.set(true, forKey: "earnPCPopUp")
             }
             has12_5PC = true
             UserDefaults.standard.set(true, forKey: "has12_5PC")
@@ -101,9 +113,16 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "fifteenPCDate")
                 fifteenPCDate = date
+                earnPCPopUp = true
+                UserDefaults.standard.set(true, forKey: "earnPCPopUp")
             }
             has15PC = true
             UserDefaults.standard.set(true, forKey: "has15PC")
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+            earnPCPopUp = false
+            UserDefaults.standard.set(false, forKey: "earnPCPopUp")
         }
     }
     
@@ -118,6 +137,8 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "oneDStrDate")
                 oneDStrDate = date
+                earnStrPopUp = true
+                UserDefaults.standard.set(true, forKey: "earnStrPopUp")
             }
             has1DStr = true
             UserDefaults.standard.set(true, forKey: "has1DStr")
@@ -128,6 +149,8 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "threeDStrDate")
                 threeDStrDate = date
+                earnStrPopUp = true
+                UserDefaults.standard.set(true, forKey: "earnStrPopUp")
             }
             has3DStr = true
             UserDefaults.standard.set(true, forKey: "has3DStr")
@@ -138,6 +161,8 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "oneWStrDate")
                 oneWStrDate = date
+                earnStrPopUp = true
+                UserDefaults.standard.set(true, forKey: "earnStrPopUp")
             }
             has1WStr = true
             UserDefaults.standard.set(true, forKey: "has1WStr")
@@ -148,6 +173,8 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "oneMStrDate")
                 oneMStrDate = date
+                earnStrPopUp = true
+                UserDefaults.standard.set(true, forKey: "earnStrPopUp")
             }
             has1MStr = true
             UserDefaults.standard.set(true, forKey: "has1MStr")
@@ -158,6 +185,8 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "threeMStrDate")
                 threeMStrDate = date
+                earnStrPopUp = true
+                UserDefaults.standard.set(true, forKey: "earnStrPopUp")
             }
             has3MStr = true
             UserDefaults.standard.set(true, forKey: "has3MStr")
@@ -168,6 +197,8 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "sixMStrDate")
                 sixMStrDate = date
+                earnStrPopUp = true
+                UserDefaults.standard.set(true, forKey: "earnStrPopUp")
             }
             has6MStr = true
             UserDefaults.standard.set(true, forKey: "has6MStr")
@@ -178,6 +209,8 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "nineMStrDate")
                 nineMStrDate = date
+                earnStrPopUp = true
+                UserDefaults.standard.set(true, forKey: "earnStrPopUp")
             }
             has9MStr = true
             UserDefaults.standard.set(true, forKey: "has9MStr")
@@ -188,9 +221,16 @@ struct BadgeView: View {
                 date = dateFormatter.string(from: Date())
                 UserDefaults.standard.set(date, forKey: "oneYStrDate")
                 oneYStrDate = date
+                earnStrPopUp = true
+                UserDefaults.standard.set(true, forKey: "earnStrPopUp")
             }
             has1YStr = true
             UserDefaults.standard.set(true, forKey: "has1YStr")
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+            earnStrPopUp = false
+            UserDefaults.standard.set(false, forKey: "earnStrPopUp")
         }
     }
     

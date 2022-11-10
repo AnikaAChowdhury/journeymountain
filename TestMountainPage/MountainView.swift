@@ -40,9 +40,14 @@ struct MountainView: View {
     @State var userStreak:Int = UserDefaults.standard.integer(forKey: "userStreak") != nil ? UserDefaults.standard.integer(forKey: "userStreak") : 0
     @State var endOfStreak:Date = UserDefaults.standard.object(forKey: "endOfStreak") != nil ? UserDefaults.standard.object(forKey: "endOfStreak") as! Date : Date()
     let popUp = PopUpMessage(todaysProgressPercent: .constant(0))
+    let badgePage = BadgeView(userStreak: .constant(1))
     @State var confettiVisible:Double = 0.0
     @State var popUpVisible:Double = 0.0
     @State var presentBadge:Double = 0.0
+    @State var badge:String = ""
+    @State var achievement:String = ""
+    @State var str:String = ""
+    @State var message:String = ""
     @State private var showGame = true
     let fixedHeight = 19.5 * 50
     let fixedWidth = 9.0 * 50
@@ -122,6 +127,8 @@ struct MountainView: View {
     
     func submitDay(){
         popUpVisible = 100.0
+        print("Streak: \(getStreak())")
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
             popUpVisible = 0.0
             characterPosition = tempCharacterPosition
@@ -134,8 +141,9 @@ struct MountainView: View {
             UserDefaults.standard.set(prevTodaysSteps, forKey: "prevTodaysSteps")
             UserDefaults.standard.set(todaysExercise, forKey: "todaysExercise")
             UserDefaults.standard.set(todaysProgressPercent, forKey: "todaysProgressPercent")
-            
-            print("Streak: \(getStreak())")
+            badgeEarned()
+            badgeEarned()
+            //for some reason the popup only appears without pressing submit again if this fxn is run twice in a row
         }
     }
     
@@ -277,9 +285,79 @@ struct MountainView: View {
     }
     
     func badgeEarned() {
-        let badges = BadgeView(userStreak: self.$userStreak)
-        // popUp object
-        // Check if badge earned bool is true, show pop up message with image of badge added
+        let badgePage = BadgeView(userStreak: self.$userStreak)
+        
+        badgePage.loss()
+        
+        if(badgePage.earnPCPopUp) {
+            if(badgePage.has5PC) {
+                badge = "5pc"
+                achievement = "5"
+            }
+            if(badgePage.has7_5PC) {
+                badge = "7_5pc"
+                achievement = "7_5"
+                
+            }
+            if(badgePage.has10PC) {
+                badge = "10pc"
+                achievement = "10"
+            }
+            if(badgePage.has12_5PC) {
+                badge = "12_5pc"
+                achievement = "12_5"
+            }
+            if(badgePage.has15PC) {
+                badge = "15pc"
+                achievement = "15"
+            }
+            message = "Congratulations! You've earned this badge for losing \(achievement)% of your initial body weight. Keep up the amazing work!"
+            presentBadge = 100.0
+        }
+        
+        badgePage.countStreak()
+        
+        if(badgePage.earnStrPopUp) {
+            if(badgePage.has1DStr) {
+                badge = "1day"
+                achievement = "1 day"
+            }
+            if(badgePage.has3DStr) {
+                badge = "3day"
+                achievement = "3 days in a row"
+            }
+            if(badgePage.has1WStr) {
+                badge = "1week"
+                achievement = "1 week"
+            }
+            if(badgePage.has1MStr) {
+                badge = "1month"
+                achievement = "1 month"
+            }
+            if(badgePage.has3MStr) {
+                badge = "3month"
+                achievement = "3 months"
+            }
+            if(badgePage.has6MStr) {
+                badge = "6month"
+                achievement = "6 months"
+            }
+            if(badgePage.has9MStr) {
+                badge = "9month"
+                achievement = "9 months"
+            }
+            if(badgePage.has1YStr) {
+                badge = "1year"
+                achievement = "1 year"
+            }
+            message = "Congratulations! You've earned this badge for tracking your health journey for \(achievement). Keep up your daily streak!"
+            presentBadge = 100.0
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(4)) {
+            presentBadge = 0.0
+        }
+         
     }
     
     func showConfetti(){
@@ -326,7 +404,6 @@ struct MountainView: View {
         mountain = mountains[mountainNum - 1]
         print("mountain number: " + String(mountainNum))
     }
-    
     
     func getMonthNumber() -> Int{
         let date = Date()
@@ -575,6 +652,10 @@ struct MountainView: View {
                         PopUpMessage(todaysProgressPercent: $todaysProgressPercent)
                             .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
                     }
+                    if(presentBadge == 100.0) {
+                        popUp.badgeEarnedPopUp(screenWidth: screenWidth, message: message, badge: badge)
+                            .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
+                    }
                 }
                 
                 Button(action: {
@@ -613,7 +694,6 @@ struct MountainView: View {
         .frame(width: fixedWidth, height: fixedHeight * 0.85)
         .scaleEffect(x: scaleX_mountain, y: scaleY_mountain)
         .background(mountain.worldColor)
-
     }
     
     init(){
