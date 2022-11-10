@@ -477,6 +477,7 @@ struct MountainView: View {
         .padding(10)
         .frame(width: fixedWidth, height: fixedHeight * 0.15)
         .scaleEffect(x: scaleX, y: scaleY)
+        .position(x:(0.50 * fixedWidth),y: fixedHeight - (0.95 * fixedHeight))
         .background(Color.black)
     }
     
@@ -652,10 +653,11 @@ struct MountainView: View {
                         PopUpMessage(todaysProgressPercent: $todaysProgressPercent)
                             .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
                     }
-                    if(presentBadge == 100.0) {
-                        popUp.badgeEarnedPopUp(screenWidth: screenWidth, message: message, badge: badge)
-                            .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
-                    }
+                    // todo: app wont compile with this so it needs to be fixed
+//                    if(presentBadge == 100.0) {
+//                        popUp.badgeEarnedPopUp(screenWidth: screenWidth, message: message, badge: badge)
+//                            .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
+//                    }
                 }
                 
                 Button(action: {
@@ -726,9 +728,9 @@ struct MountainView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         MountainView()
-            .previewDevice("iPhone SE (3rd generation)")
+//            .previewDevice("iPhone SE (3rd generation)")
 //        MountainView()
-//            .previewDevice("iPhone 14")
+            .previewDevice("iPhone 14")
 //        MountainView()
 //            .previewDevice("iPad (10th generation)")
     }
