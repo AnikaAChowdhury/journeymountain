@@ -125,10 +125,12 @@ struct StepsView: View {
         let screenWidth:CGFloat = screenSize.width
         let screenHeight:CGFloat = screenSize.height
         let stepSize:Double = 0.053
+        let fixedHeight = 19.5 * 50
+        let fixedWidth = 9.0 * 50
 
         return Group{
             ForEach(0..<155) { i in
-                makeStep(starMaker: starMaker, stepNumber: i, completedStepsNum: completedStepsNum, screenWidth: screenWidth, screenHeight: screenHeight, stepSize:stepSize, completedStep: completedStep, completedStarStep: completedStarStep, uncompletedStep: uncompletedStep, uncompletedStarStep: uncompletedStarStep)
+                makeStep(starMaker: starMaker, stepNumber: i, completedStepsNum: completedStepsNum, screenWidth: fixedWidth, screenHeight: fixedHeight, stepSize:stepSize, completedStep: completedStep, completedStarStep: completedStarStep, uncompletedStep: uncompletedStep, uncompletedStarStep: uncompletedStarStep)
             }
         }
     }

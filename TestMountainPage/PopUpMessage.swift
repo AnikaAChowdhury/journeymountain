@@ -8,6 +8,8 @@ import SwiftUI
 
 struct PopUpMessage: View {
     @Binding var todaysProgressPercent:Int
+    let fixedHeight = 19.5 * 50
+    let fixedWidth = 9.0 * 50
     
     func messageCalc() -> String {
         var message = ""
@@ -136,9 +138,9 @@ struct PopUpMessage: View {
         }
     }
     
-    func makePopUp(screenWidth:CGFloat) -> some View{
+    func makePopUp() -> some View{
         return Text(messageCalc())
-                .frame(width: screenWidth*0.85)
+                .frame(width: fixedWidth*0.85)
                 .padding(20)
                 .foregroundColor(Color.white)
                 .font(.system(size: 33, weight: Font.Weight.bold) )
@@ -153,7 +155,7 @@ struct PopUpMessage: View {
     
     func badgePopUp(screenWidth:CGFloat, message:String) -> some View {
         return Text(message)
-            .frame(width: screenWidth*0.85)
+            .frame(width: fixedWidth*0.85)
             .padding(20)
             .foregroundColor(Color.white)
             .font(.system(size: 25, weight: Font.Weight.bold) )
@@ -172,7 +174,7 @@ struct PopUpMessage: View {
         let screenWidth:CGFloat = screenSize.width
         let screenHeight:CGFloat = screenSize.height
 
-        makePopUp(screenWidth: screenWidth)
+        makePopUp()
     }
 
     struct PopUpMessage_Previews: PreviewProvider {

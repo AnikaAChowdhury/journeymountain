@@ -16,20 +16,22 @@ struct CloudView: View {
 
     var body: some View {
         let screenSize: CGRect = UIScreen.main.bounds
-        let screenWidth:CGFloat = screenSize.width
-        let screenHeight:CGFloat = screenSize.height
+//        let fixedWidth:CGFloat = screenSize.width
+//        let fixedHeight:CGFloat = screenSize.height
+        let fixedHeight = 19.5 * 50
+        let fixedWidth = 9.0 * 50
         
         return ZStack{
                 Image(cloudName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: screenWidth * 0.45)
-                    .position(x: cloud1X ,y: 0 + (0.05)*(screenHeight))
+                    .frame(width: fixedWidth * 0.45)
+                    .position(x: cloud1X ,y: 0 + (0.05)*(fixedHeight))
                     .opacity(100.0)
                     .animation(Animation.linear(duration: 130.0).repeatForever(autoreverses: true).speed(1.0), value: cloud1X)
                     .onAppear {
-                        if(cloud1X < screenWidth){
-                            cloud1X = screenWidth
+                        if(cloud1X < fixedWidth){
+                            cloud1X = fixedWidth
                         }else{
                             cloud1X = 0.0
                         }
@@ -37,13 +39,13 @@ struct CloudView: View {
                 Image(cloudName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: screenWidth * 0.45)
-                    .position(x: screenWidth - cloud2X ,y: 0 + (0.12)*(screenHeight) )
+                    .frame(width: fixedWidth * 0.45)
+                    .position(x: fixedWidth - cloud2X ,y: 0 + (0.12)*(fixedHeight) )
                     .opacity(100.0)
                     .animation(Animation.linear(duration: 80.0).repeatForever(autoreverses: true).speed(1.0), value: cloud2X)
                     .onAppear {
-                        if(cloud2X < screenWidth){
-                            cloud2X = screenWidth
+                        if(cloud2X < fixedWidth){
+                            cloud2X = fixedWidth
                         }else{
                             cloud2X = 0.0
                         }
@@ -51,13 +53,13 @@ struct CloudView: View {
                 Image(cloudName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: screenWidth * 0.45)
-                    .position(x: cloud3X ,y: 0 + (0.19)*(screenHeight) )
+                    .frame(width: fixedWidth * 0.45)
+                    .position(x: cloud3X ,y: 0 + (0.19)*(fixedHeight) )
                     .opacity(110.0)
                     .animation(Animation.linear(duration: 70.0).repeatForever(autoreverses: true).speed(1.0), value: cloud3X)
                     .onAppear {
-                        if(cloud3X < screenWidth){
-                            cloud3X = screenWidth
+                        if(cloud3X < fixedWidth){
+                            cloud3X = fixedWidth
                         }else{
                             cloud3X = 0.0
                         }

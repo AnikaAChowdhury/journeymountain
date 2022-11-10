@@ -33,6 +33,8 @@ struct CharacterView: View {
         let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth:CGFloat = screenSize.width
         let screenHeight:CGFloat = screenSize.height
+        let fixedHeight = 19.5 * 50
+        let fixedWidth = 9.0 * 50
         let firstDay = getFirstDay()
 
         func getDirection() -> String{
@@ -58,15 +60,15 @@ struct CharacterView: View {
             return  Image(characterName)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: screenWidth * 0.1)
-                        .position(x: 0 + (locations[firstDay][0])*(screenWidth) - (0.05)*(screenWidth),y: screenHeight - (locations[firstDay][1])*screenHeight - (0.035)*screenHeight)
+                        .frame(width: fixedWidth * 0.1)
+                        .position(x: 0 + (locations[firstDay][0])*(fixedWidth) - (0.05)*(fixedWidth),y: fixedHeight - (locations[firstDay][1])*fixedHeight - (0.035)*fixedHeight)
             
         }
         return Image(characterName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: screenWidth * 0.1)
-                    .position(x: 0 + (locations[characterPosition][0])*(screenWidth),y: screenHeight - (locations[characterPosition][1])*screenHeight - (0.035)*screenHeight)
+                    .frame(width: fixedWidth * 0.1)
+                    .position(x: 0 + (locations[characterPosition][0])*(fixedWidth),y: fixedHeight - (locations[characterPosition][1])*fixedHeight - (0.035)*fixedHeight)
     
     }
 }

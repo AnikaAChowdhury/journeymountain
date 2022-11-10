@@ -48,9 +48,13 @@ struct FishView: View {
     }
     
     var body: some View {
-        let screenSize: CGRect = UIScreen.main.bounds
-        let screenWidth:CGFloat = screenSize.width
-        let screenHeight:CGFloat = screenSize.height
+        let fixedHeight = 19.5 * 50
+        let fixedWidth = 9.0 * 50
+//        let screenSize: CGRect = UIScreen.main.bounds
+//        let screenWidth:CGFloat = screenSize.width
+//        let screenHeight:CGFloat = screenSize.height
+        let screenWidth:CGFloat = fixedWidth
+        let screenHeight:CGFloat = fixedHeight
         
         return ZStack{
             
@@ -86,6 +90,7 @@ struct FishView: View {
 
 struct FishView_Previews: PreviewProvider {
     static var previews: some View {
+        
         FishView(fishName1: .constant("fish1"), fishName2: .constant("fish2"))
     }
 }
