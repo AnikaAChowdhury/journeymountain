@@ -430,16 +430,24 @@ struct MountainView: View {
         
         var scaleX = 1.0
         var scaleY = 1.0
+        var positionX = 0.0
+        var positionY = 0.0
         
         if(proportion == "9:19.5"){
             scaleX = 1.0
             scaleY = 1.0
+            positionX = 0.5
+            positionY = 0.95
         }else if(proportion == "9:16"){
             scaleX = 1.0
             scaleY = 1.25
+            positionX = 0.5
+            positionY = 0.925
         }else if(proportion == "3:4"){
             scaleX = 1.0
             scaleY = 1.5
+            positionX = 0.5
+            positionY = 0.92
         }
         
         
@@ -481,9 +489,9 @@ struct MountainView: View {
             }
         }
         .padding(10)
-        .frame(width: fixedWidth, height: fixedHeight * 0.15)
+        .frame(width: fixedWidth, height: fixedHeight * 0.15 * scaleY)
         .scaleEffect(x: scaleX, y: scaleY)
-        .position(x:(0.50 * fixedWidth),y: fixedHeight - (0.95 * fixedHeight))
+        .position(x:(positionX * fixedWidth),y: fixedHeight - (positionY * fixedHeight))
         .background(Color.black)
     }
     
@@ -511,9 +519,13 @@ struct MountainView: View {
         
         var scaleX_buttons = 1.0
         var scaleY_buttons = 1.0
+        var positionX_buttons = 0.15
+        var positionY_buttons = 0.93
         
         var scaleX_mountain = 1.0
         var scaleY_mountain = 1.0
+        var positionX_mountain = 0.0
+        var positionY_mountain = 0.0
 
         if(proportion == "9:19.5"){
             scaleX_decorations = 1.09
@@ -532,9 +544,13 @@ struct MountainView: View {
             scaleY_fish = 1.0
             scaleX_buttons = 1.0
             scaleY_buttons = 1.0
+            positionX_buttons = 0.15
+            positionY_buttons = 0.93
             
             scaleX_mountain = 1.0
             scaleY_mountain = 1.0
+            positionX_mountain = 0.0
+            positionY_mountain = 0.575
             
         }else if(proportion == "9:16"){
             scaleX_decorations = 1.09
@@ -546,16 +562,20 @@ struct MountainView: View {
             scaleX_clouds = 1.0
             scaleY_clouds = 1.25
             positionX_clouds = 0.5
-            positionY_clouds = 0.45
+            positionY_clouds = 0.44
             scaleX_fish = 1.0
             scaleY_fish = 1.25
             positionX_fish = 0.0
             positionY_fish = 0.48
             scaleX_buttons = 1.0
             scaleY_buttons = 1.25
+            positionX_buttons = 0.15
+            positionY_buttons = 0.91
             
             scaleX_mountain = 1.0
             scaleY_mountain = 1.0
+            positionX_mountain = 0.0
+            positionY_mountain = 0.632
             
         }else if(proportion == "3:4"){
             scaleX_decorations = 1.09
@@ -567,16 +587,20 @@ struct MountainView: View {
             scaleX_clouds = 1.00
             scaleY_clouds = 1.5
             positionX_clouds = 0.5
-            positionY_clouds = 0.35
+            positionY_clouds = 0.32
             scaleX_fish = 1.0
             scaleY_fish = 1.5
             positionX_fish = 0.0
             positionY_fish = 0.4
             scaleX_buttons = 1.0
             scaleY_buttons = 1.5
+            positionX_buttons = 0.15
+            positionY_buttons = 0.85
             
             scaleX_mountain = 1.0
             scaleY_mountain = 1.01
+            positionX_mountain = 0.0
+            positionY_mountain = 0.691
         }
         
         
@@ -678,7 +702,7 @@ struct MountainView: View {
                     .cornerRadius(30)
                     .scaleEffect(x: scaleX_buttons, y: scaleY_buttons)
                     .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
-                    .position(x: fixedWidth * 0.85,y: fixedHeight - (0.93 * fixedHeight))
+                    .position(x: fixedWidth * (1.0 - positionX_buttons),y: fixedHeight - (positionY_buttons * fixedHeight))
                     .opacity(100.0)
                 
                 Button(action: {
@@ -693,13 +717,14 @@ struct MountainView: View {
                     .cornerRadius(30)
                     .scaleEffect(x: scaleX_buttons, y: scaleY_buttons)
                     .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
-                    .position(x: fixedWidth * 0.15,y: fixedHeight - (0.93 * fixedHeight))
+                    .position(x: fixedWidth * positionX_buttons,y: fixedHeight - (positionY_buttons * fixedHeight))
                     .opacity(100.0)
                 
             }
             .animation(Animation.easeInOut.speed(1), value: tempCharacterPosition)
         }
-        .frame(width: fixedWidth, height: fixedHeight * 0.85)
+        .position(x: fixedWidth/2 - (positionX_mountain * fixedWidth),y: fixedHeight - (positionY_mountain * fixedHeight))
+        .frame(width: fixedWidth, height: fixedHeight * (1.0 - (0.15 * scaleY_buttons)) )
         .scaleEffect(x: scaleX_mountain, y: scaleY_mountain)
         .background(mountain.worldColor)
     }
@@ -734,10 +759,10 @@ struct MountainView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MountainView()
-//            .previewDevice("iPhone SE (3rd generation)")
 //        MountainView()
-            .previewDevice("iPhone 12")
+//            .previewDevice("iPhone SE (3rd generation)")
+        MountainView()
+            .previewDevice("iPhone 14")
 //        MountainView()
 //            .previewDevice("iPad (10th generation)")
     }
