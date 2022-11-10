@@ -80,7 +80,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "621"
             endingLineNumber = "621"
-            landmarkName = "init()"
+            landmarkName = "makeMountain(screenWidth:screenHeight:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
