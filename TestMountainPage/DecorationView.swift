@@ -9,35 +9,35 @@ import SwiftUI
 
 let outer_small_locations: [[Double]] = [
     [0.26, 0.59],
-    [0.84, 0.54],
-    [0.86, 0.455],
-    [0.08, 0.34]]
+    [0.80, 0.54],
+    [0.82, 0.46],
+    [0.11, 0.34]]
 
 let inner_small_locations: [[Double]] = [
     [0.34, 0.717],
-    [0.67, 0.684],
-    [0.18, 0.34],
-    [0.77, 0.455],
-    [0.80, 0.285]]
+    [0.66, 0.684],
+    [0.22, 0.34],
+    [0.72, 0.455],
+    [0.76, 0.28]]
 
 
 let outer_big_locations: [[Double]] = [
-    [0.26, 0.68],
-    [0.155, 0.54],
-    [0.10, 0.41],
-    [0.03, 0.27],
-    [0.81, 0.645],
-    [0.94, 0.42],
-    [0.96, 0.30]]
+    [0.27, 0.68],
+    [0.17, 0.54],
+    [0.11, 0.41],
+    [0.06, 0.27],
+    [0.78, 0.645],
+    [0.90, 0.42],
+    [0.92, 0.30]]
 
 let inner_big_locations: [[Double]] = [
     [0.32, 0.66],
-    [0.21, 0.51],
-    [0.17, 0.42],
-    [0.09, 0.26],
-    [0.74, 0.63],
-    [0.88, 0.39],
-    [0.89, 0.283]]
+    [0.225, 0.51],
+    [0.18, 0.42],
+    [0.12, 0.26],
+    [0.71, 0.63],
+    [0.84, 0.39],
+    [0.85, 0.283]]
 
 
 struct DecorationView: View {
@@ -134,36 +134,34 @@ struct DecorationView: View {
         let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth:CGFloat = screenSize.width
         let screenHeight:CGFloat = screenSize.height
+        let fixedHeight = 19.5 * 50
+        let fixedWidth = 9.0 * 50
         
         return ZStack{
-//            Image("Template")
-//                .resizable()
-//                .scaledToFill()
-//                .position(x: screenWidth/2 ,y: screenHeight/2 - (0.026)*(screenHeight) )
-//                .opacity(100.0)
+           
             if(showDecoration1){
                 ForEach(0..<outer_big_locations.count) { i in
-                    makeOuterBigDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight, imageName: decoration1, imageSize: sizeDecoration1)
+                    makeOuterBigDecoration(decorationNumber: i, screenWidth: fixedWidth, screenHeight: fixedHeight, imageName: decoration1, imageSize: sizeDecoration1)
                         .opacity(100.0)
                 }
             }
             
             if(showDecoration2){
                 ForEach(0..<inner_big_locations.count) { i in
-                    makeInnerBigDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight, imageName: decoration2, imageSize: sizeDecoration2)
+                    makeInnerBigDecoration(decorationNumber: i, screenWidth: fixedWidth, screenHeight: fixedHeight, imageName: decoration2, imageSize: sizeDecoration2)
                         .opacity(100.0)
                 }
             }
             
             if(showDecoration3){
                 ForEach(0..<outer_small_locations.count) { i in
-                    makeOuterSmallDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight, imageName: decoration3, imageSize: sizeDecoration3)
+                    makeOuterSmallDecoration(decorationNumber: i, screenWidth: fixedWidth, screenHeight: fixedHeight, imageName: decoration3, imageSize: sizeDecoration3)
                 }
             }
             
             if(showDecoration4){
                 ForEach(0..<inner_small_locations.count) { i in
-                    makeInnerSmallDecoration(decorationNumber: i, screenWidth: screenWidth, screenHeight: screenHeight, imageName: decoration4, imageSize: sizeDecoration4)
+                    makeInnerSmallDecoration(decorationNumber: i, screenWidth: fixedWidth, screenHeight: fixedHeight, imageName: decoration4, imageSize: sizeDecoration4)
                 }
             }
         }
@@ -173,6 +171,7 @@ struct DecorationView: View {
 
 struct DecorationView_Previews: PreviewProvider {
     static var previews: some View {
-        DecorationView(decoration1: .constant("tree_8"), showDecoration1: .constant(true), sizeDecoration1: .constant(0.12), decoration2: .constant("tree_8"), showDecoration2: .constant(true), sizeDecoration2: .constant(0.12), decoration3: .constant("rock_large"), showDecoration3: .constant(true), sizeDecoration3: .constant(0.1), decoration4: .constant("rock_small"), showDecoration4: .constant(true), sizeDecoration4: .constant(0.08))
+//        DecorationView(decoration1: .constant("tree_8"), showDecoration1: .constant(true), sizeDecoration1: .constant(0.12), decoration2: .constant("tree_8"), showDecoration2: .constant(true), sizeDecoration2: .constant(0.12), decoration3: .constant("rock_large"), showDecoration3: .constant(true), sizeDecoration3: .constant(0.1), decoration4: .constant("rock_small"), showDecoration4: .constant(true), sizeDecoration4: .constant(0.08))
+        MountainView().previewDevice("iPhone 14")
     }
 }

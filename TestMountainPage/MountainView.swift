@@ -49,6 +49,8 @@ struct MountainView: View {
     @State var str:String = ""
     @State var message:String = ""
     @State private var showGame = true
+    let fixedHeight = 19.5 * 50
+    let fixedWidth = 9.0 * 50
     
     // increments position of character
     func moveCharacter(){
@@ -200,7 +202,7 @@ struct MountainView: View {
                 .frame(maxWidth: .infinity)
                 .padding(6)
                 .foregroundColor(Color.white)
-                .font(.system(size: 20, weight: Font.Weight.bold))
+                .font(.system(size: 16, weight: Font.Weight.bold))
                 .background(Color.green)
                 .cornerRadius(30)
         }
@@ -208,13 +210,13 @@ struct MountainView: View {
                 .frame(maxWidth: .infinity)
                 .padding(6)
                 .foregroundColor(Color.white)
-                .font(.system(size: 20, weight: Font.Weight.bold))
+                .font(.system(size: 16, weight: Font.Weight.bold))
                 .background(Color.red)
                 .cornerRadius(30)
     }
     
     func makeStars(){
-        if(tempCharacterPosition > 12 - 1 && !hasStars){
+        if(characterPosition > 12 - 1 && !hasStars){
             
             func loop(times: Int) {
                 var i = 0
@@ -373,35 +375,6 @@ struct MountainView: View {
         }
       }
     
-    func makePath(imageName:String, screenWidth:CGFloat, screenHeight:CGFloat) -> some View{
-        let dimensions:String = "9:19.5"
-        if (dimensions == "9:16"){
-            return Image(imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: screenWidth * 0.905)
-                    .position(x: (screenWidth/2 - (0.02)*(screenWidth)),y: screenHeight/2-(0.0455)*(screenHeight))
-        }else if(dimensions == "9:19.5"){
-            return Image(imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: screenWidth * 0.90)
-                    .position(x: (screenWidth/2 - (0.02)*(screenWidth)),y: screenHeight/2-(0.043)*(screenHeight))
-        }else if(dimensions == "3:4"){
-            return Image(imageName)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: screenWidth * 0.10)
-                        .position(x: (screenWidth/2 - (0.02)*(screenWidth)),y: screenHeight/2-(0.043)*(screenHeight))
-        }
-        
-        return Image(imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: screenWidth * 0.90)
-                    .position(x: (screenWidth/2 - (0.02)*(screenWidth)),y: screenHeight/2-(0.043)*(screenHeight))
-    }
-    
     func calculateScreenProportion(screenWidth: CGFloat, screenHeight: CGFloat) -> String{
         let screen9_19:Double = 0.4615
         let screen9_16:Double = 0.5625
@@ -446,6 +419,283 @@ struct MountainView: View {
         return  mountains[monthNum - 1]
     }
     
+    func makeButtons(screenWidth: CGFloat, screenHeight: CGFloat) -> some View{
+        let proportion = calculateScreenProportion(screenWidth: screenWidth, screenHeight: screenHeight)
+        
+        var scaleX = 1.0
+        var scaleY = 1.0
+        
+        if(proportion == "9:19.5"){
+            scaleX = 1.0
+            scaleY = 1.0
+        }else if(proportion == "9:16"){
+            scaleX = 1.0
+            scaleY = 1.25
+        }else if(proportion == "3:4"){
+            scaleX = 1.0
+            scaleY = 1.5
+        }
+        
+        
+        return VStack{
+            HStack{
+                Button("-10",action: subtract10)
+                    .frame(maxWidth: .infinity)
+                    .padding(7)
+                    .foregroundColor(Color.white)
+                    .font(.system(size: 20, weight: Font.Weight.bold))
+                    .background(Color.blue)
+                    .cornerRadius(30)
+                makePercentage()
+                Button("+10", action: add10)
+                    .frame(maxWidth: .infinity)
+                    .padding(7)
+                    .foregroundColor(Color.white)
+                    .font(.system(size: 20, weight: Font.Weight.bold))
+                    .background(Color.blue)
+                    .cornerRadius(30)
+                makeExerciseButton()
+            }
+            HStack{
+                Button("Submit day", action: submitDay)
+                    .frame(maxWidth: .infinity)
+                    .padding(7)
+                    .foregroundColor(Color.white)
+                    .font(.system(size: 20, weight: Font.Weight.bold))
+                    .background(Color.blue)
+                    .cornerRadius(30)
+                
+                    Button("Reset Month", action: resetMonth)
+                    .frame(maxWidth: .infinity)
+                    .padding(7)
+                    .foregroundColor(Color.white)
+                    .font(.system(size: 20, weight: Font.Weight.bold))
+                    .background(Color.blue)
+                    .cornerRadius(30)
+            }
+        }
+        .padding(10)
+        .frame(width: fixedWidth, height: fixedHeight * 0.15)
+        .scaleEffect(x: scaleX, y: scaleY)
+        .background(Color.black)
+    }
+    
+    func makeMountain(screenWidth: CGFloat, screenHeight: CGFloat) -> some View{
+        let proportion = calculateScreenProportion(screenWidth: screenWidth, screenHeight: screenHeight)
+        
+        var scaleX_decorations = 1.09
+        var scaleY_decorations = 1.09
+        
+        var scaleX_character = 1.0
+        var scaleY_character = 1.0
+        var positionX_character = 0.005
+        var positionY_character = 0.466
+        
+        var scaleX_clouds = 1.0
+        var scaleY_clouds = 1.0
+        var positionX_clouds = 0.52
+        var positionY_clouds = 0.5
+        
+        
+        var scaleX_fish = 1.0
+        var scaleY_fish = 1.0
+        var positionX_fish = 0.0
+        var positionY_fish = 0.52
+        
+        var scaleX_buttons = 1.0
+        var scaleY_buttons = 1.0
+        
+        var scaleX_mountain = 1.0
+        var scaleY_mountain = 1.0
+
+        if(proportion == "9:19.5"){
+            scaleX_decorations = 1.09
+            scaleY_decorations = 1.09
+            scaleX_character = 1.0
+            scaleY_character = 1.0
+            positionX_character = 0.005
+            positionY_character = 0.466
+            scaleX_clouds = 1.0
+            scaleY_clouds = 1.0
+            positionX_clouds = 0.5
+            positionY_clouds = 0.52
+            positionX_fish = 0.0
+            positionY_fish = 0.52
+            scaleX_fish = 1.0
+            scaleY_fish = 1.0
+            scaleX_buttons = 1.0
+            scaleY_buttons = 1.0
+            
+            scaleX_mountain = 1.0
+            scaleY_mountain = 1.0
+            
+        }else if(proportion == "9:16"){
+            scaleX_decorations = 1.09
+            scaleY_decorations = 1.09
+            scaleX_character = 1.0
+            scaleY_character = 1.25
+            positionX_character = 0.005
+            positionY_character = 0.54
+            scaleX_clouds = 1.0
+            scaleY_clouds = 1.25
+            positionX_clouds = 0.5
+            positionY_clouds = 0.45
+            scaleX_fish = 1.0
+            scaleY_fish = 1.25
+            positionX_fish = 0.0
+            positionY_fish = 0.48
+            scaleX_buttons = 1.0
+            scaleY_buttons = 1.25
+            
+            scaleX_mountain = 1.0
+            scaleY_mountain = 1.0
+            
+        }else if(proportion == "3:4"){
+            scaleX_decorations = 1.09
+            scaleY_decorations = 1.09
+            scaleX_character = 1.0
+            scaleY_character = 1.5
+            positionX_character = 0.005
+            positionY_character = 0.61
+            scaleX_clouds = 1.00
+            scaleY_clouds = 1.5
+            positionX_clouds = 0.5
+            positionY_clouds = 0.35
+            scaleX_fish = 1.0
+            scaleY_fish = 1.5
+            positionX_fish = 0.0
+            positionY_fish = 0.4
+            scaleX_buttons = 1.0
+            scaleY_buttons = 1.5
+            
+            scaleX_mountain = 1.0
+            scaleY_mountain = 1.01
+        }
+        
+        
+        return withAnimation{
+            ZStack{
+                Image("Template")
+                    .resizable()
+                    .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
+                    .position(x: fixedWidth/2 ,y: fixedHeight/2 - (0.017)*fixedHeight)
+                    .opacity(0.0)
+                
+                // actual mountain
+                Group{
+                    if(mountain.hasClouds){
+                        CloudView(cloudName: $mountain.clouds)
+                            .scaleEffect(x: scaleX_clouds, y: scaleY_clouds)
+                            .position(x: (positionX_clouds * fixedWidth),y: fixedHeight - (positionY_clouds * fixedHeight))
+                            .opacity(100.0)
+                    }
+
+                    if(mountain.hasFish){
+                        FishView(fishName1: $mountain.fish1,fishName2: $mountain.fish2)
+                            .scaleEffect(x: scaleX_fish, y: scaleY_fish)
+                            .position(x: fixedWidth/2 + (positionX_fish * fixedWidth),y: fixedHeight - (positionY_fish * fixedHeight))
+                            .opacity(100.0)
+                    }
+                    
+                    Image(mountain.background)
+                        .resizable()
+                        .frame(width: fixedWidth * 1.0, height: fixedHeight * 0.756)
+                        .position(x: fixedWidth/2 ,y: fixedHeight/2 - (0.028)*fixedHeight)
+                        .opacity(100.0)
+
+                    Image(mountain.foreground)
+                        .resizable()
+                        .frame(width: fixedWidth * 0.93, height: fixedHeight * 0.675)
+                        .position(x: fixedWidth/2 - (0.025 * fixedWidth),y: fixedHeight/2 + (0.01 * fixedHeight))
+                        .opacity(100.0)
+
+                    Image(mountain.path)
+                        .resizable()
+                        .frame(width: fixedWidth * 0.93, height: fixedHeight * 0.742)
+                        .position(x: fixedWidth/2 - (0.025 * fixedWidth),y: fixedHeight/2 - (0.035 * fixedHeight))
+                        .opacity(100.0)
+
+
+                    StepsView(completedStepsNum: $tempCharacterPosition, starMaker: $starMaker, completedStep: $mountain.completedStep, completedStarStep: $mountain.completedStarStep, uncompletedStep: $mountain.uncompletedStep, uncompletedStarStep: $mountain.uncompletedStarStep)
+                        .onChange(of: characterPosition){ newValue in
+                            makeStars()
+                        }
+                        .scaleEffect(x: 1.0, y: 1.077)
+                        .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
+                        .position(x: fixedWidth/2 - (0.0 * fixedWidth),y: fixedHeight/2 + (0.011 * fixedHeight))
+                        .opacity(100.0)
+
+                    DecorationView(decoration1: $mountain.decoration1, showDecoration1: $mountain.showDecoration1, sizeDecoration1: $mountain.sizeDecoration1, decoration2: $mountain.decoration2, showDecoration2: $mountain.showDecoration2, sizeDecoration2: $mountain.sizeDecoration2, decoration3: $mountain.decoration3, showDecoration3: $mountain.showDecoration3, sizeDecoration3: $mountain.sizeDecoration3, decoration4: $mountain.decoration4, showDecoration4: $mountain.showDecoration4, sizeDecoration4: $mountain.sizeDecoration4)
+                        .scaleEffect(x: scaleX_decorations, y: scaleY_decorations)
+                        .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
+                        .position(x: fixedWidth/2 + (0.01 * fixedWidth),y: fixedHeight/2 + (0.013 * fixedHeight))
+                        .opacity(100.0)
+
+
+                    CharacterView(characterPosition: $tempCharacterPosition)
+                        .scaleEffect(x: scaleX_character, y: scaleY_character)
+                        .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
+                        .position(x: fixedWidth/2 + (positionX_character * fixedWidth),y: fixedHeight - (positionY_character * fixedHeight))
+                        .opacity(100.0)
+//
+                    GIFView("confetti1")
+                        .scaleEffect(x: 2.0, y: 3.0, anchor: UnitPoint(x: 0, y: 0))
+                        .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
+                        .position(x: fixedWidth/2 + (0.00 * fixedWidth),y: fixedHeight - (0.5 * fixedHeight))
+                        .opacity(confettiVisible)
+                        .onChange(of: tempCharacterPosition){ newValue in
+                            if(todaysSteps >= prevTodaysSteps){
+                                showConfetti()
+                            }
+                        }
+                    if (popUpVisible == 100.0){
+                        PopUpMessage(todaysProgressPercent: $todaysProgressPercent)
+                            .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
+                    }
+                    if(presentBadge == 100.0) {
+                        popUp.badgeEarnedPopUp(screenWidth: screenWidth, message: message, badge: badge)
+                            .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
+                    }
+                }
+                
+                Button(action: {
+                    showGame = false
+                }, label: {
+                    Text("Badges")
+                })
+                    .padding(7)
+                    .background(Color(UIColor(red: 0.957, green: 0.831, blue: 0.502, alpha: 1).cgColor))
+                    .foregroundColor(Color.white)
+                    .font(.system(size: 20, weight: Font.Weight.bold))
+                    .cornerRadius(30)
+                    .scaleEffect(x: scaleX_buttons, y: scaleY_buttons)
+                    .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
+                    .position(x: fixedWidth * 0.85,y: fixedHeight - (0.93 * fixedHeight))
+                    .opacity(100.0)
+                
+                Button(action: {
+                    changeTheme()
+                }, label: {
+                    Text("Theme")
+                })
+                    .padding(7)
+                    .background(Color.blue)
+                    .foregroundColor(Color.white)
+                    .font(.system(size: 20, weight: Font.Weight.bold))
+                    .cornerRadius(30)
+                    .scaleEffect(x: scaleX_buttons, y: scaleY_buttons)
+                    .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
+                    .position(x: fixedWidth * 0.15,y: fixedHeight - (0.93 * fixedHeight))
+                    .opacity(100.0)
+                
+            }
+            .animation(Animation.easeInOut.speed(1), value: tempCharacterPosition)
+        }
+        .frame(width: fixedWidth, height: fixedHeight * 0.85)
+        .scaleEffect(x: scaleX_mountain, y: scaleY_mountain)
+        .background(mountain.worldColor)
+    }
+    
     init(){
         _mountain = State(initialValue: getMountain())
     }
@@ -458,141 +708,14 @@ struct MountainView: View {
         let screenProportion:String = calculateScreenProportion(screenWidth: screenWidth, screenHeight: screenHeight)
         
         if(showGame){
-            VStack {
-                withAnimation{
-                    ZStack{
-//                        Image("Template")
-//                            .resizable()
-//                            .scaledToFill()
-//                            .position(x: screenWidth/2 ,y: screenHeight/2 - (0.026)*(screenHeight) )
-//                            .opacity(0.0)
-                        
-                        // actual mountain
-                        Group{
-                            if(mountain.hasClouds){
-                                CloudView(cloudName: $mountain.clouds)
-                                    .opacity(100.0)
-                            }
-                            
-                            if(mountain.hasFish){
-                                FishView(fishName1: $mountain.fish1,fishName2: $mountain.fish2)
-                            }
-                            
-                            Image(mountain.background)
-                                .resizable()
-                                .scaledToFit()
-                                .position(x: screenWidth/2 ,y: screenHeight/2 - (0.041)*(screenHeight) )
-                                .opacity(100.0)
-                            Image(mountain.foreground)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: screenWidth * 0.93)
-                                .position(x: screenWidth/2 - (0.025)*(screenWidth),y: screenHeight/2-(0.002)*(screenHeight))
-                                .opacity(100.0)
-
-                            makePath(imageName: mountain.path, screenWidth: screenWidth, screenHeight: screenHeight)
-                                .opacity(100.0)
-
-                            StepsView(completedStepsNum: $tempCharacterPosition, starMaker: $starMaker, completedStep: $mountain.completedStep, completedStarStep: $mountain.completedStarStep, uncompletedStep: $mountain.uncompletedStep, uncompletedStarStep: $mountain.uncompletedStarStep)
-                                .onChange(of: tempCharacterPosition){ newValue in
-                                    makeStars()
-                                }
-                                .opacity(100.0)
-
-                            DecorationView(decoration1: $mountain.decoration1, showDecoration1: $mountain.showDecoration1, sizeDecoration1: $mountain.sizeDecoration1, decoration2: $mountain.decoration2, showDecoration2: $mountain.showDecoration2, sizeDecoration2: $mountain.sizeDecoration2, decoration3: $mountain.decoration3, showDecoration3: $mountain.showDecoration3, sizeDecoration3: $mountain.sizeDecoration3, decoration4: $mountain.decoration4, showDecoration4: $mountain.showDecoration4, sizeDecoration4: $mountain.sizeDecoration4)
-
-                            CharacterView(characterPosition: $tempCharacterPosition)
-                                .opacity(100.0)
-                        }
-                        
-                        GIFView("confetti1")
-                            .scaleEffect(x: 2.0, y: 2.0, anchor: UnitPoint(x: 0.0, y: 0.0))
-                            .position(x: screenWidth/2, y:screenHeight/2 - (0.1)*screenHeight)
-                            .opacity(confettiVisible)
-                            .onChange(of: tempCharacterPosition){ newValue in
-                                if(todaysSteps >= prevTodaysSteps){
-                                    showConfetti()
-                                }
-                            }
-                        if (popUpVisible == 100.0){
-                            PopUpMessage(todaysProgressPercent: $todaysProgressPercent)
-                                .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
-                        }
-                        if(presentBadge == 100.0) {
-                            popUp.badgeEarnedPopUp(screenWidth: screenWidth, message: message, badge: badge)
-                                .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
-                        }
-
-                        Button(action: {
-                            showGame = false
-                        }, label: {
-                            Text("Badges")
-                        })
-                            .padding(7)
-                            .background(Color(UIColor(red: 0.957, green: 0.831, blue: 0.502, alpha: 1).cgColor))
-                            .foregroundColor(Color.white)
-                            .font(.system(size: 20, weight: Font.Weight.bold))
-                            .cornerRadius(30)
-                            .position(x: (0.85)*screenWidth, y:(0.03)*screenHeight)
-                        
-                        Button(action: {
-                            changeTheme()
-                        }, label: {
-                            Text("Theme")
-                        })
-                            .padding(7)
-                            .background(Color.blue)
-                            .foregroundColor(Color.white)
-                            .font(.system(size: 20, weight: Font.Weight.bold))
-                            .cornerRadius(30)
-                            .position(x: (0.15)*screenWidth, y:(0.03)*screenHeight)
-                        
-                    }
-                    .animation(Animation.easeInOut.speed(1), value: tempCharacterPosition)
-                }
-                .position(x: screenWidth/2 ,y: screenHeight/2 - (0.13)*(screenHeight))
+            VStack(spacing: 0) {
+                makeMountain(screenWidth: screenWidth, screenHeight: screenHeight)
                 
-                VStack{
-                    HStack{
-                        Button("-10",action: subtract10)
-                            .frame(maxWidth: .infinity)
-                            .padding(7)
-                            .foregroundColor(Color.white)
-                            .font(.system(size: 20, weight: Font.Weight.bold))
-                            .background(Color.blue)
-                            .cornerRadius(30)
-                        makePercentage()
-                        Button("+10", action: add10)
-                            .frame(maxWidth: .infinity)
-                            .padding(7)
-                            .foregroundColor(Color.white)
-                            .font(.system(size: 20, weight: Font.Weight.bold))
-                            .background(Color.blue)
-                            .cornerRadius(30)
-                        makeExerciseButton()
-                    }
-                    HStack{
-                        Button("Submit day", action: submitDay)
-                            .frame(maxWidth: .infinity)
-                            .padding(7)
-                            .foregroundColor(Color.white)
-                            .font(.system(size: 20, weight: Font.Weight.bold))
-                            .background(Color.blue)
-                            .cornerRadius(30)
-                        
-                            Button("Reset Month", action: resetMonth)
-                            .frame(maxWidth: .infinity)
-                            .padding(7)
-                            .foregroundColor(Color.white)
-                            .font(.system(size: 20, weight: Font.Weight.bold))
-                            .background(Color.blue)
-                            .cornerRadius(30)
-                    }
-                }
-                .padding(10)
-                .background(Color.black)
+                makeButtons(screenWidth: screenWidth, screenHeight: screenHeight)
+
             }
-            .background(mountain.worldColor)
+            .frame(width: fixedWidth, height: fixedHeight)
+            .scaleEffect(x: (1.0) * (screenWidth/fixedWidth) ,y: (1.0) * (screenHeight/fixedHeight))
         }
         else{
             BadgeView(userStreak: self.$userStreak)
@@ -603,8 +726,10 @@ struct MountainView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         MountainView()
-            .previewDevice("iPhone 12 mini")
-//            .previewDevice("iPhone 8 Plus")
-//            .previewDevice("iPad (9th generation)")
+            .previewDevice("iPhone SE (3rd generation)")
+//        MountainView()
+//            .previewDevice("iPhone 14")
+//        MountainView()
+//            .previewDevice("iPad (10th generation)")
     }
 }
