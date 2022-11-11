@@ -39,8 +39,6 @@ struct MountainView: View {
     @State var day:Int = UserDefaults.standard.integer(forKey: "day") != nil ? UserDefaults.standard.integer(forKey: "day") : 0
     @State var userStreak:Int = UserDefaults.standard.integer(forKey: "userStreak") != nil ? UserDefaults.standard.integer(forKey: "userStreak") : 0
     @State var endOfStreak:Date = UserDefaults.standard.object(forKey: "endOfStreak") != nil ? UserDefaults.standard.object(forKey: "endOfStreak") as! Date : Date()
-    let popUp = PopUpMessage(todaysProgressPercent: .constant(0))
-    let badgePage = BadgeView(userStreak: .constant(1))
     @State var confettiVisible:Double = 0.0
     @State var popUpVisible:Double = 0.0
     @State var presentBadge:Double = 0.0
@@ -682,19 +680,22 @@ struct MountainView: View {
                                 showConfetti()
                             }
                         }
-                    if (true){
-                    //if (popUpVisible == 100.0){
+                    if (popUpVisible == 100.0){
                         PopUpMessage(todaysProgressPercent: $todaysProgressPercent)
                             .scaleEffect(x: scaleX_popUp, y: scaleY_popUp)
                             .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
                             .position(x: (0.50 * fixedWidth),y: fixedHeight - (0.5 * fixedHeight))
                             .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
+                            
+                    Group {
+                        if (popUpVisible == 100.0) {
+                            PopUpMessage(todaysProgressPercent: $todaysProgressPercent)
+                                .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
+                        }
+                        if (presentBadge == 100.0) {
+                            BadgeEarnedPopUp(message: $message, badge: $badge).transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
+                        }
                     }
-                    // todo: app wont compile with this so it needs to be fixed
-//                    if(presentBadge == 100.0) {
-//                        popUp.badgeEarnedPopUp(screenWidth: screenWidth, message: message, badge: badge)
-//                            .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
-//                    }
                 }
                 
                 Button(action: {

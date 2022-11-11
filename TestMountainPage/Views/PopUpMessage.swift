@@ -152,36 +152,6 @@ struct PopUpMessage: View {
                         .stroke(.black, lineWidth: 6)
                 )
     }
-    
-    func badgePopUp(screenWidth:CGFloat, message:String) -> some View {
-        return Text(message)
-            .frame(width: screenWidth*0.85)
-            .padding(20)
-            .foregroundColor(Color.white)
-            .font(.system(size: 25, weight: Font.Weight.bold) )
-            .multilineTextAlignment(.center)
-            .background(Color.yellow)
-            .cornerRadius(20)
-            .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(.black, lineWidth: 6)
-            )
-    }
-    
-    func badgeEarnedPopUp(screenWidth:CGFloat, message:String, badge:String) -> some View {
-        return Text("\(Image(badge))\n\(message)")
-            .frame(width: fixedWidth*0.85)
-            .padding(20)
-            .foregroundColor(Color.white)
-            .font(.system(size: 25, weight: Font.Weight.bold) )
-            .multilineTextAlignment(.center)
-            .background(Color.yellow)
-            .cornerRadius(20)
-            .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(.black, lineWidth: 6)
-            )
-    }
 
     var body: some View{
         
