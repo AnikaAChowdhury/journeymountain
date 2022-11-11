@@ -54,15 +54,6 @@ struct MountainView: View {
     
     // increments position of character
     func moveCharacter(){
-        if(characterPosition == -1){
-            characterPosition = getStartIndex()
-            UserDefaults.standard.set(characterPosition, forKey: "characterPosition")
-        }
-        if(tempCharacterPosition == -1){
-            tempCharacterPosition = getStartIndex()
-            UserDefaults.standard.set(tempCharacterPosition, forKey: "tempCharacterPosition")
-        }
-        
         let amountToMove = todaysSteps
         if(tempCharacterPosition + amountToMove <= 154){
             tempCharacterPosition = characterPosition + amountToMove
@@ -528,6 +519,10 @@ struct MountainView: View {
         var scaleY_mountain = 1.0
         var positionX_mountain = 0.0
         var positionY_mountain = 0.0
+        
+        var scaleX_popUp = 1.0
+        var scaleY_popUp = 1.0
+
 
         if(proportion == "9:19.5"){
             scaleX_decorations = 1.09
@@ -548,6 +543,8 @@ struct MountainView: View {
             scaleY_buttons = 1.0
             positionX_buttons = 0.15
             positionY_buttons = 0.93
+            scaleX_popUp = 1.0
+            scaleY_popUp = 1.0
             
             scaleX_mountain = 1.0
             scaleY_mountain = 1.0
@@ -573,6 +570,8 @@ struct MountainView: View {
             scaleY_buttons = 1.25
             positionX_buttons = 0.15
             positionY_buttons = 0.91
+            scaleX_popUp = 1.0
+            scaleY_popUp = 1.25
             
             scaleX_mountain = 1.0
             scaleY_mountain = 1.0
@@ -598,6 +597,8 @@ struct MountainView: View {
             scaleY_buttons = 1.5
             positionX_buttons = 0.15
             positionY_buttons = 0.85
+            scaleX_popUp = 1.0
+            scaleY_popUp = 1.5
             
             scaleX_mountain = 1.0
             scaleY_mountain = 1.01
@@ -681,8 +682,12 @@ struct MountainView: View {
                                 showConfetti()
                             }
                         }
-                    if (popUpVisible == 100.0){
+                    if (true){
+                    //if (popUpVisible == 100.0){
                         PopUpMessage(todaysProgressPercent: $todaysProgressPercent)
+                            .scaleEffect(x: scaleX_popUp, y: scaleY_popUp)
+                            .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
+                            .position(x: (0.50 * fixedWidth),y: fixedHeight - (0.5 * fixedHeight))
                             .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
                     }
                     // todo: app wont compile with this so it needs to be fixed
@@ -733,6 +738,12 @@ struct MountainView: View {
     
     init(){
         _mountain = State(initialValue: getMountain())
+        if(characterPosition == 0 || characterPosition == -1){
+            _characterPosition = State(initialValue: getStartIndex())
+            _tempCharacterPosition = State(initialValue: getStartIndex())
+            UserDefaults.standard.set(characterPosition, forKey: "characterPosition")
+            UserDefaults.standard.set(tempCharacterPosition, forKey: "tempCharacterPosition")
+        }
         playBackgroundSound(sound: "background", type: "wav")
     }
     
@@ -763,9 +774,9 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
 //        MountainView()
 //            .previewDevice("iPhone SE (3rd generation)")
-        MountainView()
-            .previewDevice("iPhone 14")
 //        MountainView()
-//            .previewDevice("iPad (10th generation)")
+//            .previewDevice("iPhone 14")
+        MountainView()
+            .previewDevice("iPad (10th generation)")
     }
 }

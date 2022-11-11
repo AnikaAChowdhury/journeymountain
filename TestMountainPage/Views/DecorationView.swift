@@ -57,6 +57,10 @@ struct DecorationView: View {
     @Binding var decoration4:String
     @Binding var showDecoration4:Bool
     @Binding var sizeDecoration4:Double
+    
+    let fixedHeight = 19.5 * 50
+    let fixedWidth = 9.0 * 50
+
 
     func makeInnerBigDecoration(decorationNumber:Int, screenWidth:CGFloat, screenHeight:CGFloat, imageName:String, imageSize:Double) -> some View{
         
@@ -130,18 +134,34 @@ struct DecorationView: View {
         return d
     }
     
-    var body: some View {
-        let screenSize: CGRect = UIScreen.main.bounds
-        let screenWidth:CGFloat = screenSize.width
-        let screenHeight:CGFloat = screenSize.height
-        let fixedHeight = 19.5 * 50
-        let fixedWidth = 9.0 * 50
+    
+    func makeDecorationView(screenWidth: CGFloat, screenHeight: CGFloat) -> some View{
+        let proportion = MountainView().calculateScreenProportion(screenWidth: screenWidth, screenHeight: screenHeight)
+        
+        var scaleX = 1.0
+        var scaleY = 1.0
+        
+        if(proportion == "9:19.5"){
+            scaleX = 1.0
+            scaleY = 1.0
+            
+        }else if(proportion == "9:16"){
+            scaleX = 1.0
+            scaleY = 1.0
+            
+        }else if(proportion == "3:4"){
+            scaleX = 1.0
+            scaleY = 1.0
+
+        }
+        
         
         return ZStack{
            
             if(showDecoration1){
                 ForEach(0..<outer_big_locations.count) { i in
                     makeOuterBigDecoration(decorationNumber: i, screenWidth: fixedWidth, screenHeight: fixedHeight, imageName: decoration1, imageSize: sizeDecoration1)
+                        .scaleEffect(x: scaleX, y: scaleY)
                         .opacity(100.0)
                 }
             }
@@ -149,6 +169,7 @@ struct DecorationView: View {
             if(showDecoration2){
                 ForEach(0..<inner_big_locations.count) { i in
                     makeInnerBigDecoration(decorationNumber: i, screenWidth: fixedWidth, screenHeight: fixedHeight, imageName: decoration2, imageSize: sizeDecoration2)
+                        .scaleEffect(x: scaleX, y: scaleY)
                         .opacity(100.0)
                 }
             }
@@ -156,15 +177,26 @@ struct DecorationView: View {
             if(showDecoration3){
                 ForEach(0..<outer_small_locations.count) { i in
                     makeOuterSmallDecoration(decorationNumber: i, screenWidth: fixedWidth, screenHeight: fixedHeight, imageName: decoration3, imageSize: sizeDecoration3)
+                        .scaleEffect(x: scaleX, y: scaleY)
+
                 }
             }
             
             if(showDecoration4){
                 ForEach(0..<inner_small_locations.count) { i in
                     makeInnerSmallDecoration(decorationNumber: i, screenWidth: fixedWidth, screenHeight: fixedHeight, imageName: decoration4, imageSize: sizeDecoration4)
+                        .scaleEffect(x: scaleX, y: scaleY)
                 }
             }
         }
+    }
+    
+    var body: some View {
+        let screenSize: CGRect = UIScreen.main.bounds
+        let screenWidth:CGFloat = screenSize.width
+        let screenHeight:CGFloat = screenSize.height
+        
+        makeDecorationView(screenWidth: screenWidth, screenHeight: screenHeight)
         
     }
 }
