@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 let mountain_1 = Mountain(monthNumber: 1, worldColor: Color(UIColor(red: 0.871, green: 0.977, blue: 1, alpha: 1).cgColor), clouds: "cloud", hasClouds: true,  decoration1: "tree_snowy_1", decoration2: "tree_snowy_1", decoration3: "snowman", decoration4: "", showDecoration1: true, showDecoration2: true, showDecoration3: true, showDecoration4: false, hasSnow: true, sizeDecoration1: 0.1, sizeDecoration2: 0.07, sizeDecoration3: 0.09, sizeDecoration4: 0.08)
 let mountain_2 = Mountain(monthNumber: 2, worldColor: Color(UIColor(red: 1, green: 0.721, blue: 0.721, alpha: 1).cgColor), clouds: "cloud", hasClouds: true,  decoration1: "heart_balloons", decoration2: "teddy_bear", decoration3: "roses", decoration4: "", showDecoration1: true, showDecoration2: true, showDecoration3: true, showDecoration4: false, hasSnow: true, sizeDecoration1: 0.15, sizeDecoration2: 0.11, sizeDecoration3: 0.1, sizeDecoration4: 0.15)
@@ -39,6 +40,7 @@ struct MountainView: View {
     @State var day:Int = UserDefaults.standard.integer(forKey: "day") != nil ? UserDefaults.standard.integer(forKey: "day") : 0
     @State var userStreak:Int = UserDefaults.standard.integer(forKey: "userStreak") != nil ? UserDefaults.standard.integer(forKey: "userStreak") : 0
     @State var endOfStreak:Date = UserDefaults.standard.object(forKey: "endOfStreak") != nil ? UserDefaults.standard.object(forKey: "endOfStreak") as! Date : Date()
+    @State var isAuthorized:Bool = UserDefaults.standard.bool(forKey: "isAuthorized") != nil ? UserDefaults.standard.bool(forKey: "isAuthorized") : false
     @State var confettiVisible:Double = 0.0
     @State var popUpVisible:Double = 0.0
     @State var presentBadge:Double = 0.0
@@ -47,6 +49,8 @@ struct MountainView: View {
     @State var str:String = ""
     @State var message:String = ""
     @State private var showGame = true
+    let notificationCenter = UNUserNotificationCenter.current()
+    
     let fixedHeight = 19.5 * 50
     let fixedWidth = 9.0 * 50
     
@@ -614,14 +618,14 @@ struct MountainView: View {
                     .opacity(0.0)
                 
                 // actual mountain
-                Group{
+                Group {
                     if(mountain.hasClouds){
                         CloudView(cloudName: $mountain.clouds)
                             .scaleEffect(x: scaleX_clouds, y: scaleY_clouds)
                             .position(x: (positionX_clouds * fixedWidth),y: fixedHeight - (positionY_clouds * fixedHeight))
                             .opacity(100.0)
                     }
-
+                    
                     if(mountain.hasFish){
                         FishView(fishName1: $mountain.fish1,fishName2: $mountain.fish2)
                             .scaleEffect(x: scaleX_fish, y: scaleY_fish)
@@ -634,20 +638,20 @@ struct MountainView: View {
                         .frame(width: fixedWidth * 1.0, height: fixedHeight * 0.756)
                         .position(x: fixedWidth/2 ,y: fixedHeight/2 - (0.028)*fixedHeight)
                         .opacity(100.0)
-
+                    
                     Image(mountain.foreground)
                         .resizable()
                         .frame(width: fixedWidth * 0.93, height: fixedHeight * 0.675)
                         .position(x: fixedWidth/2 - (0.025 * fixedWidth),y: fixedHeight/2 + (0.01 * fixedHeight))
                         .opacity(100.0)
-
+                    
                     Image(mountain.path)
                         .resizable()
                         .frame(width: fixedWidth * 0.93, height: fixedHeight * 0.742)
                         .position(x: fixedWidth/2 - (0.025 * fixedWidth),y: fixedHeight/2 - (0.035 * fixedHeight))
                         .opacity(100.0)
-
-
+                    
+                    
                     StepsView(completedStepsNum: $tempCharacterPosition, starMaker: $starMaker, hasStars: $hasStars,  completedStep: $mountain.completedStep, completedStarStep: $mountain.completedStarStep, uncompletedStep: $mountain.uncompletedStep, uncompletedStarStep: $mountain.uncompletedStarStep)
                         .onChange(of: tempCharacterPosition){ newValue in
                             makeStars()
@@ -656,20 +660,20 @@ struct MountainView: View {
                         .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
                         .position(x: fixedWidth/2 - (0.0 * fixedWidth),y: fixedHeight/2 + (0.011 * fixedHeight))
                         .opacity(100.0)
-
+                    
                     DecorationView(decoration1: $mountain.decoration1, showDecoration1: $mountain.showDecoration1, sizeDecoration1: $mountain.sizeDecoration1, decoration2: $mountain.decoration2, showDecoration2: $mountain.showDecoration2, sizeDecoration2: $mountain.sizeDecoration2, decoration3: $mountain.decoration3, showDecoration3: $mountain.showDecoration3, sizeDecoration3: $mountain.sizeDecoration3, decoration4: $mountain.decoration4, showDecoration4: $mountain.showDecoration4, sizeDecoration4: $mountain.sizeDecoration4)
                         .scaleEffect(x: scaleX_decorations, y: scaleY_decorations)
                         .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
                         .position(x: fixedWidth/2 + (0.01 * fixedWidth),y: fixedHeight/2 + (0.013 * fixedHeight))
                         .opacity(100.0)
-
-
+                    
+                    
                     CharacterView(characterPosition: $tempCharacterPosition)
                         .scaleEffect(x: scaleX_character, y: scaleY_character)
                         .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
                         .position(x: fixedWidth/2 + (positionX_character * fixedWidth),y: fixedHeight - (positionY_character * fixedHeight))
                         .opacity(100.0)
-//
+                    //
                     GIFView("confetti1")
                         .scaleEffect(x: 2.0, y: 3.0, anchor: UnitPoint(x: 0, y: 0))
                         .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
@@ -680,20 +684,20 @@ struct MountainView: View {
                                 showConfetti()
                             }
                         }
-                    Group {
-                        if (popUpVisible == 100.0){
-                            PopUpMessage(todaysProgressPercent: $todaysProgressPercent)
-                                .scaleEffect(x: scaleX_popUp, y: scaleY_popUp)
-                                .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
-                                .position(x: (0.50 * fixedWidth),y: fixedHeight - (0.5 * fixedHeight))
-                                .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
-                        }
-                        
-                        
-                        if (presentBadge == 100.0) {
-                            BadgeEarnedPopUp(message: $message, badge: $badge).transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
-                        }
+                }
+                Group {
+                    if (popUpVisible == 100.0){
+                        PopUpMessage(todaysProgressPercent: $todaysProgressPercent)
+                            .scaleEffect(x: scaleX_popUp, y: scaleY_popUp)
+                            .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
+                            .position(x: (0.50 * fixedWidth),y: fixedHeight - (0.5 * fixedHeight))
+                            .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
                     }
+                    
+                    if (presentBadge == 100.0) {
+                        BadgeEarnedPopUp(message: $message, badge: $badge).transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
+                    }
+                    
                 }
                 
                 Button(action: {
@@ -735,6 +739,17 @@ struct MountainView: View {
         .background(mountain.worldColor)
     }
     
+    func authorizeNotifications() {
+        UIApplication.shared.registerForRemoteNotifications()
+        notificationCenter.requestAuthorization(options: [.sound , .alert , .badge ]) { success, error in
+            if success {
+                isAuthorized = true
+                UserDefaults.standard.set(isAuthorized, forKey:"isAuthorized")
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
+    }
+    
     init(){
         _mountain = State(initialValue: getMountain())
         if(characterPosition == 0 || characterPosition == -1){
@@ -744,6 +759,10 @@ struct MountainView: View {
             UserDefaults.standard.set(tempCharacterPosition, forKey: "tempCharacterPosition")
         }
         playBackgroundSound(sound: "background", type: "wav")
+        
+        if (!isAuthorized) {
+            authorizeNotifications()
+        }
     }
     
     var body: some View {
@@ -771,11 +790,16 @@ struct MountainView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-//        MountainView()
-//            .previewDevice("iPhone SE (3rd generation)")
-//        MountainView()
-//            .previewDevice("iPhone 14")
+/*
+            MountainView()
+            .previewDevice("iPhone SE (3rd generation)")
+ */
+        MountainView()
+            .previewDevice("iPhone 14")
+/*
         MountainView()
             .previewDevice("iPad (10th generation)")
+*/
+            
     }
 }
