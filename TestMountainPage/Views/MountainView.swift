@@ -772,14 +772,13 @@ struct MountainView: View {
     func scheduleNotification() {
         let content = UNMutableNotificationContent()
         
-        content.title = "I'm a notification"
-        content.body = "Look at this notification"
+        content.title = "TestMountainPage"
+        content.body = customizeNotification()
         content.sound = .default
         content.badge = 1
         
         notificationCenter.getNotificationSettings(){ (settings) in
             if(settings.authorizationStatus == .authorized) {
-                print("is authorized")
                 
                 let date = Date().addingTimeInterval(5)
                 
@@ -803,6 +802,47 @@ struct MountainView: View {
             }
         }
         
+    }
+    
+    func customizeNotification() -> String {
+        let date = Date()
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        let dayInWeek = dateFormatter.string(from: date)
+        message = ""
+        
+        //weekend
+        if calendar.isDateInWeekend(date) {
+            let randomInt = Int.random(in: 1..<2)
+            switch(randomInt) {
+            case 1:
+                message = "Busy week ahead? Save some time by preparing some healthy meals this weekend."
+            case 2:
+                message = "Happy \(dayInWeek)! Remember to track your progress for the day."
+            default :
+                message = "Happy \(dayInWeek)! Remember to track your progress for the day."
+            }
+        }
+        else {
+            let randomInt = Int.random(in: 1..<5)
+            switch(randomInt) {
+            case 1:
+                message = "Don’t forget to finish logging your food choices and exercise today."
+            case 2:
+                message = "Make sure to update your food and exercise log for the day."
+            case 3:
+                message = "You haven’t logged your last meal, would you like to do that now?"
+            case 4:
+                message = "Reminder: most of today has passed and you haven't logged your progress in yet."
+            case 5:
+                message = "Don't lose your streak! Track your progress by logging your food and exercise for the day."
+            default:
+                message = "Don't lose your streak! Track your progress by logging your food and exercise for the day."
+            }
+        }
+        
+        return message
     }
     
     init(){
