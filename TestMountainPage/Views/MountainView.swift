@@ -40,7 +40,6 @@ struct MountainView: View {
     @State var day:Int = UserDefaults.standard.integer(forKey: "day") != nil ? UserDefaults.standard.integer(forKey: "day") : 0
     @State var userStreak:Int = UserDefaults.standard.integer(forKey: "userStreak") != nil ? UserDefaults.standard.integer(forKey: "userStreak") : 0
     @State var endOfStreak:Date = UserDefaults.standard.object(forKey: "endOfStreak") != nil ? UserDefaults.standard.object(forKey: "endOfStreak") as! Date : Date()
-    @State var isAuthorized:Bool = UserDefaults.standard.bool(forKey: "isAuthorized") != nil ? UserDefaults.standard.bool(forKey: "isAuthorized") : false
     @State var confettiVisible:Double = 0.0
     @State var popUpVisible:Double = 0.0
     @State var presentBadge:Double = 0.0
@@ -144,7 +143,6 @@ struct MountainView: View {
             UserDefaults.standard.set(todaysProgressPercent, forKey: "todaysProgressPercent")
             badgeEarned()
             badgeEarned()
-            //for some reason the popup only appears without pressing submit again if this fxn is run twice in a row
         }
     }
     
@@ -199,7 +197,12 @@ struct MountainView: View {
     
     func makeExerciseButton() -> some View{
         if(todaysExercise){
-            return Button("Exercise", action: toggleExercise)
+            return Button(action: {
+                toggleExercise()
+                scheduleNotification()
+            }, label: {
+                Text("Exercise")
+            })
                 .frame(maxWidth: .infinity)
                 .padding(6)
                 .foregroundColor(Color.white)
@@ -207,13 +210,18 @@ struct MountainView: View {
                 .background(Color.green)
                 .cornerRadius(30)
         }
-        return Button("Exercise", action: toggleExercise)
-                .frame(maxWidth: .infinity)
-                .padding(6)
-                .foregroundColor(Color.white)
-                .font(.system(size: 16, weight: Font.Weight.bold))
-                .background(Color.red)
-                .cornerRadius(30)
+        return Button(action: {
+            toggleExercise()
+            scheduleNotification()
+        }, label: {
+            Text("Exercise")
+        })
+            .frame(maxWidth: .infinity)
+            .padding(6)
+            .foregroundColor(Color.white)
+            .font(.system(size: 16, weight: Font.Weight.bold))
+            .background(Color.red)
+            .cornerRadius(30)
     }
     
     func makeStars(){
@@ -448,7 +456,12 @@ struct MountainView: View {
         
         return VStack{
             HStack{
-                Button("-10",action: subtract10)
+                Button(action: {
+                    subtract10()
+                    scheduleNotification()
+                }, label: {
+                    Text("-10")
+                })
                     .frame(maxWidth: .infinity)
                     .padding(7)
                     .foregroundColor(Color.white)
@@ -456,7 +469,12 @@ struct MountainView: View {
                     .background(Color.blue)
                     .cornerRadius(30)
                 makePercentage()
-                Button("+10", action: add10)
+                Button(action: {
+                    add10()
+                    scheduleNotification()
+                }, label: {
+                    Text("+10")
+                })
                     .frame(maxWidth: .infinity)
                     .padding(7)
                     .foregroundColor(Color.white)
@@ -466,7 +484,12 @@ struct MountainView: View {
                 makeExerciseButton()
             }
             HStack{
-                Button("Submit day", action: submitDay)
+                Button(action: {
+                    submitDay()
+                    scheduleNotification()
+                }, label: {
+                    Text("Submit Day")
+                })
                     .frame(maxWidth: .infinity)
                     .padding(7)
                     .foregroundColor(Color.white)
@@ -474,7 +497,11 @@ struct MountainView: View {
                     .background(Color.blue)
                     .cornerRadius(30)
                 
-                    Button("Reset Month", action: resetMonth)
+                Button(action: {
+                    resetMonth()
+                }, label: {
+                    Text("Reset Month")
+                })
                     .frame(maxWidth: .infinity)
                     .padding(7)
                     .foregroundColor(Color.white)
@@ -697,7 +724,6 @@ struct MountainView: View {
                     if (presentBadge == 100.0) {
                         BadgeEarnedPopUp(message: $message, badge: $badge).transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
                     }
-                    
                 }
                 
                 Button(action: {
@@ -740,14 +766,43 @@ struct MountainView: View {
     }
     
     func authorizeNotifications() {
-        UIApplication.shared.registerForRemoteNotifications()
-        notificationCenter.requestAuthorization(options: [.sound , .alert , .badge ]) { success, error in
-            if success {
-                isAuthorized = true
-                UserDefaults.standard.set(isAuthorized, forKey:"isAuthorized")
-                UIApplication.shared.registerForRemoteNotifications()
+        notificationCenter.requestAuthorization(options: [.sound , .alert , .badge ]) { success, error in }
+    }
+    
+    func scheduleNotification() {
+        let content = UNMutableNotificationContent()
+        
+        content.title = "I'm a notification"
+        content.body = "Look at this notification"
+        content.sound = .default
+        content.badge = 1
+        
+        notificationCenter.getNotificationSettings(){ (settings) in
+            if(settings.authorizationStatus == .authorized) {
+                print("is authorized")
+                
+                let date = Date().addingTimeInterval(5)
+                
+                let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+                
+                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+                
+                let uuidString = UUID().uuidString
+                
+                let request = UNNotificationRequest(
+                    identifier: uuidString,
+                    content: content,
+                    trigger: trigger
+                )
+                
+                notificationCenter.add(request)
+                    
+            }
+            else {
+                print("Push notifications not authorized.")
             }
         }
+        
     }
     
     init(){
@@ -759,10 +814,7 @@ struct MountainView: View {
             UserDefaults.standard.set(tempCharacterPosition, forKey: "tempCharacterPosition")
         }
         playBackgroundSound(sound: "background", type: "wav")
-        
-        if (!isAuthorized) {
-            authorizeNotifications()
-        }
+        authorizeNotifications()
     }
     
     var body: some View {
