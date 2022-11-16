@@ -27,6 +27,11 @@
 		4CEF6064291D71810000BF6A /* backwards.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4CEF605F291D71800000BF6A /* backwards.wav */; };
 		4CEF6065291D71810000BF6A /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4CEF6060291D71810000BF6A /* background.wav */; };
 		4CEF6066291D71810000BF6A /* badge_earned.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4CEF6061291D71810000BF6A /* badge_earned.wav */; };
+		4CFBAC2E292595DF00CA2DA2 /* yay1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4CFBAC29292595DE00CA2DA2 /* yay1.mp3 */; };
+		4CFBAC2F292595DF00CA2DA2 /* stars.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4CFBAC2A292595DF00CA2DA2 /* stars.mp3 */; };
+		4CFBAC30292595DF00CA2DA2 /* forward2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4CFBAC2B292595DF00CA2DA2 /* forward2.mp3 */; };
+		4CFBAC31292595DF00CA2DA2 /* yay3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4CFBAC2C292595DF00CA2DA2 /* yay3.mp3 */; };
+		4CFBAC32292595DF00CA2DA2 /* yay2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4CFBAC2D292595DF00CA2DA2 /* yay2.mp3 */; };
 		8DE325F6291DA1F800A998F9 /* BadgePagePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE325F5291DA1F800A998F9 /* BadgePagePopUp.swift */; };
 		8DE325F8291DA21D00A998F9 /* BadgeEarnedPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE325F7291DA21D00A998F9 /* BadgeEarnedPopUp.swift */; };
 		998A055A28F7194D00299F53 /* PopUpMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998A055928F7194C00299F53 /* PopUpMessage.swift */; };
@@ -54,6 +59,11 @@
 		4CEF605F291D71800000BF6A /* backwards.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = backwards.wav; sourceTree = "<group>"; };
 		4CEF6060291D71810000BF6A /* background.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = background.wav; sourceTree = "<group>"; };
 		4CEF6061291D71810000BF6A /* badge_earned.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = badge_earned.wav; sourceTree = "<group>"; };
+		4CFBAC29292595DE00CA2DA2 /* yay1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = yay1.mp3; sourceTree = "<group>"; };
+		4CFBAC2A292595DF00CA2DA2 /* stars.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = stars.mp3; sourceTree = "<group>"; };
+		4CFBAC2B292595DF00CA2DA2 /* forward2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = forward2.mp3; sourceTree = "<group>"; };
+		4CFBAC2C292595DF00CA2DA2 /* yay3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = yay3.mp3; sourceTree = "<group>"; };
+		4CFBAC2D292595DF00CA2DA2 /* yay2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = yay2.mp3; sourceTree = "<group>"; };
 		8DE325F5291DA1F800A998F9 /* BadgePagePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePagePopUp.swift; sourceTree = "<group>"; };
 		8DE325F7291DA21D00A998F9 /* BadgeEarnedPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeEarnedPopUp.swift; sourceTree = "<group>"; };
 		998A055928F7194C00299F53 /* PopUpMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpMessage.swift; sourceTree = "<group>"; };
@@ -93,7 +103,6 @@
 				4CEF6068291D71AB0000BF6A /* Views */,
 				4CEF6067291D718A0000BF6A /* GIFs */,
 				4CEF6052291D71150000BF6A /* Sounds */,
-				4C15490C28E51296005690B0 /* TestMountainPageApp.swift */,
 				4C15491028E5129C005690B0 /* Assets.xcassets */,
 				4C15491228E5129C005690B0 /* Preview Content */,
 			);
@@ -111,6 +120,11 @@
 		4CEF6052291D71150000BF6A /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				4CFBAC2B292595DF00CA2DA2 /* forward2.mp3 */,
+				4CFBAC2A292595DF00CA2DA2 /* stars.mp3 */,
+				4CFBAC29292595DE00CA2DA2 /* yay1.mp3 */,
+				4CFBAC2D292595DF00CA2DA2 /* yay2.mp3 */,
+				4CFBAC2C292595DF00CA2DA2 /* yay3.mp3 */,
 				4CEF6060291D71810000BF6A /* background.wav */,
 				4CEF605F291D71800000BF6A /* backwards.wav */,
 				4CEF6061291D71810000BF6A /* badge_earned.wav */,
@@ -132,6 +146,7 @@
 		4CEF6068291D71AB0000BF6A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4C15490C28E51296005690B0 /* TestMountainPageApp.swift */,
 				4C048BFE28FCDB98007D1F9C /* CloudView.swift */,
 				4C5E6F3E290A193600D22D02 /* FishView.swift */,
 				4CE909D528E8B4580041AD34 /* StepsView.swift */,
@@ -215,12 +230,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CEF6064291D71810000BF6A /* backwards.wav in Resources */,
+				4CFBAC32292595DF00CA2DA2 /* yay2.mp3 in Resources */,
 				4CEF6066291D71810000BF6A /* badge_earned.wav in Resources */,
+				4CFBAC2F292595DF00CA2DA2 /* stars.mp3 in Resources */,
 				4CEF6063291D71810000BF6A /* confetti.wav in Resources */,
+				4CFBAC31292595DF00CA2DA2 /* yay3.mp3 in Resources */,
 				4CEF6065291D71810000BF6A /* background.wav in Resources */,
 				4C15491428E5129C005690B0 /* Preview Assets.xcassets in Resources */,
 				4C0749C728F6673100DF69D3 /* confetti2.gif in Resources */,
+				4CFBAC2E292595DF00CA2DA2 /* yay1.mp3 in Resources */,
 				4CEF6062291D71810000BF6A /* forward.wav in Resources */,
+				4CFBAC30292595DF00CA2DA2 /* forward2.mp3 in Resources */,
 				4C0749C928F6673A00DF69D3 /* confetti1.gif in Resources */,
 				4C15491128E5129C005690B0 /* Assets.xcassets in Resources */,
 			);
@@ -375,7 +395,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TestMountainPage/Preview Content\"";
-				DEVELOPMENT_TEAM = P8BUJJLMP9;
+				DEVELOPMENT_TEAM = 8WYXDUFQAW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -388,7 +408,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = SeniorProject.JourneyMountainPage;
+				PRODUCT_BUNDLE_IDENTIFIER = SeniorProject.JourneyMountainPage2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -407,7 +427,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TestMountainPage/Preview Content\"";
-				DEVELOPMENT_TEAM = P8BUJJLMP9;
+				DEVELOPMENT_TEAM = 8WYXDUFQAW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -420,7 +440,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = SeniorProject.JourneyMountainPage;
+				PRODUCT_BUNDLE_IDENTIFIER = SeniorProject.JourneyMountainPage2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

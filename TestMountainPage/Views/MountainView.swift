@@ -62,9 +62,24 @@ struct MountainView: View {
             tempCharacterPosition = 154
         }
         
+        
         // if we made progress then play forward sound
         if(todaysSteps > prevTodaysSteps && todaysSteps > 0){
-            playSound(sound: "forward", type: "wav")
+            var rand = Int.random(in: 1..<6)
+            switch(rand){
+                case 1:
+                    playSound(sound: "forward", type: "wav")
+                case 2:
+                    playSound(sound: "forward2", type: "mp3")
+                case 3:
+                    playSound(sound: "yay1", type: "mp3")
+                case 4:
+                    playSound(sound: "yay2", type: "mp3")
+                case 5:
+                    playSound(sound: "yay3", type: "mp3")
+                default:
+                    playSound(sound: "forward", type: "wav")
+            }
         //else play backwards sound
         }else if(todaysSteps < prevTodaysSteps && prevTodaysSteps > 0){
             playSound(sound: "backwards", type: "wav")
@@ -226,7 +241,7 @@ struct MountainView: View {
     
     func makeStars(){
         if(tempCharacterPosition > 12 - 1 && !hasStars){
-            playSound(sound: "confetti", type: "wav")
+            playSound(sound: "stars", type: "mp3")
             func loop(times: Int) {
                 var i = 0
                 func nextIteration() {
@@ -293,6 +308,9 @@ struct MountainView: View {
     }
     
     func badgeEarned() {
+        
+        playSound(sound: "badge_earned", type: "wav")
+
         let badgePage = BadgeView(userStreak: self.$userStreak)
         
         badgePage.loss()
@@ -766,7 +784,14 @@ struct MountainView: View {
     }
     
     func authorizeNotifications() {
-        notificationCenter.requestAuthorization(options: [.sound , .alert , .badge ]) { success, error in }
+        notificationCenter.requestAuthorization(options: [.sound , .alert , .badge ]) {
+            success, error in
+            if (success) {
+                print("Success Authorizing notifications")
+            }else{
+                print("Error Authorizing notifications")
+            }
+        }
     }
     
     func scheduleNotification() {
@@ -780,8 +805,9 @@ struct MountainView: View {
         notificationCenter.getNotificationSettings(){ (settings) in
             if(settings.authorizationStatus == .authorized) {
                 
-                let date = Date().addingTimeInterval(5)
-                
+                let minutes = 1
+                let date = Date().addingTimeInterval(TimeInterval(minutes * 60))
+
                 let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
                 
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
@@ -795,6 +821,7 @@ struct MountainView: View {
                 )
                 
                 notificationCenter.add(request)
+                print("Scheduled notification for: \(date.formatted())")
                     
             }
             else {
