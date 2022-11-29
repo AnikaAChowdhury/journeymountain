@@ -27,6 +27,8 @@ let mountains: [Mountain] = [
 ]
 
 struct MountainView: View {
+    @Environment(\.scenePhase) var scenePhase
+    
     @State var mountainNum:Int = UserDefaults.standard.integer(forKey: "mountainNum") != nil ? UserDefaults.standard.integer(forKey: "mountainNum") : 8
     @State var mountain:Mountain = mountains[8-1]
     @State var characterPosition:Int = UserDefaults.standard.integer(forKey: "characterPosition") != nil ? UserDefaults.standard.integer(forKey: "characterPosition") : -1
@@ -214,7 +216,6 @@ struct MountainView: View {
         if(todaysExercise){
             return Button(action: {
                 toggleExercise()
-                scheduleNotification()
             }, label: {
                 Text("Exercise")
             })
@@ -227,7 +228,6 @@ struct MountainView: View {
         }
         return Button(action: {
             toggleExercise()
-            scheduleNotification()
         }, label: {
             Text("Exercise")
         })
@@ -476,7 +476,6 @@ struct MountainView: View {
             HStack{
                 Button(action: {
                     subtract10()
-                    scheduleNotification()
                 }, label: {
                     Text("-10")
                 })
@@ -489,7 +488,6 @@ struct MountainView: View {
                 makePercentage()
                 Button(action: {
                     add10()
-                    scheduleNotification()
                 }, label: {
                     Text("+10")
                 })
@@ -504,7 +502,6 @@ struct MountainView: View {
             HStack{
                 Button(action: {
                     submitDay()
-                    scheduleNotification()
                 }, label: {
                     Text("Submit Day")
                 })
@@ -872,6 +869,12 @@ struct MountainView: View {
         return message
     }
     
+    func clearNotifications() {
+        notificationCenter.removeAllDeliveredNotifications()
+        notificationCenter.removeAllPendingNotificationRequests()
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
+    
     init(){
         _mountain = State(initialValue: getMountain())
         if(characterPosition == 0 || characterPosition == -1){
@@ -889,17 +892,23 @@ struct MountainView: View {
         let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth:CGFloat = screenSize.width
         let screenHeight:CGFloat = screenSize.height
-        
-        
+
         if(showGame){
             VStack(spacing: 0) {
                 makeMountain(screenWidth: screenWidth, screenHeight: screenHeight)
                 
                 makeButtons(screenWidth: screenWidth, screenHeight: screenHeight)
-
             }
             .frame(width: fixedWidth, height: fixedHeight)
             .scaleEffect(x: (1.0) * (screenWidth/fixedWidth) ,y: (1.0) * (screenHeight/fixedHeight))
+            .onChange(of: scenePhase) { newPhase in
+                if newPhase == .active {
+                    clearNotifications()
+                } else if newPhase == .inactive {
+                    scheduleNotification()
+                }
+            }
+            
         }
         else{
             BadgeView(userStreak: self.$userStreak)
