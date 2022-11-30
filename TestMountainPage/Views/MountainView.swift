@@ -737,7 +737,12 @@ struct MountainView: View {
                     }
                     
                     if (presentBadge == 100.0) {
-                        BadgeEarnedPopUp(message: $message, badge: $badge).transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
+                        BadgeEarnedPopUp(message: $message, badge: $badge)
+                            .scaleEffect(x: scaleX_popUp, y: scaleY_popUp)
+                            .frame(width: fixedWidth * 1.0, height: fixedHeight * 1.0)
+                            .position(x: (0.50 * fixedWidth),y: fixedHeight - (0.5 * fixedHeight))
+                            .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
+                        
                     }
                 }
                 

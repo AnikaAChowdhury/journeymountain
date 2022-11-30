@@ -122,9 +122,6 @@ struct StepsView: View {
 
     var body: some View {
         
-        let screenSize: CGRect = UIScreen.main.bounds
-        let screenWidth:CGFloat = screenSize.width
-        let screenHeight:CGFloat = screenSize.height
         let stepSize:Double = 0.053
         let fixedHeight = 19.5 * 50
         let fixedWidth = 9.0 * 50
