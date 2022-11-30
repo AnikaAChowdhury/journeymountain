@@ -10,7 +10,6 @@ import SwiftUI
 struct BadgeView: View {
     @Binding var userStreak:Int
     
-    
     @State private var popUpVisible:Double = 0.0
     let popUp = PopUpMessage(todaysProgressPercent: .constant(0))
     
@@ -57,6 +56,17 @@ struct BadgeView: View {
     
     @State var message = ""
     @State private var showGame = false
+    
+    let screenSize:CGRect = UIScreen.main.bounds
+    @State var scaleX = 1.0
+    @State var scaleY = 1.0
+    @State var scaleX_image = 1.0
+    @State var scaleY_image = 1.0
+    @State var image_padding = 10.0
+    @State var positionX_exit = 0.0
+    @State var positionY_exit = 0.0
+    @State var scaleX_popUp = 1.0
+    @State var scaleY_popUp = 1.0
     
     func loss() {
         let dateFormatter = DateFormatter()
@@ -143,7 +153,7 @@ struct BadgeView: View {
             has1DStr = true
             UserDefaults.standard.set(true, forKey: "has1DStr")
         }
-    
+        
         if userStreak >= 3 {
             if(!has3DStr) {
                 date = dateFormatter.string(from: Date())
@@ -242,8 +252,67 @@ struct BadgeView: View {
         }
     }
     
+    func calculateScreenProportion(screenWidth: CGFloat, screenHeight: CGFloat) -> String{
+        let screen9_19:Double = 0.4615
+        let screen9_16:Double = 0.5625
+        let screen3_4:Double = 0.75
+        let screenProportion = screenWidth/screenHeight
+        var proportion = "9:19.5"
+        if((abs(screenProportion - screen9_19) < abs(screenProportion - screen9_16))
+           && (abs(screenProportion - screen9_19) < abs(screenProportion - screen3_4))){
+            proportion = "9:19.5"
+        }else if((abs(screenProportion - screen9_16) < abs(screenProportion - screen9_19))
+                 && (abs(screenProportion - screen9_16) < abs(screenProportion - screen3_4))){
+            proportion = "9:16"
+        }else if((abs(screenProportion - screen3_4) < abs(screenProportion - screen9_19))
+                 && (abs(screenProportion - screen3_4) < abs(screenProportion - screen9_16))){
+            proportion = "3:4"
+        }
+        return proportion
+    }
+    
+    func setScale(screenWidth: CGFloat, screenHeight: CGFloat) {
+        
+        let proportion = calculateScreenProportion(screenWidth: screenWidth, screenHeight: screenHeight)
+        
+        if(proportion == "9:19.5"){
+            scaleX = 0.85
+            scaleY = 0.85
+            scaleX_image = 1.0
+            scaleY_image = 1.0
+            image_padding = 0.0
+            positionX_exit = 0.85 * screenWidth
+            positionY_exit = 0.0 * screenHeight
+            scaleX_popUp = 1.0
+            scaleY_popUp = 1.0
+            
+            
+        }else if(proportion == "9:16"){
+            scaleX = 0.85
+            scaleY = 0.85
+            scaleX_image = 1.0
+            scaleY_image = 1.0
+            image_padding = 0.0
+            positionX_exit = 0.85 * screenWidth
+            positionY_exit = 0.01 * screenHeight
+            scaleX_popUp = 1.0
+            scaleY_popUp = 1.25
+            
+        }else if(proportion == "3:4"){
+            scaleX = 1.7
+            scaleY = 1.7
+            scaleX_image = 2.0
+            scaleY_image = 2.0
+            image_padding = 50.0
+            positionX_exit = 0.85 * screenWidth
+            positionY_exit = 0.03 * screenHeight
+            scaleX_popUp = 1.5
+            scaleY_popUp = 1.5
+        }
+        
+    }
+    
     var body: some View {
-        let screenSize:CGRect = UIScreen.main.bounds
         let screenWidth:CGFloat = screenSize.width
         let screenHeight:CGFloat = screenSize.height
         
@@ -257,51 +326,63 @@ struct BadgeView: View {
                         }, label: {
                             Text("Exit")
                         })
-                        .font(.system(size: 20, weight: Font.Weight.bold))
-                        .padding(7.0)
+                        .padding(7)
                         .background(Color(red: 200/255, green: 135/255, blue: 35/255))
                         .foregroundColor(Color.white)
-                        .cornerRadius(30.0)
-                        .position(x: (0.85)*screenWidth, y:(0.0)*screenHeight)
+                        .font(.system(size: 20, weight: Font.Weight.bold))
+                        .cornerRadius(30)
+                        .scaleEffect(x: scaleX, y: scaleY)
+                        .position(x: positionX_exit, y: positionY_exit)
+                        .opacity(100.0)
                         
                         Text("Badge Index")
                             .font(.largeTitle)
                             .fontWeight(.heavy)
                             .foregroundColor(Color(red: 200/255, green: 135/255, blue: 35/255))
+                            .scaleEffect(x: scaleX, y: scaleY)
+                            .padding(.top, image_padding/2)
                         
                         
                         //percent weight loss category
                         VStack{
                             HStack{
-                                
                                 if(has5PC) {
                                     Button(action: {
                                         message = "5% Weight Loss\n\nThis badge was earned on \n \(fivePCDate) \n from losing 5% of your initial body weight."
                                         popUpWindow()
                                     }, label: {
                                         Image("5pc")
+                                            .padding(.horizontal, image_padding)
+                                            .padding(.vertical, image_padding/2)
+                                            .scaleEffect(x: scaleX_image, y: scaleY_image)
                                     })
-//                                    .buttonStyle(.plain)
+                                    .buttonStyle(.plain)
                                 }
                                 else {
                                     Image("badge-empty")
+                                        .padding(.horizontal, image_padding)
+                                        .padding(.vertical, image_padding/2)
+                                        .scaleEffect(x: scaleX_image * 0.95, y: scaleY_image * 0.95)
                                 }
-                                
                                 if(has7_5PC) {
                                     Button(action: {
                                         message = "7.5% Weight Loss\n\nThis badge was earned on \n \(seven_fivePCDate) \n from losing 7.5% of your initial body weight."
                                         popUpWindow()
                                     }, label: {
                                         Image("7_5pc")
+                                            .padding(.horizontal, image_padding)
+                                            .padding(.vertical, image_padding/2)
+                                            .scaleEffect(x: scaleX_image, y: scaleY_image)
                                     })
                                     .buttonStyle(.plain)
                                 }
                                 else {
                                     Image("badge-empty")
+                                        .padding(.horizontal, image_padding)
+                                        .padding(.vertical, image_padding/2)
+                                        .scaleEffect(x: scaleX_image * 0.95, y: scaleY_image * 0.95)
                                 }
-                                
                             }
-                            
                             HStack{
                                 if(has10PC) {
                                     Button(action: {
@@ -309,12 +390,18 @@ struct BadgeView: View {
                                         popUpWindow()
                                     }, label: {
                                         Image("10pc")
+                                            .padding(.horizontal, image_padding)
+                                            .padding(.vertical, image_padding/2)
+                                            .scaleEffect(x: scaleX_image, y: scaleY_image)
                                     })
                                     .buttonStyle(.plain)
                                     
                                 }
                                 else {
                                     Image("badge-empty")
+                                        .padding(.horizontal, image_padding)
+                                        .padding(.vertical, image_padding/2)
+                                        .scaleEffect(x: scaleX_image * 0.95, y: scaleY_image * 0.95)
                                 }
                                 
                                 if(has12_5PC) {
@@ -323,11 +410,17 @@ struct BadgeView: View {
                                         popUpWindow()
                                     }, label: {
                                         Image("12_5pc")
+                                            .padding(.horizontal, image_padding)
+                                            .padding(.vertical, image_padding/2)
+                                            .scaleEffect(x: scaleX_image, y: scaleY_image)
                                     })
                                     .buttonStyle(.plain)
                                 }
                                 else {
                                     Image("badge-empty")
+                                        .padding(.horizontal, image_padding)
+                                        .padding(.vertical, image_padding/2)
+                                        .scaleEffect(x: scaleX_image * 0.95, y: scaleY_image * 0.95)
                                 }
                                 
                                 if(has15PC) {
@@ -336,13 +429,20 @@ struct BadgeView: View {
                                         popUpWindow()
                                     }, label: {
                                         Image("15pc")
+                                            .padding(.horizontal, image_padding)
+                                            .padding(.vertical, image_padding/2)
+                                            .scaleEffect(x: scaleX_image, y: scaleY_image)
                                     })
                                     .buttonStyle(.plain)
                                 }
                                 else {
                                     Image("badge-empty")
+                                        .padding(.horizontal, image_padding)
+                                        .padding(.vertical, image_padding/2)
+                                        .scaleEffect(x: scaleX_image * 0.95, y: scaleY_image * 0.95)
                                 }
                             }
+                            .padding(.vertical, image_padding)
                             
                             // % initial weight loss category
                             Button(action: {
@@ -356,11 +456,11 @@ struct BadgeView: View {
                                     .background(Color(red: 200/255, green: 135/255, blue: 35/255))
                                     .foregroundColor(Color.white)
                                     .cornerRadius(30.0)
+                                    .scaleEffect(x: scaleX, y: scaleY)
                                 
                             })
-                            .padding(.top, 10.0)
-                            .padding(.bottom, 30.0)
                         }
+                        .padding(.vertical, image_padding)
                         
                         Spacer()
                         
@@ -373,11 +473,17 @@ struct BadgeView: View {
                                         popUpWindow()
                                     }, label: {
                                         Image("1day")
+                                            .padding(.horizontal, image_padding)
+                                            .padding(.vertical, image_padding)
+                                            .scaleEffect(x: scaleX_image, y: scaleY_image)
                                     })
                                     .buttonStyle(.plain)
                                 }
                                 else {
                                     Image("badge-empty")
+                                        .padding(.horizontal, image_padding)
+                                        .padding(.vertical, image_padding)
+                                        .scaleEffect(x: scaleX_image * 0.95, y: scaleY_image * 0.95)
                                 }
                                 
                                 if(has3DStr) {
@@ -386,11 +492,17 @@ struct BadgeView: View {
                                         popUpWindow()
                                     }, label: {
                                         Image("3day")
+                                            .padding(.horizontal, image_padding)
+                                            .padding(.vertical, image_padding)
+                                            .scaleEffect(x: scaleX_image, y: scaleY_image)
                                     })
                                     .buttonStyle(.plain)
                                 }
                                 else {
                                     Image("badge-empty")
+                                        .padding(.horizontal, image_padding)
+                                        .padding(.vertical, image_padding)
+                                        .scaleEffect(x: scaleX_image * 0.95, y: scaleY_image * 0.95)
                                 }
                             }
                             
@@ -402,11 +514,17 @@ struct BadgeView: View {
                                         popUpWindow()
                                     }, label: {
                                         Image("1week")
+                                            .padding(.horizontal, image_padding)
+                                            .padding(.vertical, image_padding/2)
+                                            .scaleEffect(x: scaleX_image, y: scaleY_image)
                                     })
                                     .buttonStyle(.plain)
                                 }
                                 else {
                                     Image("badge-empty")
+                                        .padding(.horizontal, image_padding)
+                                        .padding(.vertical, image_padding/2)
+                                        .scaleEffect(x: scaleX_image * 0.95, y: scaleY_image * 0.95)
                                 }
                                 
                                 if(has1MStr) {
@@ -414,11 +532,17 @@ struct BadgeView: View {
                                         message = "1 Month Streak\n\nThis badge was earned on \n \(oneMStrDate) \n from logging your progress into the app for a month straight."
                                     }, label: {
                                         Image("1month")
+                                            .padding(.horizontal, image_padding)
+                                            .padding(.vertical, image_padding/2)
+                                            .scaleEffect(x: scaleX_image, y: scaleY_image)
                                     })
                                     .buttonStyle(.plain)
                                 }
                                 else {
                                     Image("badge-empty")
+                                        .padding(.horizontal, image_padding)
+                                        .padding(.vertical, image_padding/2)
+                                        .scaleEffect(x: scaleX_image * 0.95, y: scaleY_image * 0.95)
                                 }
                                 
                                 if(has3MStr) {
@@ -427,93 +551,120 @@ struct BadgeView: View {
                                         popUpWindow()
                                     }, label: {
                                         Image("3month")
+                                            .padding(.horizontal, image_padding)
+                                            .padding(.vertical, image_padding/2)
+                                            .scaleEffect(x: scaleX_image, y: scaleY_image)
                                     })
                                     .buttonStyle(.plain)
                                 }
                                 else {
                                     Image("badge-empty")
+                                        .padding(.horizontal, image_padding)
+                                        .padding(.vertical, image_padding/2)
+                                        .scaleEffect(x: scaleX_image * 0.95, y: scaleY_image * 0.95)
                                 }
                             }
+                            
+                            HStack{
                                 
-                                HStack{
-                                    
-                                    if(has6MStr) {
-                                        Button(action: {
-                                            message = "6 Month Streak\n\nThis badge was earned on \n \(sixMStrDate) \n from logging your progress into the app for 6 months straight."
-                                            popUpWindow()
-                                        }, label: {
-                                            Image("6month")
-                                        })
-                                        .buttonStyle(.plain)
-                                    }
-                                    else {
-                                        Image("badge-empty")
-                                    }
-                                    
-                                    if(has9MStr) {
-                                        Button(action: {
-                                            message = "9 Month Streak\n\nThis badge was earned on \n \(nineMStrDate) \n from logging your progress into the app for 9 months straight."
-                                            popUpWindow()
-                                        }, label: {
-                                            Image("9month")
-                                        })
-                                        .buttonStyle(.plain)
-                                    }
-                                    else {
-                                        Image("badge-empty")
-                                    }
-                                    
-                                    if(has1YStr) {
-                                        Button(action: {
-                                            message = "1 Year Streak\n\nThis badge was earned on \n \(oneYStrDate) \n from logging your progress into the app for 1 year straight."
-                                            popUpWindow()
-                                        }, label: {
-                                            Image("1year")
-                                        })
-                                        .buttonStyle(.plain)
-                                    }
-                                    else {
-                                        Image("badge-empty")
-                                    }
+                                if(has6MStr) {
+                                    Button(action: {
+                                        message = "6 Month Streak\n\nThis badge was earned on \n \(sixMStrDate) \n from logging your progress into the app for 6 months straight."
+                                        popUpWindow()
+                                    }, label: {
+                                        Image("6month")
+                                            .padding(.horizontal, image_padding)
+                                            .padding(.vertical, image_padding/2)
+                                            .scaleEffect(x: scaleX_image, y: scaleY_image)
+                                    })
+                                    .buttonStyle(.plain)
+                                }
+                                else {
+                                    Image("badge-empty")
+                                        .padding(.horizontal, image_padding)
+                                        .padding(.vertical, image_padding/2)
+                                        .scaleEffect(x: scaleX_image * 0.95, y: scaleY_image * 0.95)
                                 }
                                 
-                                // Daily streak category
-                                Button(action: {
-                                    message = "Daily Streak\n\nThis badge category is for your daily streak. If you log in and record your food and exercise every day, you can earn a badge for a streak."
-                                    popUpWindow()
-                                }, label: {
-                                    Text("Daily Streak")
-                                        .font(.system(size: 20, weight: Font.Weight.bold))
-                                        .padding(7.0)
-                                        .padding(.horizontal, 10.0)
-                                        .background(Color(red: 200/255, green: 135/255, blue: 35/255))
-                                        .foregroundColor(Color.white)
-                                        .cornerRadius(30.0)
-                                    
-                                })
-                                .padding(.top, 10.0)
-                                .padding(.bottom, 30.0)
+                                if(has9MStr) {
+                                    Button(action: {
+                                        message = "9 Month Streak\n\nThis badge was earned on \n \(nineMStrDate) \n from logging your progress into the app for 9 months straight."
+                                        popUpWindow()
+                                    }, label: {
+                                        Image("9month")
+                                            .padding(.horizontal, image_padding)
+                                            .padding(.vertical, image_padding/2)
+                                            .scaleEffect(x: scaleX_image, y: scaleY_image)
+                                    })
+                                    .buttonStyle(.plain)
+                                }
+                                else {
+                                    Image("badge-empty")
+                                        .padding(.horizontal, image_padding)
+                                        .padding(.vertical, image_padding/2)
+                                        .scaleEffect(x: scaleX_image * 0.95, y: scaleY_image * 0.95)
+                                }
                                 
+                                if(has1YStr) {
+                                    Button(action: {
+                                        message = "1 Year Streak\n\nThis badge was earned on \n \(oneYStrDate) \n from logging your progress into the app for 1 year straight."
+                                        popUpWindow()
+                                    }, label: {
+                                        Image("1year")
+                                            .padding(.horizontal, image_padding)
+                                            .padding(.vertical, image_padding/2)
+                                            .scaleEffect(x: scaleX_image, y: scaleY_image)
+                                    })
+                                    .buttonStyle(.plain)
+                                }
+                                else {
+                                    Image("badge-empty")
+                                        .padding(.horizontal, image_padding)
+                                        .padding(.vertical, image_padding/2)
+                                        .scaleEffect(x: scaleX_image * 0.95, y: scaleY_image * 0.95)
+                                }
+                            }
+                            .padding(.vertical, image_padding)
+                            
+                            // Daily streak category
+                            Button(action: {
+                                message = "Daily Streak\n\nThis badge category is for your daily streak. If you log in and record your food and exercise every day, you can earn a badge for a streak."
+                                popUpWindow()
+                            }, label: {
+                                Text("Daily Streak")
+                                    .font(.system(size: 20, weight: Font.Weight.bold))
+                                    .padding(7.0)
+                                    .padding(.horizontal, 10.0)
+                                    .background(Color(red: 200/255, green: 135/255, blue: 35/255))
+                                    .foregroundColor(Color.white)
+                                    .cornerRadius(30.0)
+                                    .scaleEffect(x: scaleX, y: scaleY)
+                                
+                            })
                             
                         }
+                        .padding(.vertical, image_padding)
                     }
                     .padding(.top, 20.0)
-                    .padding(.bottom, 40.0)
+                    .padding(.bottom, 50.0)
                     
                     Spacer()
                 }
                 .onAppear {
                     loss()
                     countStreak()
+                    setScale(screenWidth: screenWidth, screenHeight: screenHeight)
                 }
                 if(popUpVisible == 100.0) {
                     BadgePagePopUp(message: $message)
+                        .scaleEffect(x: scaleX_popUp, y: scaleY_popUp)
                         .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
                 }
             }
             .background(Color(UIColor(red: 0.957, green: 0.831, blue: 0.502, alpha: 1).cgColor))
-
-        } else {
+            
+        }
+        else {
             MountainView()
         }
     }
@@ -525,5 +676,5 @@ struct BadgeView: View {
 
         }
     }
-    
 }
+    
