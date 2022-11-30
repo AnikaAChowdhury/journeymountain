@@ -1,8 +1,7 @@
 //
 //  PopUpMessage.swift
 //  TestMountainPage
-//
-//  Created by Chowdhury,Anika and Michael Mendel
+// Created by Chowdhury,Anika and Michael Mendel
 
 import SwiftUI
 
@@ -24,7 +23,6 @@ struct PopUpMessage: View {
                 message = "Tomorrow is a new day and a chance to make a better choice!"
             case 3:
                 message = "What cancer fighting colors did you miss today?"
-                
             //Category 1:  <40% in blue zone >60% in yellow red zone for case 4 to 8
                 
             case 4:
@@ -127,7 +125,7 @@ struct PopUpMessage: View {
         }else{
             //message = "80%+ message"
             //Category 5 >80% in the blue zone and <20% in the red and yellow zone
-            
+        
             let randomInt = Int.random(in: 1..<13)
             switch(randomInt){
             case 1:
@@ -153,7 +151,6 @@ struct PopUpMessage: View {
             default:
                 message = "I will encourage others to make changes to improve their health!"
             }
-            
         }
         return message
     }
