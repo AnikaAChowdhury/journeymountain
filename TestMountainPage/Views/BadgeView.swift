@@ -646,7 +646,7 @@ struct BadgeView: View {
                         .padding(.vertical, image_padding)
                     }
                     .padding(.top, 20.0)
-                    .padding(.bottom, 40.0)
+                    .padding(.bottom, 50.0)
                     
                     Spacer()
                 }
