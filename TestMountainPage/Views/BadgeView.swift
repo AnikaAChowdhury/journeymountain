@@ -306,7 +306,7 @@ struct BadgeView: View {
             image_padding = 50.0
             positionX_exit = 0.85 * screenWidth
             positionY_exit = 0.03 * screenHeight
-            scaleX_popUp = 1.0
+            scaleX_popUp = 1.5
             scaleY_popUp = 1.5
         }
         
@@ -657,6 +657,7 @@ struct BadgeView: View {
                 }
                 if(popUpVisible == 100.0) {
                     BadgePagePopUp(message: $message)
+                        .scaleEffect(x: scaleX_popUp, y: scaleY_popUp)
                         .transition(.asymmetric(insertion: AnyTransition.scale.animation(.easeInOut(duration: 0.7)), removal: .opacity))
                 }
             }
